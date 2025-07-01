@@ -16,7 +16,6 @@
         <li><a href="#">Explore</a></li>
         <li><a href="#">Manage</a></li>
         <li><a href="#">About Us</a></li>
-        <li><a href="#">Log In</a></li>
       </ul>
       <div class="login-link">
       <a href="#">Log In</a> </div>
