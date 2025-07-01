@@ -18,5 +18,9 @@
         <li><a href="#">About Us</a></li>
         <li><a href="#">Log In</a></li>
       </ul>
+      <div class="login-link">
+      <a href="#">Log In</a> </div>
     </nav>
+      
   </header>
+
