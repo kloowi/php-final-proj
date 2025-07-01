@@ -1,0 +1,45 @@
+CREATE TABLE Admin (
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+);
+
+CREATE TABLE Users (
+);
+
+CREATE TABLE Experiences (
+		experience_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    location VARCHAR(255),
+    price DECIMAL(10, 2) NOT NULL,
+    duration VARCHAR(100), -- e.g., '3 hours'
+    category VARCHAR(100), -- e.g., 'history', 'food', 'arts'
+    available_slots INT DEFAULT 0,
+    image_url VARCHAR(500)
+);
+
+CREATE TABLE Experience_Schedule (
+    schedule_id INT PRIMARY KEY AUTO_INCREMENT,
+    experience_id INT NOT NULL,
+    date DATE NOT NULL,
+    time TIME NOT NULL,
+    available_slots INT NOT NULL CHECK (available_slots >= 0),
+
+    FOREIGN KEY (experience_id) REFERENCES Experiences(experience_id)
+);
+
+CREATE Bookings (
+    booking_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    experience_id INT NOT NULL,
+    booking_date DATE NOT NULL,
+    number_of_guests INT NOT NULL CHECK (number_of_guests > 0),
+    status VARCHAR(20) NOT NULL CHECK (status IN ('confirmed', 'cancelled', 'pending')),
+    
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (experience_id) REFERENCES Experiences(experience_id)
+);
+
+CREATE TABLE Payment (
+);
+
