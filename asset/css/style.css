@@ -1,0 +1,154 @@
+/* Reset and basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.site-header {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  transition: background 0.3s ease;
+}
+
+.site-header.transparent {
+  background: transparent;
+}
+
+.site-header.white-bg {
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Top Nav */
+.top-nav {
+  background: #222;
+  color: #fff;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.9rem;
+}
+
+.top-nav a {
+  color: #4aa3ff;
+  text-decoration: none;
+}
+
+/* Main Nav */
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.main-nav .nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.main-nav .nav-links li {
+  list-style: none;
+}
+
+.main-nav .nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+  background: url('/assets/images/manila-night.jpg') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.search-bar {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.search-bar button {
+  background: #4aa3ff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
+/* Sections */
+.adventure,
+.popular-experiences {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.feature-item {
+  font-size: 1.5rem;
+}
+
+.explore-btn {
+  background: #4aa3ff;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Experience Cards */
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.experience-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 600px;
+}
+
+.experience-card img {
+  width: 150px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Footer */
+.site-footer {
+  background: #222;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
