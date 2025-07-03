@@ -18,6 +18,7 @@
       <div class="feature-item">📸 Feature</div>
       <div class="feature-item">🚶 Feature</div>
       <div class="feature-item">📍 Feature</div>
+      <div class="feature-item">🗺️ Feature</div>
     </div>
     <button class="explore-btn">Explore</button>
   </section>
