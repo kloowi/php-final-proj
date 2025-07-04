@@ -4,6 +4,7 @@ if (isAdminLoggedIn()) {
     header('Location: dashboard.php');
     exit;
 }
+
 $error_message = '';
 if ($_POST) {
     $username = trim($_POST['username'] ?? '');

@@ -18,7 +18,7 @@
       <div class="feature-item">📸 Feature</div>
       <div class="feature-item">🚶 Feature</div>
       <div class="feature-item">📍 Feature</div>
-      <div class="feature-item">🗺️ Feature</div>
+      <div class="feature-item">🗺️d= Feature</div>
     </div>
     <button class="explore-btn">Explore</button>
   </section>

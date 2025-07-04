@@ -1,12 +1,32 @@
 <?php
-require_once 'auth.php';
+require_once './authentication/auth.php';
 requireAdminLogin();
 $admin = getCurrentAdmin();
 require_once '../includes/db_connect.php';
 
+
 // Handle add/edit/delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
+    // Handle file upload if present
+    $image_path = '';
+    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = '../assets/images/experiences/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        $file_tmp = $_FILES['image_file']['tmp_name'];
+        $file_name = basename($_FILES['image_file']['name']);
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+        $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
+        if (in_array($file_ext, $allowed_ext)) {
+            $new_name = uniqid('exp_', true) . '.' . $file_ext;
+            $dest_path = $upload_dir . $new_name;
+            if (move_uploaded_file($file_tmp, $dest_path)) {
+                $image_path = 'assets/images/experiences/' . $new_name;
+            }
+        }
+    }
     if ($action === 'add') {
         $title = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
@@ -15,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $duration = trim($_POST['duration'] ?? '');
         $category = trim($_POST['category'] ?? '');
         $available_slots = intval($_POST['available_slots'] ?? 0);
-        $image_url = trim($_POST['image_url'] ?? '');
+        // Use uploaded image or fallback to text input if no file uploaded
+        $image_url = $image_path ?: trim($_POST['image_url'] ?? '');
         if ($title && $description) {
             $stmt = $pdo->prepare('INSERT INTO Experiences (title, description, location, price, duration, category, available_slots, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
             $stmt->execute([$title, $description, $location, $price, $duration, $category, $available_slots, $image_url]);
@@ -27,24 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     if ($action === 'edit') {
-        $id = intval($_POST['id']);
-        $title = trim($_POST['title'] ?? '');
-        $description = trim($_POST['description'] ?? '');
-        $location = trim($_POST['location'] ?? '');
-        $price = floatval($_POST['price'] ?? 0);
-        $duration = trim($_POST['duration'] ?? '');
-        $category = trim($_POST['category'] ?? '');
-        $available_slots = intval($_POST['available_slots'] ?? 0);
-        $image_url = trim($_POST['image_url'] ?? '');
-        if ($title && $description) {
-            $stmt = $pdo->prepare('UPDATE Experiences SET title=?, description=?, location=?, price=?, duration=?, category=?, available_slots=?, image_url=? WHERE experience_id=?');
-            $stmt->execute([$title, $description, $location, $price, $duration, $category, $available_slots, $image_url, $id]);
-            setFlashMessage('success', 'Experience updated successfully.');
-        } else {
-            setFlashMessage('danger', 'Title and description are required.');
-        }
-        header('Location: experiences.php');
-        exit;
+        require_once 'edit_experience.php';
     }
     if ($action === 'delete') {
         $id = intval($_POST['id']);
@@ -66,6 +70,9 @@ if (isset($_GET['edit'])) {
     $stmt->execute([$id]);
     $editing = $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+// Edit action moved to separate file
+require_once 'edit_experience.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,10 +101,11 @@ if (isset($_GET['edit'])) {
             <?php displayFlashMessage(); ?>
             <div class="form-container">
                 <h2><?php echo $editing ? 'Edit Experience' : 'Add New Experience'; ?></h2>
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="<?php echo $editing ? 'edit' : 'add'; ?>">
                     <?php if ($editing): ?>
                         <input type="hidden" name="id" value="<?php echo $editing['experience_id']; ?>">
+                        <input type="hidden" name="existing_image_url" value="<?php echo htmlspecialchars($editing['image_url'] ?? ''); ?>">
                     <?php endif; ?>
                     <div class="form-row">
                         <div class="form-group">
@@ -125,8 +133,11 @@ if (isset($_GET['edit'])) {
                             <input type="number" name="available_slots" value="<?php echo htmlspecialchars($editing['available_slots'] ?? ''); ?>">
                         </div>
                         <div class="form-group">
-                            <label>Image URL</label>
-                            <input type="text" name="image_url" value="<?php echo htmlspecialchars($editing['image_url'] ?? ''); ?>">
+                            <label>Image File</label>
+                            <input type="file" name="image_file" accept="image/*">
+                            <?php if ($editing && !empty($editing['image_url'])): ?>
+                                <br><img src="../<?php echo htmlspecialchars($editing['image_url']); ?>" alt="Current Image" style="max-width:100px;max-height:100px;">
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="form-group">

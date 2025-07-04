@@ -1,5 +1,5 @@
 <?php
-require_once 'auth.php';
+require_once './authentication/auth.php';
 requireAdminLogin();
 $admin = getCurrentAdmin();
 
@@ -131,7 +131,9 @@ $experiences = $stmt->fetchAll();
                 <div class="experiences-grid">
                     <?php foreach ($experiences as $experience): ?>
                         <div class="experience-card">
-                            <img src="<?php echo htmlspecialchars($experience['image_url'] ?: '../assets/images/experience.jpg'); ?>" 
+                            <img src="<?php echo htmlspecialchars(
+                                !empty($experience['image_url']) ? '../' . $experience['image_url'] : '../assets/images/experience.jpg'
+                            ); ?>" 
                                  alt="<?php echo htmlspecialchars($experience['title']); ?>">
                             <h3><?php echo htmlspecialchars($experience['title']); ?></h3>
                             <p><strong>Location:</strong> <?php echo htmlspecialchars($experience['location']); ?></p>
@@ -141,7 +143,7 @@ $experiences = $stmt->fetchAll();
                             <p><?php echo htmlspecialchars(substr($experience['description'], 0, 100)) . '...'; ?></p>
                             
                             <div class="experience-actions">
-                                <a href="edit_experience.php?id=<?php echo $experience['experience_id']; ?>" 
+                                <a href="experiences.php?edit=1<?php echo $experience['experience_id']; ?>" 
                                    class="btn btn-warning">Edit</a>
                                 <form method="POST" style="display: inline;" 
                                       onsubmit="return confirm('Are you sure you want to delete this experience?')">

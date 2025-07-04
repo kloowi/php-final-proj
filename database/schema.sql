@@ -1,4 +1,4 @@
-CREATE DATABASE manila_experiences;
+CREATE DATABASE stepintomanila;
 
 CREATE TABLE IF NOT EXISTS Admin (
     username VARCHAR(50) NOT NULL UNIQUE,

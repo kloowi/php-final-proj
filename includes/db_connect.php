@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'manila_experiences';
+$dbname = 'stepintomanila';
 $username = 'root';
 $password = '';
 
