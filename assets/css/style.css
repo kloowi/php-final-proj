@@ -7,28 +7,44 @@
 
 body {
   font-family: Arial, sans-serif;
+  padding-top: 0px;
+  /* overflow-y: scroll; */
 }
 
 /* Header */
 .site-header {
-  position: fixed;
   width: 100%;
-  z-index: 999;
-  transition: background 0.3s ease;
-  color: white;
-}
-
-.site-header.transparent {
-  background: transparent;
-  -webkit-text-fill-color: #fff;
-}
-
-.site-header.white-bg {
-  -webkit-text-fill-color: #0080ff;
+  color: #0080ff;
   background: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  
+  z-index: 999;
+  position: absolute;
 }
+
+/* When header is white */
+.site-header.white-bg .main-nav,
+.site-header.white-bg .nav-links a,
+.site-header.white-bg .logo,
+.site-header.white-bg .login-link a {
+  background: #fff;
+  color: #0080ff;
+}
+
+/* When header is transparent */
+.site-header.transparent {
+  background: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.site-header.transparent .main-nav,
+.site-header.transparent .nav-links a,
+.site-header.transparent .logo,
+.site-header.transparent .login-link a {
+  background: transparent;
+  color: #fff;
+}
+
 
 /* Top Nav */
 .top-nav {
@@ -51,6 +67,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+  box-sizing: border-box;
 }
 
 .main-nav .nav-links {
@@ -64,7 +81,6 @@ body {
 
 .main-nav .nav-links a {
   text-decoration: none;
-  color: #000;
   font-weight: bold;
 }
 
@@ -127,59 +143,6 @@ body {
   border-radius: 5px;
 }
 
-/* Experience Cards */
-.experience-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-
-.experience-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  max-width: 600px;
-}
-
-.experience-card img {
-  width: 150px;
-  height: 100px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.experience-info {
-  flex: 1;
-}
-
-.experience-details {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.experience-details span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.location {
-  color: #4aa3ff;
-}
-
-.price {
-  font-weight: bold;
-  color: #28a745;
-}
-
-.duration {
-  color: #6c757d;
-}
-
 /* Footer */
 .site-footer {
   background: #fff;
@@ -187,4 +150,25 @@ body {
   padding: 1rem;
   text-align: center;
   
+}
+
+/* Minimalistic scrollbar styles for all pages */
+/* For Webkit browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #b0b0b0;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+/* For Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #b0b0b0 transparent;
+  overflow-y: scroll;
 }

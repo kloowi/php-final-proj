@@ -1,5 +1,5 @@
 <?php
-require_once 'auth.php';
+require_once './authentication/auth.php';
 if (isAdminLoggedIn()) {
     header('Location: dashboard.php');
     exit;
