@@ -12,7 +12,7 @@
   </section>
 
   <section class="adventure">
-    <h2>Join us for an adventure!</h2>
+    <h2>Join us for an adventure!!</h2>
     <p>Explore Manila’s hidden gems, guided by locals. From food crawls to heritage walks — your story starts here.</p>
     <div class="features">
       <div class="feature-item">📸 Feature</div>
