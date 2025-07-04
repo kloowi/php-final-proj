@@ -149,6 +149,37 @@ body {
   object-fit: cover;
 }
 
+.experience-info {
+  flex: 1;
+}
+
+.experience-details {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.experience-details span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.location {
+  color: #4aa3ff;
+}
+
+.price {
+  font-weight: bold;
+  color: #28a745;
+}
+
+.duration {
+  color: #6c757d;
+}
+
 /* Footer */
 .site-footer {
   background: #fff;
