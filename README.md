@@ -8,6 +8,18 @@ NOTE: pakita ko july 8 pano gawin sa personal pc habang di pa naghhost
   - ui ng lahat 
   - backend ng ui
   - admin panel pakitapos
+
+#july 8 2025
+**TO-DO**
+
+- [ ]  Product Research
+- [x]  categorize explore page (klowi)
+- [ ]  UI (View Prod, Manage, BookingProcess,Login)
+- [ ]  backend ng ui
+- [ ]  admin panel pakitapos
+- [x]  Fix header.php klo
+- [x]  UI ABOUT done
+
 # Discover Manila - Admin System
 
 This project now includes a complete admin system for managing experiences on the explore page, replacing the hardcoded content with dynamic database-driven content.
