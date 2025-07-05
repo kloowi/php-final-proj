@@ -1,5 +1,5 @@
 <?php include 'includes/header.php'; ?>
-<link rel="stylesheet" href="/APPDEV/php-final-proj/assets/css/index.css">
+<link rel="stylesheet" href="assets/css/index.css">
 
 <div class="hero">
     <h1>Your gateway to discovering Manila like a local.</h1>
