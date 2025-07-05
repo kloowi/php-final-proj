@@ -1,15 +1,4 @@
-#binago july 7,2025
-NOTE: pakita ko july 8 pano gawin sa personal pc habang di pa naghhost
-1. integrated backend database to explorepage
-2. uniform header across all pages (one header.php for all)
-3. added minimalistic scrollbar
-  to do:
-  - categorize explore page (klowi)
-  - ui ng lahat 
-  - backend ng ui
-  - admin panel pakitapos
-
-#july 8 2025
+# AGENDA FOR JULY 8 2025
 **TO-DO**
 
 - [ ]  Product Research
@@ -19,6 +8,17 @@ NOTE: pakita ko july 8 pano gawin sa personal pc habang di pa naghhost
 - [ ]  admin panel pakitapos
 - [x]  Fix header.php klo
 - [x]  UI ABOUT done
+
+# binago july 7,2025
+NOTE: pakita ko july 8 pano gawin sa personal pc habang di pa naghhost
+1. integrated backend database to explorepage
+2. uniform header across all pages (one header.php for all)
+3. added minimalistic scrollbar
+  to do:
+  - categorize explore page (klowi)
+  - ui ng lahat 
+  - backend ng ui
+  - admin panel pakitapos
 
 # Discover Manila - Admin System
 
