@@ -1,0 +1,109 @@
+/* Header Styles */
+
+/* Header */
+.site-header {
+  width: 100%;
+  color: #0080ff;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+/* When header is white */
+.site-header.white-bg {
+  transition: all 0.3s ease;
+  background: #fff !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.site-header.white-bg .main-nav,
+.site-header.white-bg .nav-links a,
+.site-header.white-bg .logo,
+.site-header.white-bg .login-link a {
+  background: transparent;
+  color: #0080ff;
+  transition: all 0.3s ease;
+}
+
+/* When header is transparent */
+.site-header.transparent {
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: all 0.3s ease;
+}
+
+.site-header.transparent .main-nav,
+.site-header.transparent .nav-links a,
+.site-header.transparent .logo,
+.site-header.transparent .login-link a {
+  background: transparent;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.site-header.transparent .nav-links a.active {
+  color: #fff !important;
+}
+
+/* Top Nav */
+.top-nav {
+  background: #222;
+  color: #fff;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.9rem;
+}
+
+.top-nav a {
+  color: #4aa3ff;
+  text-decoration: none;
+}
+
+/* Main Nav */
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+}
+
+.main-nav .nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.main-nav .nav-links li {
+  list-style: none;
+}
+
+.main-nav .nav-links a {
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.main-nav .nav-links a:hover {
+  opacity: 0.8;
+}
+
+.main-nav .nav-links a.active {
+  color: #0056b3;
+}
+
+.login-link a {
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+  opacity: 0.8;
+} 

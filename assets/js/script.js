@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.getElementById("main-header");
   const logo = document.getElementById("site-logo");
 
+  // Check if elements exist before proceeding
+  if (!header || !logo) {
+    console.log("Header or logo not found");
+    return;
+  }
+
   const blueLogo = BASE_URL + "/assets/images/logo/blue-logo.png";
   const whiteLogo = BASE_URL + "/assets/images/logo/white-logo.png";
 
@@ -30,14 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Scroll-based toggle
   toggleHeaderBackground();
   window.addEventListener("scroll", () => {
-    console.log("Window scrolled");
     logoClicked = false;
     toggleHeaderBackground();
   });
 
   // Hover effect on entire header
   header.addEventListener("mouseenter", () => {
-    console.log("Header mouseenter");
     if (!isScrolled) {
       header.classList.add("white-bg");
       header.classList.remove("transparent");
@@ -46,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   header.addEventListener("mouseleave", () => {
-    console.log("Header mouseleave");
     logoClicked = false;
     if (!isScrolled) {
       header.classList.remove("white-bg");
@@ -55,9 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  header.addEventListener("click", () => {
-    console.log("Header clicked");
-    if (logo) logo.src = blueLogo;
+  // Logo click handler
+  logo.addEventListener("click", (e) => {
+    e.stopPropagation();
+    logo.src = blueLogo;
     logoClicked = true;
   });
 });

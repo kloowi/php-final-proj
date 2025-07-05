@@ -11,6 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Discover Manila</title>
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/style.css">
+  <link rel="stylesheet" href="<?php echo $basePath; ?>/css/header.css">
   <script>
     const BASE_URL = "<?php echo dirname($_SERVER['SCRIPT_NAME']); ?>";
   </script>
