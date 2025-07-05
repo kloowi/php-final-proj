@@ -7,16 +7,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const whiteLogo = "/APPDEV/php-final-proj/assets/images/logo/white-logo.png";
 
   let logoClicked = false;
+  let isScrolled = false;
 
   const toggleHeaderBackground = () => {
     if (window.scrollY > 50) {
-      header.classList.remove("transparent");
-      header.classList.add("white-bg");
-      if (!logoClicked && logo) logo.src = blueLogo;
+      if (!header.classList.contains("white-bg")) {
+        header.classList.remove("transparent");
+        header.classList.add("white-bg");
+        if (!logoClicked && logo) logo.src = blueLogo;
+      }
+      isScrolled = true;
     } else {
-      header.classList.remove("white-bg");
-      header.classList.add("transparent");
-      if (!logoClicked && logo) logo.src = whiteLogo;
+      if (!header.classList.contains("transparent")) {
+        header.classList.remove("white-bg");
+        header.classList.add("transparent");
+        if (!logoClicked && logo) logo.src = whiteLogo;
+      }
+      isScrolled = false;
     }
   };
 
@@ -31,15 +38,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // Hover effect on entire header
   header.addEventListener("mouseenter", () => {
     console.log("Header mouseenter");
-    header.classList.add("white-bg");
-    header.classList.remove("transparent");
-    if (!logoClicked && logo) logo.src = blueLogo;
+    if (!isScrolled) {
+      header.classList.add("white-bg");
+      header.classList.remove("transparent");
+      if (!logoClicked && logo) logo.src = blueLogo;
+    }
   });
 
   header.addEventListener("mouseleave", () => {
     console.log("Header mouseleave");
     logoClicked = false;
-    if (window.scrollY < 50) {
+    if (!isScrolled) {
       header.classList.remove("white-bg");
       header.classList.add("transparent");
       if (logo) logo.src = whiteLogo;
