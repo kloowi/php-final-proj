@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.getElementById("main-header");
   const logo = document.getElementById("site-logo");
 
-  const blueLogo = "/APPDEV/php-final-proj/assets/images/logo/blue-logo.png";
-  const whiteLogo = "/APPDEV/php-final-proj/assets/images/logo/white-logo.png";
+  const blueLogo = BASE_URL + "/assets/images/logo/blue-logo.png";
+  const whiteLogo = BASE_URL + "/assets/images/logo/white-logo.png";
 
   let logoClicked = false;
   let isScrolled = false;

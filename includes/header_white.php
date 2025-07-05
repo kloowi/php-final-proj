@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Discover Manila</title>
-  <link rel="stylesheet" href=">/css/style.css">
+  <link rel="stylesheet" href=">../assets/css/style.css">
 </head>
 <body>
 <header style="background-color: white; padding: 25px 60px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
