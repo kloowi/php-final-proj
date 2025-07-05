@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" href="assets/css/footer.css">
+</head>
   <footer class="site-footer">
     <div class="footer-links">
       <span>© 2025 StepIntoManila. All rights reserved.</span>
