@@ -12,5 +12,5 @@
   margin-right: 50px; /* Adjust the value for a bigger or smaller gap */
 }
 .site-footer {
-  border: 2px solid #dbdbdb; /* You can adjust the color and thickness */
+  border-top: 2px solid #dbdbdb;
 } 
