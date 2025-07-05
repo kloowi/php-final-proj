@@ -4,6 +4,7 @@
 <div class="about-section">
   <h2>About StepIntoManila</h2>
   <p>
+    <a href="view_experience.php?id=1">View Experience</a>
     StepIntoManila is your gateway to discovering the vibrant heart of the Philippines.
     We make it easy to book unforgettable experiences at Manila's top tourist spots—from
     cultural landmarks and hidden gems to exciting adventures. Whether you're a first-time
@@ -13,6 +14,6 @@
 </div>
 
 <div class="about-image-container">
-  <img src="../assets/images/MANILA.jpg" alt="Manila Skyline">
+  <img src="../assets/images/index/MANILA.jpg" alt="Manila Skyline">
   <div class="overlay-text">MANILA</div>
 </div>

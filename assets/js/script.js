@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const blueLogo = BASE_URL + "/assets/images/logo/blue-logo.png";
-  const whiteLogo = BASE_URL + "/assets/images/logo/white-logo.png";
+const blueLogo = "/assets/images/logo/blue-logo.png";
+const whiteLogo = "/assets/images/logo/white-logo.png";
 
   let logoClicked = false;
   let isScrolled = false;
