@@ -167,7 +167,7 @@ include '../includes/header.php';
 
 /* Back button */
 .back-btn {
-    background: #6c757d;
+    background: #4aa3ff;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -183,7 +183,7 @@ include '../includes/header.php';
 }
 
 .back-btn:hover {
-    background: #5a6268;
+    background: #1a73e8;
 }
 
 /* Book Now button */
@@ -219,7 +219,7 @@ include '../includes/header.php';
 
 
         <!-- Back Button -->
-        <a href="explore-test.php" class="back-btn">
+        <a href="explore-testlocal.php" class="back-btn">
             <i class="fas fa-arrow-left"></i>
             Back to Explore
         </a>

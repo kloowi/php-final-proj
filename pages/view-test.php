@@ -165,6 +165,27 @@ include '../includes/header.php';
     text-decoration: none;
 }
 
+/* Back button */
+.back-btn {
+    background: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    transition: background-color 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #5a6268;
+}
+
 /* Book Now button */
 .book-btn {
     background: #007bff;
@@ -195,6 +216,13 @@ include '../includes/header.php';
 
 <div class="page-wrapper">
     <div class="experience-card">
+
+
+        <!-- Back Button -->
+        <a href="explore-test.php" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Explore
+        </a>
 
         <!-- Header Image -->
         <?php
