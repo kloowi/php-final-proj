@@ -13,6 +13,6 @@
 </div>
 
 <div class="about-image-container">
-  <img src="../assets/images/MANILA.jpg" alt="Manila Skyline">
+  <img src="../assets/images/index/MANILA.jpg" alt="Manila Skyline">
   <div class="overlay-text">MANILA</div>
 </div>
