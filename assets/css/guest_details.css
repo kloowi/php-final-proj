@@ -1,0 +1,132 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #fff;
+}
+
+.hero {
+  position: relative;
+  height: 300px;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner-title {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 14px 40px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #007bff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 80px auto;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  background: #f9f9f9;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.calendar-box {
+  background: #fff;
+  border-radius: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-box h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+#calendar {
+  width: 100%;
+  max-width: 100%;
+}
+
+.flatpickr-calendar {
+  width: 100% !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+.time-box {
+  background: #fff;
+  border-radius: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.time-box h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.time-box select,
+.time-box input[type="text"],
+.guest-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.guest-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.guest-controls button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  background: #eee;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pay-btn {
+  background: #007bff;
+  color: #fff;
+  padding: 12px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s;
+}
+
+.pay-btn:hover {
+  background: #0056b3;
+}

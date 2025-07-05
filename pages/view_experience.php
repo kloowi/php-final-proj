@@ -230,7 +230,7 @@
                     <a href="#">Read all reviews</a>
                 </div>
 
-                <button class="book-btn">Book Now!</button>
+                 <a href="../guest_details.php" class="book-btn">Book Now!</a>
             </div>
         </div>
     </div>
