@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/db_connect.php';
+require_once 'includes/db_connect-hostinger.php';
 
 echo "<h2>Testing Database Connection and Experience Data</h2>";
 

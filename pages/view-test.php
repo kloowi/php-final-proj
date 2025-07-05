@@ -1,5 +1,5 @@
 <?php 
-require_once '../includes/db_connect.php';
+require_once '../includes/db_connect-hostinger.php';
 
 // Get experience ID from URL parameter
 $experience_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
