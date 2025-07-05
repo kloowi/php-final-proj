@@ -1,6 +1,6 @@
   <footer class="site-footer">
     <div class="footer-links">
-      <span>Company Name Inc.</span>
+      <span><b>StepIntoManila Co.</b></span>
       <a href="#">Other quick links</a>
       <a href="#">🌐 English (US)</a>
       <a href="#">₱ PHP</a>
