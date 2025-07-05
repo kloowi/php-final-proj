@@ -5,7 +5,7 @@
     <h1>Your gateway to discovering Manila like a local.</h1>
     <div class="search-box">
         <h3>Search Experiences</h3>
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search....">
         <button>Search Vacation</button>
     </div>
 </div>
