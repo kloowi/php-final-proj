@@ -77,6 +77,8 @@ foreach ($experiences as $experience) {
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
+
+<?php include 'includes/footer.php'; ?>
 </body>
 </html>
 

@@ -1,5 +1,5 @@
 <?php
-$host = 'hostinger';
+$host = 'localhost';
 $dbname = 'u134427490_StepIntoManila';
 $username = 'u134427490_girlies';
 $password = 'Girlies%_123';
