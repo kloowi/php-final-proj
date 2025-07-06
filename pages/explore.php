@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/db_connect.php';
+require_once '../includes/db_connect-hostinger.php';
 
 $experiences = [];
 if ($pdo) {
@@ -60,25 +60,27 @@ foreach ($experiences as $experience) {
                             $image_path = '../assets/images/experience_1.jpg';
                         }
                         ?>
-                        <div class="card">
-                            <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($experience['title']); ?>" class="card-img">
-                            <div class="card-content">
-                                <div class="card-text-group">
-                                    <div>
-                                        <h3 class="card-title"><?php echo htmlspecialchars($experience['title']); ?></h3>
-                                        <p class="card-subtitle"><?php echo htmlspecialchars($experience['location']); ?> ★4.5</p>
+                        <a href="view_experience.php?id=<?php echo $experience['experience_id']; ?>" style="text-decoration: none; color: inherit;">
+                            <div class="card">
+                                <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($experience['title']); ?>" class="card-img">
+                                <div class="card-content">
+                                    <div class="card-text-group">
+                                        <div>
+                                            <h3 class="card-title"><?php echo htmlspecialchars($experience['title']); ?></h3>
+                                            <p class="card-subtitle"><?php echo htmlspecialchars($experience['location']); ?> ★4.5</p>
+                                        </div>
+                                        <div class="card-price">₱<?php echo number_format($experience['price'], 2); ?></div>
                                     </div>
-                                    <div class="card-price">₱<?php echo number_format($experience['price'], 2); ?></div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
 </body>
 </html>
 

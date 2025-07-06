@@ -21,198 +21,19 @@ if (!$experience) {
     exit;
 }
 
+// Fetch reviews for this experience's category
+$reviews = [];
+if (!empty($experience['category'])) {
+    $stmt = $pdo->prepare('SELECT * FROM Reviews WHERE category = ? ORDER BY rating DESC');
+    $stmt->execute([$experience['category']]);
+    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 include '../includes/header.php'; 
 ?>
 
+<link rel="stylesheet" href="../assets/css/view_experience.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-/* Wrapper for spacing below the header */
-.page-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 80px 20px 40px;
-    background: #f7f7f7;
-}
-
-/* Main card */
-.experience-card {
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    padding: 30px;
-    max-width: 1000px;
-    width: 100%;
-    font-family: Arial, sans-serif;
-    color: #333;
-    margin-top: 20px;
-}
-
-/* Image section */
-.experience-card img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-/* Title and price */
-.title-price {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.title-price h1 {
-    font-size: 28px;
-    font-weight: bold;
-    margin: 0;
-}
-
-.price-box-inline {
-    font-size: 36px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-.price-box-inline span {
-    font-size: 14px;
-    color: #777;
-    font-weight: normal;
-}
-
-.subheading {
-    font-size: 16px;
-    color: #666;
-    margin: 2px 0 30px;
-}
-
-/* Description and review layout */
-.details-row {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-.col-70 {
-    flex: 1 1 70%;
-}
-
-.col-30 {
-    flex: 1 1 30%;
-}
-
-.card {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 14px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-/* Accordion toggle */
-.accordion-toggle {
-    background: #f1f1f1;
-    padding: 14px 16px;
-    border: none;
-    width: 100%;
-    text-align: left;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: background 0.3s ease;
-}
-
-.accordion-toggle .arrow {
-    transition: transform 0.3s ease;
-}
-
-.accordion-toggle.open .arrow {
-    transform: rotate(90deg);
-}
-
-/* Accordion content */
-.accordion-content {
-    display: none;
-    padding: 15px;
-    background: #fff;
-    margin-bottom: 10px;
-    font-size: 14px;
-    border-radius: 6px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
-
-/* Reviews */
-.reviews {
-    background: #eef4ff;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.reviews a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-/* Back button */
-.back-btn {
-    background: #4aa3ff;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
-    transition: background-color 0.2s ease;
-}
-
-.back-btn:hover {
-    background: #1a73e8;
-}
-
-/* Book Now button */
-.book-btn {
-    background: #007bff;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    width: auto;
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-}
-
-@media (max-width: 768px) {
-    .details-row {
-        flex-direction: column;
-    }
-
-    .title-price {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-}
-</style>
 
 <div class="page-wrapper">
     <div class="experience-card">
@@ -244,13 +65,12 @@ include '../includes/header.php';
             <h1><?php echo htmlspecialchars($experience['title']); ?></h1>
             <div class="price-box-inline">₱<?php echo number_format($experience['price'], 2); ?> <span>/guest</span></div>
         </div>
-        <p class="subheading"><?php echo htmlspecialchars($experience['title']); ?><br><?php echo htmlspecialchars($experience['location']); ?></p>
+        <p class="subheading"><?php echo htmlspecialchars($experience['location']); ?></p>
 
         <!-- Side-by-side Layout -->
         <div class="details-row">
             <div class="col-70">
                 <div class="card">
-                    <strong><?php echo htmlspecialchars($experience['title']); ?></strong>
                     <p><?php echo nl2br(htmlspecialchars($experience['description'])); ?></p>
                 </div>
 
@@ -286,12 +106,49 @@ include '../includes/header.php';
 
             <!-- Sidebar -->
             <div class="col-30">
-                <div class="reviews">
-                    <strong>Reviews ★4.5</strong><br>
-                    <?php echo htmlspecialchars($experience['location']); ?><br><br>
-                    "Experience the beauty of <?php echo htmlspecialchars($experience['location']); ?>!"<br>
-                    <a href="#">Read all reviews</a>
+                <div class="reviews modern-reviews">
+                    <h3 class="reviews-title">Guest Reviews</h3>
+                    <div class="reviews-list">
+                    <?php if ($reviews): ?>
+                        <?php 
+                        // Group reviews into pairs for 2-column layout
+                        $review_pairs = array_chunk($reviews, 2);
+                        foreach ($review_pairs as $pair): ?>
+                            <div class="review-row">
+                                <?php foreach ($pair as $review): ?>
+                                    <div class="review-card">
+                                        <div class="review-avatar">
+                                            <img src="../assets/images/review-icon.png" alt="Reviewer avatar">
+                                        </div>
+                                        <div class="review-main">
+                                            <div class="review-header">
+                                                <span class="review-username"><?php echo htmlspecialchars($review['username']); ?></span>
+                                                <?php if (!empty($review['location'])): ?>
+                                                    <span class="review-location"><?php echo htmlspecialchars($review['location']); ?></span>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="review-rating-row">
+                                                <span class="review-rating">
+                                                    <?php for ($i = 0; $i < 5; $i++): ?>
+                                                        <i class="fa-star<?php echo $i < $review['rating'] ? ' fa-solid' : ' fa-regular'; ?>" style="color:#f5b50a;"></i>
+                                                    <?php endfor; ?>
+                                                </span>
+                                            </div>
+                                            <div class="review-body">
+                                                <p><?php echo htmlspecialchars($review['description']); ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="no-reviews">No reviews for this category yet.</p>
+                    <?php endif; ?>
+                    </div>
                 </div>
+
+
 
                 <button class="book-btn">Book Now!</button>
             </div>

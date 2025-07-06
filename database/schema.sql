@@ -56,5 +56,12 @@ CREATE TABLE Payment (
     FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
 );
 
+CREATE TABLE Reviews (
+    username VARCHAR(50) NOT NULL,
+    rating INT NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL
+);
+
 INSERT INTO Admin (username, password_hash)
 VALUES ('admin', '$2y$10$6hMYSzevKv94GwgetbdzBe5qluhB2a..lAQ3XiRN9006mT1ZvECzC');
