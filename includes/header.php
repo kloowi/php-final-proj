@@ -1,7 +1,17 @@
 <?php
-  $isIndex = basename($_SERVER['PHP_SELF']) === 'index.php';
+  // Simplified and more reliable path detection
+  $scriptPath = $_SERVER['SCRIPT_NAME'];
+  $isIndex = (basename($scriptPath) === 'index.php');
   $headerClass = $isIndex ? 'transparent' : 'white-bg';
-  $basePath = $isIndex ? 'assets' : '../assets';
+  
+  // Determine base path based on current directory structure
+  if ($isIndex) {
+    // We're on the main index.php
+    $basePath = 'assets';
+  } else {
+    // We're in a subdirectory (like pages/)
+    $basePath = '../assets';
+  }
 ?>
 
 <!DOCTYPE html>
@@ -40,3 +50,6 @@
       </div>
     </nav>
   </header>
+
+</body>
+</html> 
