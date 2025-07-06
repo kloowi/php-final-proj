@@ -246,36 +246,35 @@
     margin: 18px 0 0 0;
 }
 
-/* Back button */
 .back-btn {
-    background: #4aa3ff;
+    background: #1E90FF;
     color: white;
     padding: 12px 24px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 20px;
+    transition: background-color 0.3s ease;
 }
 
 .back-btn:hover {
-    background: #1a73e8;
+    background: #0072e6;
 }
 
-/* Book Now button */
 .book-btn {
-    background: #4aa3ff;
+    background: #1E90FF;
     color: white;
     padding: 12px 24px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     text-decoration: none;
     display: inline-flex;
@@ -284,10 +283,11 @@
     gap: 8px;
     width: 100%;
     margin: 0 auto;
+    transition: background-color 0.3s ease;
 }
 
 .book-btn:hover {
-    background: #1a73e8;
+    background: #0072e6;
 }
 
 /* Add styling for login-required button */
