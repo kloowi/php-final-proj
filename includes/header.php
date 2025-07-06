@@ -2,6 +2,7 @@
   $isIndex = basename($_SERVER['PHP_SELF']) === 'index.php';
   $headerClass = $isIndex ? 'transparent' : 'white-bg';
   $basePath = $isIndex ? 'assets' : '../assets';
+  $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -30,10 +31,17 @@
           style="height: 40px;">
       </div>
       <ul class="nav-links">
-        <li><a href="<?php echo $isIndex ? 'index.php' : '../index.php'; ?>" class="active">Home</a></li>
-        <li><a href="<?php echo $isIndex ? './pages/explore.php' : 'explore.php'; ?>">Explore</a></li>
-        <li><a href="<?php echo $isIndex ? './pages/manage.php' : 'manage.php'; ?>">Manage</a></li>
-        <li><a href="<?php echo $isIndex ? './pages/about.php' : 'about.php'; ?>">About Us</a></li>
+        <li><a href="<?php echo $isIndex ? 'index.php' : '../index.php'; ?>"
+              class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>">Home</a></li>
+
+        <li><a href="<?php echo $isIndex ? './pages/explore.php' : 'explore.php'; ?>"
+              class="<?php echo ($currentPage == 'explore.php') ? 'active' : ''; ?>">Explore</a></li>
+
+        <li><a href="<?php echo $isIndex ? './pages/manage.php' : 'manage.php'; ?>"
+              class="<?php echo ($currentPage == 'manage.php') ? 'active' : ''; ?>">Manage</a></li>
+
+        <li><a href="<?php echo $isIndex ? './pages/about.php' : 'about.php'; ?>"
+              class="<?php echo ($currentPage == 'about.php') ? 'active' : ''; ?>">About Us</a></li>
       </ul>
       <div class="login-link">
         <a href="#">Log In</a>

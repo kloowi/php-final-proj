@@ -10,6 +10,7 @@
     </div>
 </div>
 
+
 <div class="intro-section">
     <div class="intro-text">
         <h2>Join us for an adventure!</h2>
