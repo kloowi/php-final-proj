@@ -81,6 +81,49 @@ require_once 'edit_experience.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Experiences - Admin Panel</title>
     <link rel="stylesheet" href="admin.css">
+    <style>
+    body, .form-container, .table-container, .form-container *, .table-container *, .admin-header h1, .admin-header, .custom-file-label, .selected-file-name {
+        font-family: 'Fustat', Arial, sans-serif !important;
+    }
+    input[type="file"],
+    input[type="file"]::-webkit-file-upload-button,
+    input[type="file"]::file-selector-button {
+        display: none !important;
+    }
+    .custom-file-label {
+        display: inline-block;
+        background: #4aa3ff;
+        color: #fff;
+        border-radius: 6px;
+        padding: 8px 18px;
+        font-weight: 600;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 2px;
+        margin-bottom: 10px;
+    }
+    .custom-file-label:hover, .custom-file-label:focus {
+        background: #0080ff;
+    }
+    .selected-file-name {
+        display: inline-block;
+        margin-left: 12px;
+        color: #0080ff;
+        font-size: 0.98em;
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+    .experiences-grid-wrapper {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0 8px;
+    }
+    </style>
 </head>
 <body>
     <div class="admin-layout">
@@ -91,12 +134,12 @@ require_once 'edit_experience.php';
             <ul class="sidebar-nav">
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="experiences.php" class="active">Experiences</a></li>
-                <li><a href="logout.php">Logout</a></li>
+                <li><a href="/php-final-proj-main/admin/authentication/logout.php">Logout</a></li>
             </ul>
         </div>
         <div class="admin-content">
             <div class="admin-header">
-                <h1>Manage Experiences</h1>
+                <h2 style="margin-top: 0; margin-bottom: 0;">Manage Experiences</h2>
             </div>
             <?php displayFlashMessage(); ?>
             <div class="form-container">
@@ -134,10 +177,9 @@ require_once 'edit_experience.php';
                         </div>
                         <div class="form-group">
                             <label>Image File</label>
-                            <input type="file" name="image_file" accept="image/*">
-                            <?php if ($editing && !empty($editing['image_url'])): ?>
-                                <br><img src="../<?php echo htmlspecialchars($editing['image_url']); ?>" alt="Current Image" style="max-width:100px;max-height:100px;">
-                            <?php endif; ?>
+                            <input type="file" name="image_file" id="image_file" class="custom-file-input" accept="image/*">
+                            <label for="image_file" class="custom-file-label">Choose Image</label>
+                            <span class="selected-file-name" id="selected-file-name"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -167,7 +209,11 @@ require_once 'edit_experience.php';
                     <tbody>
                         <?php foreach ($experiences as $exp): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($exp['title']); ?></td>
+                                <td>
+                                    <h3 style="color: #222; font-size: 1.15em; margin: 0 0 8px 0; font-weight: 700;">
+                                        <?php echo htmlspecialchars($exp['title']); ?>
+                                    </h3>
+                                </td>
                                 <td><?php echo htmlspecialchars($exp['location']); ?></td>
                                 <td><?php echo htmlspecialchars($exp['price']); ?></td>
                                 <td><?php echo htmlspecialchars($exp['duration']); ?></td>
@@ -188,5 +234,17 @@ require_once 'edit_experience.php';
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var fileInput = document.getElementById('image_file');
+        var fileNameSpan = document.getElementById('selected-file-name');
+        if (fileInput && fileNameSpan) {
+            fileInput.addEventListener('change', function() {
+                var fileName = fileInput.files.length > 0 ? fileInput.files[0].name : '';
+                fileNameSpan.textContent = fileName;
+            });
+        }
+    });
+    </script>
 </body>
 </html> 

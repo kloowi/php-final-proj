@@ -32,6 +32,44 @@ if ($_POST) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <link rel="stylesheet" href="admin.css">
+    <style>
+        body { background: #f4f6f8; font-family: Arial, sans-serif; }
+        .login-container { display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .login-box { background: #fff; padding: 48px 40px; border-radius: 16px; box-shadow: 0 2px 12px rgba(74,163,255,0.10); width: 400px; }
+        .login-box h1 { margin-bottom: 28px; color: #0080ff; font-size: 2.2em; font-weight: 800; letter-spacing: -1px; text-align: center; }
+        .form-group { margin-bottom: 22px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; color: #222; font-size: 1.1em; }
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #bcdcff;
+            border-radius: 8px;
+            background: #f8fbff;
+            font-size: 1.1em;
+            transition: border 0.2s;
+        }
+        .form-control:focus {
+            border: 1.5px solid #4aa3ff;
+            outline: none;
+            background: #f4faff;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px 0;
+            background: #4aa3ff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        .btn:hover, .btn:focus { background: #0080ff; }
+        .alert { margin-bottom: 18px; border-radius: 6px; padding: 12px 18px; font-size: 1em; }
+        .alert-danger { background: #f8d7da; color: #721c24; }
+    </style>
 </head>
 <body>
     <div class="login-container">

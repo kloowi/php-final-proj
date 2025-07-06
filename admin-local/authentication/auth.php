@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../includes/db_connect-hostinger.php';
+require_once __DIR__ . '/../../includes/db_connect.php';
 
 // Helper: Check if admin is logged in
 function isAdminLoggedIn() {
@@ -23,7 +23,7 @@ function getCurrentAdmin() {
 // Helper: Admin logout
 function adminLogout() {
     session_destroy();
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 

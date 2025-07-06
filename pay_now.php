@@ -1,4 +1,4 @@
-<?php include '../includes/header.php'; ?>
+<?php include 'includes/header.php'; ?>
 <link rel="stylesheet" href="assets/css/payment.css">
 <body>
 
