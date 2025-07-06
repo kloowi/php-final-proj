@@ -37,7 +37,7 @@
               class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>">Home</a></li>
 
         <li><a href="<?php echo $isIndex ? './pages/explore.php' : 'explore.php'; ?>"
-              class="<?php echo ($currentPage == 'explore.php') ? 'active' : ''; ?>">Explore</a></li>
+       class="<?php echo ($currentPage == 'explore.php' || $currentPage == 'view_experience.php') ? 'active' : ''; ?>">Explore</a></li>
 
         <li><a href="<?php echo $isIndex ? './pages/manage.php' : 'manage.php'; ?>"
               class="<?php echo ($currentPage == 'manage.php') ? 'active' : ''; ?>">Manage</a></li>
