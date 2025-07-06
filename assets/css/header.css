@@ -95,7 +95,13 @@
 }
 
 .main-nav .nav-links a.active {
-  color: #0056b3;
+  color: white;
+  background-color: #0080ff;
+  padding: 6px 14px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 128, 300, 0.3);
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 .login-link a {
@@ -107,3 +113,4 @@
 .login-link a:hover {
   opacity: 0.8;
 } 
+

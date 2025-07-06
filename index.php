@@ -5,7 +5,7 @@
     <h1>Your gateway to discovering Manila like a local.</h1>
     <div class="search-box">
         <h3>Search Experiences</h3>
-        <input type="text" placeholder="Search....">
+        <input type="text" placeholder="Search...">
         <button>Search Vacation</button>
     </div>
 </div>
@@ -20,7 +20,7 @@
                 <p>Feature</p>
             </div>
         </div>
-        <button class="explore-btn">Explore</button>
+        <a href="pages/explore.php" class="explore-btn">Explore</a>
     </div>
     <div class="intro-image">
         <img src="assets/images/index/v10_33.png" alt="Adventure">
