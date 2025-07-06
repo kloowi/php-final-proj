@@ -1,4 +1,4 @@
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/header-index.php'; ?>
 <link rel="stylesheet" href="assets/css/index.css">
 
 <div class="hero">
