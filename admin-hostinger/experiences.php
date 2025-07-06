@@ -2,7 +2,7 @@
 require_once './authentication/auth.php';
 requireAdminLogin();
 $admin = getCurrentAdmin();
-require_once '../includes/db_connect.php';
+require_once '../includes/db_connect-hostinger.php';
 
 
 // Handle add/edit/delete
