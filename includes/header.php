@@ -1,5 +1,7 @@
 <?php
-  $isIndex = basename($_SERVER['PHP_SELF']) === 'index.php';
+  // Simplified and more reliable path detection
+  $scriptPath = $_SERVER['SCRIPT_NAME'];
+  $isIndex = (basename($scriptPath) === 'index.php');
   $headerClass = $isIndex ? 'transparent' : 'white-bg';
   $basePath = $isIndex ? 'assets' : '../assets';
   $currentPage = basename($_SERVER['PHP_SELF']);
@@ -48,3 +50,6 @@
       </div>
     </nav>
   </header>
+
+</body>
+</html> 

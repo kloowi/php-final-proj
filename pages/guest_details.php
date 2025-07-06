@@ -1,38 +1,21 @@
-<?php 
-// Get experience data from URL parameters
-$experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : 0;
-$experience_title = isset($_GET['title']) ? $_GET['title'] : 'Experience';
-$experience_price = isset($_GET['price']) ? (float)$_GET['price'] : 0;
-
-// Validate that we have the required data
-if (!$experience_id || !$experience_title || !$experience_price) {
-    header('Location: pages/explore-testlocal.php');
-    exit;
-}
-?>
-
-<?php include 'includes/header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Guest Details - <?php echo htmlspecialchars($experience_title); ?></title>
+  <title>Guest Details</title>
+  <link rel="stylesheet" href="../assets/css/guest_details.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <link rel="stylesheet" href="assets/css/guest_details.css">
 </head>
 <body>
+<?php include '../includes/header.php'; ?>
 
 <div class="hero">
-  <img src="assets/images/booking/v157_303.png" alt="Banner Image">
+  <img src="../assets/images/booking/v157_303.png" alt="Banner Image">
   <div class="banner-title">Guest Details</div>
 </div>
 
-<form action="pay_now.php" method="POST">
-  <!-- Hidden fields to pass experience data -->
-  <input type="hidden" name="experience_id" value="<?php echo $experience_id; ?>">
-  <input type="hidden" name="experience_title" value="<?php echo htmlspecialchars($experience_title); ?>">
-  <input type="hidden" name="experience_price" value="<?php echo $experience_price; ?>">
+<form action="process_booking.php" method="POST">
   <div class="container">
     <div class="calendar-box">
       <h3>Choose a Date</h3>
@@ -63,7 +46,7 @@ if (!$experience_id || !$experience_title || !$experience_price) {
         <input type="text" name="guest_name[]" placeholder="Guest 1 Name" required>
       </div>
 
-      <button type="submit" class="pay-btn">Pay now!</button>
+      <a href="pay_now.php" class="pay-btn">Pay now!</a>
     </div>
   </div>
 </form>

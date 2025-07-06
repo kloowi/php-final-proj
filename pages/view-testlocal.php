@@ -150,7 +150,7 @@ include '../includes/header.php';
 
 
 
-                <button class="book-btn">Book Now!</button>
+                <a href="guest_details.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($experience['title']); ?>&price=<?php echo $experience['price']; ?>" class="book-btn">Book Now!</a>
             </div>
         </div>
     </div>
