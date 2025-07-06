@@ -1,5 +1,9 @@
 <?php 
+session_start();
 require_once '../includes/db_connect.php';
+
+// Check if user is logged in
+$isLoggedIn = isset($_SESSION['user_id']);
 
 // Get experience ID from URL parameter
 $experience_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -150,7 +154,11 @@ include '../includes/header.php';
 
 
 
-                <a href="guest_details.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($experience['title']); ?>&price=<?php echo $experience['price']; ?>" class="book-btn">Book Now!</a>
+                <?php if ($isLoggedIn): ?>
+                    <a href="guest_details.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($experience['title']); ?>&price=<?php echo $experience['price']; ?>" class="book-btn">Book Now!</a>
+                <?php else: ?>
+                    <a href="login.php?redirect=view-testlocal.php?id=<?php echo $experience_id; ?>" class="book-btn">Book</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

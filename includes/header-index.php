@@ -1,4 +1,5 @@
 <?php
+session_start();
   // Simplified and more reliable path detection
   $scriptPath = $_SERVER['SCRIPT_NAME'];
   $isIndex = (basename($scriptPath) === 'index.php');
@@ -46,7 +47,11 @@
               class="<?php echo ($currentPage == 'about.php') ? 'active' : ''; ?>">About Us</a></li>
       </ul>
       <div class="login-link">
-        <a href="#">Log In</a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <a href="logout.php">Log Out</a>
+        <?php else: ?>
+          <a href="<?php echo $isIndex ? './pages/login.php' : 'login.php'; ?>">Log In</a>
+        <?php endif; ?>
       </div>
     </nav>
   </header>

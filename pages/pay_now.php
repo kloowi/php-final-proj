@@ -1,9 +1,60 @@
-<?php include 'includes/header.php'; ?>
-<link rel="stylesheet" href="assets/css/payment.css">
+<?php 
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+    exit;
+}
+
+// Get experience details from URL parameters or session
+$experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : 0;
+$title = isset($_GET['title']) ? $_GET['title'] : '';
+$price = isset($_GET['price']) ? (float)$_GET['price'] : 0;
+$selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : '';
+$selected_time = isset($_GET['selected_time']) ? $_GET['selected_time'] : '';
+$guest_count = isset($_GET['guest_count']) ? (int)$_GET['guest_count'] : 1;
+
+// If we have experience_id, fetch the full experience details from database
+$experience = null;
+if ($experience_id > 0) {
+    require_once '../includes/db_connect.php';
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM Experiences WHERE experience_id = ?');
+        $stmt->execute([$experience_id]);
+        $experience = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($experience) {
+            $title = $experience['title'];
+            $price = $experience['price'];
+        }
+    } catch (PDOException $e) {
+        // Handle database error silently
+    }
+}
+
+// Calculate total price
+$total_price = $price * $guest_count;
+
+// Handle image path
+$image_path = '';
+if ($experience && !empty($experience['image_url'])) {
+    $image_path = $experience['image_url'];
+    if (!preg_match('/^https?:\/\//', $image_path)) {
+        $image_path = '../' . $image_path;
+    }
+} else {
+    // Fallback image
+    $image_path = '../assets/images/experiences/exp_6867c00ab3bef3.06653871.jpg';
+}
+
+include '../includes/header.php'; 
+?>
+<link rel="stylesheet" href="../assets/css/payment.css">
 <body>
 
 <div class="checkout-hero">
-  <img src="assets/images/booking/v157_303.png" alt="Banner Image">
+  <img src="../assets/images/booking/v157_303.png" alt="Banner Image">
   <div class="checkout-title">Checkout</div>
 </div>
 
@@ -12,6 +63,13 @@
   <div class="payment-box">
     <h3>Payment</h3>
     <form action="process_payment.php" method="POST">
+      <input type="hidden" name="experience_id" value="<?php echo $experience_id; ?>">
+      <input type="hidden" name="title" value="<?php echo htmlspecialchars($title); ?>">
+      <input type="hidden" name="price" value="<?php echo $price; ?>">
+      <input type="hidden" name="selected_date" value="<?php echo htmlspecialchars($selected_date); ?>">
+      <input type="hidden" name="selected_time" value="<?php echo htmlspecialchars($selected_time); ?>">
+      <input type="hidden" name="guest_count" value="<?php echo $guest_count; ?>">
+      
       <label><input type="radio" name="payment_method" value="card" checked> Card</label>
       <label><input type="radio" name="payment_method" value="bank"> Bank</label>
       <label><input type="radio" name="payment_method" value="transfer"> Transfer</label>
@@ -23,7 +81,7 @@
       </div>
 
       <div class="checkout-buttons">
-        <a href="../guest_details.php" class="cancel-btn">Cancel</a>
+        <a href="guest_details.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($title); ?>&price=<?php echo $price; ?>" class="cancel-btn">Cancel</a>
         <button type="submit" class="confirm-btn">Confirm</button>
       </div>
     </form>
@@ -32,13 +90,19 @@
   <!-- Order Summary Box -->
   <div class="summary-box">
     <h3>Order Summary</h3>
-    <img src="assets/images/experiences/exp_6867c00ab3bef3.06653871.jpg" alt="Experience Image">
+    <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($title); ?>">
     <div class="summary-details">
-      <strong>Fort Santiago Ticket</strong>
-      <span class="price">PHP 350.00</span>
-      <p><strong>Select Date:</strong> 07 - 18 - 2025</p>
-      <p><strong>Start With:</strong> 9:00 AM</p>
-      <p><strong>End With:</strong> 10:00 AM</p>
+      <strong><?php echo htmlspecialchars($title); ?></strong>
+      <span class="price">PHP <?php echo number_format($total_price, 2); ?></span>
+      <?php if ($selected_date): ?>
+        <p><strong>Select Date:</strong> <?php echo htmlspecialchars($selected_date); ?></p>
+      <?php endif; ?>
+      <?php if ($selected_time): ?>
+        <p><strong>Start With:</strong> <?php echo htmlspecialchars($selected_time); ?></p>
+      <?php endif; ?>
+      <?php if ($guest_count > 1): ?>
+        <p><strong>Guests:</strong> <?php echo $guest_count; ?> people</p>
+      <?php endif; ?>
     </div>
   </div>
 </div>

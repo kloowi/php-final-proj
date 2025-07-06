@@ -290,6 +290,18 @@
     background: #1a73e8;
 }
 
+/* Add styling for login-required button */
+.login-required {
+    background-color: #6b7280 !important;
+    color: white !important;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-required:hover {
+    background-color: #4b5563 !important;
+}
+
 @media (max-width: 768px) {
     .details-row {
         flex-direction: column;
