@@ -248,54 +248,42 @@
 
 /* Back button */
 .back-btn {
-    background: #4aa3ff;
+    margin-top: 20px;
+    background-color: #1E90FF;
     color: white;
-    padding: 12px 24px;
+    padding: 12px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
+    font-size: 14px;
     font-weight: bold;
-    font-size: 16px;
     cursor: pointer;
     text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(74, 163, 255, 0.3);
+    display: inline-block;
+    transition: background-color 0.3s ease;
 }
 
 .back-btn:hover {
-    background: #1a73e8;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(74, 163, 255, 0.4);
+    background: #0072e6;
 }
 
 /* Book Now button */
 .book-btn {
-    background: #4aa3ff;
+    margin-top: 20px;
+    background-color: #1E90FF;
     color: white;
-    padding: 12px 24px;
+    padding: 12px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
+    font-size: 14px;
     font-weight: bold;
-    font-size: 16px;
     cursor: pointer;
     text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    margin: 0 auto;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(74, 163, 255, 0.3);
+    display: inline-block;
+    transition: background-color 0.3s ease;
 }
 
 .book-btn:hover {
-    background: #1a73e8;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(74, 163, 255, 0.4);
+    background: #0072e6;
 }
 
 @media (max-width: 768px) {

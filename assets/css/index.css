@@ -41,7 +41,7 @@
 .search-box input[type="text"] {
     padding: 12px 20px;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     background: #f4f4f4;
     font-size: 14px;
     width: 220px;
@@ -53,7 +53,7 @@
     color: white;
     padding: 12px 30px;
     border: none;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
@@ -93,12 +93,21 @@
 
 .explore-btn {
     margin-top: 20px;
-    background: #007bff;
+    background-color: #1E90FF;
     color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 12px 30px;
     border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.explore-btn:hover {
+    background-color: #0072e6;
 }
 
 .popular-section {
@@ -108,7 +117,7 @@
 }
 
 .popular-section h3 {
-    color: #007bff;
+    color: #1E90FF;
     margin-bottom: 30px;
 }
 
