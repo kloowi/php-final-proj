@@ -179,7 +179,7 @@ $experiences = $stmt->fetchAll();
             <ul class="sidebar-nav">
                 <li><a href="dashboard.php" class="active">Dashboard</a></li>
                 <li><a href="experiences.php">Experiences</a></li>
-                <li><a href="/php-final-proj-main/admin/authentication/logout.php">Logout</a></li>
+                <li><a href="authentication/logout.php">Logout</a></li>
             </ul>
         </div>
         <div class="admin-content">
@@ -192,7 +192,7 @@ $experiences = $stmt->fetchAll();
                     <div class="card-title">Total Experiences</div>
                     <div class="card-value">
                         <?php
-                        require_once '../includes/db_connect.php';
+                        require_once '../includes/db_connect-hostinger.php'; //hey
                         $count = $pdo->query('SELECT COUNT(*) FROM Experiences')->fetchColumn();
                         echo $count;
                         ?>
