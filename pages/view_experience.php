@@ -183,7 +183,9 @@ include '../includes/header.php';
                     </div>
                 </div>
 
+                <div class="book-btn-wrapper">
                 <button class="book-btn">Book Now!</button>
+                </div>
             </div>
         </div>
     </div>
