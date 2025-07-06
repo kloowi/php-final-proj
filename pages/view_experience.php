@@ -1,4 +1,9 @@
 <?php 
+session_start();
+
+// Check if user is logged in
+$isLoggedIn = isset($_SESSION['user_id']);
+
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -183,7 +188,11 @@ include '../includes/header.php';
                     </div>
                 </div>
 
-                <button class="book-btn">Book Now!</button>
+                <?php if ($isLoggedIn): ?>
+                    <a href="guest_details.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($experience['title'] ?? ''); ?>&price=<?php echo $experience['price'] ?? 0; ?>" class="book-btn">Book Now!</a>
+                <?php else: ?>
+                    <a href="login.php?redirect=view_experience.php?id=<?php echo $experience_id; ?>" class="book-btn">Book Now!</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

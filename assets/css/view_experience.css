@@ -298,6 +298,18 @@
     box-shadow: 0 4px 12px rgba(74, 163, 255, 0.4);
 }
 
+/* Add styling for login-required button */
+.login-required {
+    background-color: #6b7280 !important;
+    color: white !important;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-required:hover {
+    background-color: #4b5563 !important;
+}
+
 @media (max-width: 768px) {
     .details-row {
         flex-direction: column;

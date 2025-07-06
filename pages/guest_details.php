@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page with return URL
+    $redirect_url = urlencode($_SERVER['REQUEST_URI']);
+    header("Location: login.php?redirect=" . $redirect_url);
+    exit;
+}
+
+// Get experience details from URL parameters
+$experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : 0;
+$title = isset($_GET['title']) ? $_GET['title'] : '';
+$price = isset($_GET['price']) ? (float)$_GET['price'] : 0;
+
+// Validate that we have the required parameters
+if (!$experience_id || !$title || !$price) {
+    header('Location: explore-testlocal.php');
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +68,7 @@
         <input type="text" name="guest_name[]" placeholder="Guest 1 Name" required>
       </div>
 
-      <a href="pay_now.php" class="pay-btn">Pay now!</a>
+      <a href="pay_now.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($title); ?>&price=<?php echo $price; ?>" class="pay-btn" onclick="return submitFormData()">Pay now!</a>
     </div>
   </div>
 </form>
@@ -81,6 +103,25 @@
       input.classList.add("guest-input");
       guestContainer.appendChild(input);
     }
+  }
+
+  function submitFormData() {
+    const selectedDate = document.getElementById("selected-date").value;
+    const selectedTime = document.querySelector('select[name="selected_time"]').value;
+    const guestCount = document.getElementById("guestCountInput").value;
+    
+    if (!selectedDate || !selectedTime) {
+      alert("Please select a date and time before proceeding.");
+      return false;
+    }
+    
+    // Build the URL with form data
+    const baseUrl = "pay_now.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($title); ?>&price=<?php echo $price; ?>";
+    const formData = `&selected_date=${encodeURIComponent(selectedDate)}&selected_time=${encodeURIComponent(selectedTime)}&guest_count=${encodeURIComponent(guestCount)}`;
+    
+    // Redirect to pay_now.php with all the data
+    window.location.href = baseUrl + formData;
+    return false;
   }
 </script>
 
