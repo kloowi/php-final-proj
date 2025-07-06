@@ -1,6 +1,11 @@
 <?php
 require_once '../includes/db_connect.php';
 
+// Check if database connection is available
+if (!$pdo) {
+    die("Database connection failed. Please try again later.");
+}
+
 // Handle form submission
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,11 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = trim($_POST['category'] ?? '');
 
     if ($username && $rating && $description && $category) {
-        $stmt = $pdo->prepare('INSERT INTO Reviews (username, rating, description, category) VALUES (?, ?, ?, ?)');
-        if ($stmt->execute([$username, $rating, $description, $category])) {
-            $message = 'Review added successfully!';
-        } else {
-            $message = 'Failed to add review.';
+        try {
+            $stmt = $pdo->prepare('INSERT INTO Reviews (username, rating, description, category) VALUES (?, ?, ?, ?)');
+            if ($stmt->execute([$username, $rating, $description, $category])) {
+                $message = 'Review added successfully!';
+            } else {
+                $message = 'Failed to add review.';
+            }
+        } catch (PDOException $e) {
+            $message = 'Database error occurred. Please try again.';
+            error_log("Review insert error: " . $e->getMessage());
         }
     } else {
         $message = 'Please fill in all fields.';
@@ -25,9 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $selected_category = $_POST['category'] ?? '';
 $reviews = [];
 if ($selected_category) {
-    $stmt = $pdo->prepare('SELECT * FROM Reviews WHERE category = ? ORDER BY rating DESC');
-    $stmt->execute([$selected_category]);
-    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM Reviews WHERE category = ? ORDER BY rating DESC');
+        $stmt->execute([$selected_category]);
+        $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Review fetch error: " . $e->getMessage());
+        $message = 'Error loading reviews. Please try again.';
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +50,7 @@ if ($selected_category) {
 <head>
     <meta charset="UTF-8">
     <title>Add Review</title>
-    <link rel="stylesheet" href="assets/css/view_experience.css">
+    <link rel="stylesheet" href="../assets/css/view_experience.css">
     <style>
         .review-form { max-width: 400px; margin: 30px auto; padding: 24px; border: 1px solid #e0e0e0; border-radius: 10px; background: #fff; }
         .review-form input, .review-form textarea, .review-form select { width: 100%; margin-bottom: 12px; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
@@ -46,13 +61,15 @@ if ($selected_category) {
         .review strong { font-size: 16px; }
         .review span { color: #f5b50a; margin-left: 8px; }
         .review p { margin: 4px 0 0 0; }
+        .error { color: #d32f2f; background: #ffebee; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+        .success { color: #2e7d32; background: #e8f5e8; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
     <div class="review-form">
         <h2>Add a Review</h2>
         <?php if ($message): ?>
-            <p><?php echo htmlspecialchars($message); ?></p>
+            <p class="<?php echo strpos($message, 'successfully') !== false ? 'success' : 'error'; ?>"><?php echo htmlspecialchars($message); ?></p>
         <?php endif; ?>
         <form method="post">
             <input type="text" name="username" placeholder="Your Name" required>
