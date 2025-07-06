@@ -1,32 +1,68 @@
 <?php 
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once '../includes/db_connect-hostinger.php';
 
-// Get experience ID from URL parameter
+// Get experience ID from URL parameter with proper validation
 $experience_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
+// Validate experience_id
+if ($experience_id <= 0) {
+    // Log the invalid ID
+    error_log("Invalid experience ID: " . $_GET['id'] ?? 'not set');
+    
+    // Redirect to explore page
+    header('Location: explore.php');
+    exit;
+}
+
 $experience = null;
-if ($pdo && $experience_id > 0) {
+$error_message = '';
+
+if ($pdo) {
     try {
         $stmt = $pdo->prepare('SELECT * FROM Experiences WHERE experience_id = ?');
         $stmt->execute([$experience_id]);
-        $experience = $stmt->fetch(PDO::FETCH_ASSOC);
+        $experience = $stmt->fetch();
+        
+        if (!$experience) {
+            error_log("Experience not found with ID: " . $experience_id);
+            $error_message = "Experience not found.";
+        }
     } catch (PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
+        error_log("Database error in view_experience.php: " . $e->getMessage());
+        $error_message = "Database error occurred.";
+        
+        // For debugging, show the error if debug parameter is set
+        if (isset($_GET['debug']) && $_GET['debug'] === '1') {
+            echo "Database error: " . $e->getMessage();
+            exit;
+        }
     }
+} else {
+    $error_message = "Database connection failed.";
+    error_log("Database connection is null in view_experience.php");
 }
 
-// If no experience found, redirect to explore page or show error
+// If no experience found or database error, redirect to explore page
 if (!$experience) {
-    header('Location: explore-test.php');
+    header('Location: explore.php');
     exit;
 }
 
 // Fetch reviews for this experience's category
 $reviews = [];
-if (!empty($experience['category'])) {
-    $stmt = $pdo->prepare('SELECT * FROM Reviews WHERE category = ? ORDER BY rating DESC');
-    $stmt->execute([$experience['category']]);
-    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if (!empty($experience['category']) && $pdo) {
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM Reviews WHERE category = ? ORDER BY rating DESC LIMIT 10');
+        $stmt->execute([$experience['category']]);
+        $reviews = $stmt->fetchAll();
+    } catch (PDOException $e) {
+        error_log("Error fetching reviews: " . $e->getMessage());
+        // Continue without reviews rather than failing completely
+    }
 }
 
 include '../includes/header.php'; 
@@ -38,9 +74,8 @@ include '../includes/header.php';
 <div class="page-wrapper">
     <div class="experience-card">
 
-
         <!-- Back Button -->
-        <a href="explore-testlocal.php" class="back-btn">
+        <a href="explore.php" class="back-btn">
             <i class="fas fa-arrow-left"></i>
             Back to Explore
         </a>
@@ -48,7 +83,7 @@ include '../includes/header.php';
         <!-- Header Image -->
         <?php
         // Handle image path - if it's a relative path, add the parent directory
-        $image_path = $experience['image_url'];
+        $image_path = $experience['image_url'] ?? '';
         if ($image_path && !preg_match('/^https?:\/\//', $image_path)) {
             $image_path = '../' . $image_path;
         }
@@ -58,20 +93,20 @@ include '../includes/header.php';
             $image_path = '../assets/images/experience_1.jpg';
         }
         ?>
-        <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($experience['title']); ?>">
+        <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($experience['title'] ?? 'Experience'); ?>">
 
         <!-- Title and Price -->
         <div class="title-price">
-            <h1><?php echo htmlspecialchars($experience['title']); ?></h1>
-            <div class="price-box-inline">₱<?php echo number_format($experience['price'], 2); ?> <span>/guest</span></div>
+            <h1><?php echo htmlspecialchars($experience['title'] ?? 'Experience Title'); ?></h1>
+            <div class="price-box-inline">₱<?php echo number_format($experience['price'] ?? 0, 2); ?> <span>/guest</span></div>
         </div>
-        <p class="subheading"><?php echo htmlspecialchars($experience['location']); ?></p>
+        <p class="subheading"><?php echo htmlspecialchars($experience['location'] ?? 'Location'); ?></p>
 
         <!-- Side-by-side Layout -->
         <div class="details-row">
             <div class="col-70">
                 <div class="card">
-                    <p><?php echo nl2br(htmlspecialchars($experience['description'])); ?></p>
+                    <p><?php echo nl2br(htmlspecialchars($experience['description'] ?? 'No description available.')); ?></p>
                 </div>
 
                 <!-- Accordion Section -->
@@ -109,7 +144,7 @@ include '../includes/header.php';
                 <div class="reviews modern-reviews">
                     <h3 class="reviews-title">Guest Reviews</h3>
                     <div class="reviews-list">
-                    <?php if ($reviews): ?>
+                    <?php if (!empty($reviews)): ?>
                         <?php 
                         // Group reviews into pairs for 2-column layout
                         $review_pairs = array_chunk($reviews, 2);
@@ -122,7 +157,7 @@ include '../includes/header.php';
                                         </div>
                                         <div class="review-main">
                                             <div class="review-header">
-                                                <span class="review-username"><?php echo htmlspecialchars($review['username']); ?></span>
+                                                <span class="review-username"><?php echo htmlspecialchars($review['username'] ?? 'Anonymous'); ?></span>
                                                 <?php if (!empty($review['location'])): ?>
                                                     <span class="review-location"><?php echo htmlspecialchars($review['location']); ?></span>
                                                 <?php endif; ?>
@@ -130,12 +165,12 @@ include '../includes/header.php';
                                             <div class="review-rating-row">
                                                 <span class="review-rating">
                                                     <?php for ($i = 0; $i < 5; $i++): ?>
-                                                        <i class="fa-star<?php echo $i < $review['rating'] ? ' fa-solid' : ' fa-regular'; ?>" style="color:#f5b50a;"></i>
+                                                        <i class="fa-star<?php echo $i < ($review['rating'] ?? 0) ? ' fa-solid' : ' fa-regular'; ?>" style="color:#f5b50a;"></i>
                                                     <?php endfor; ?>
                                                 </span>
                                             </div>
                                             <div class="review-body">
-                                                <p><?php echo htmlspecialchars($review['description']); ?></p>
+                                                <p><?php echo htmlspecialchars($review['description'] ?? 'No review text.'); ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -147,8 +182,6 @@ include '../includes/header.php';
                     <?php endif; ?>
                     </div>
                 </div>
-
-
 
                 <button class="book-btn">Book Now!</button>
             </div>
