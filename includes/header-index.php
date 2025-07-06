@@ -4,7 +4,6 @@
   $isIndex = (basename($scriptPath) === 'index.php');
   $headerClass = $isIndex ? 'transparent' : 'white-bg';
   $basePath = $isIndex ? 'assets' : '../assets';
-  
   $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
