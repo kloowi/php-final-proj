@@ -116,6 +116,19 @@ body {
   padding: 2px 6px;
   border-radius: 4px;
 }
+#deleteModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.18);
+  align-items: center;
+  justify-content: center;
+}
+#deleteModal.active {
+  display: flex;
+}
 </style>
 
 <div class="account-container">
@@ -161,6 +174,21 @@ body {
   </div>
   <div style="max-width: 1200px; margin: 0 auto; width: 100%;">
     <button class="logout-btn" style="margin-left: 0;">Logout</button>
+  </div>
+</div>
+
+<!-- Delete Account Modal -->
+<div id="deleteModal" style="position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.18); align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:18px; box-shadow:0 8px 32px rgba(0,0,0,0.18); padding:48px 36px 32px 36px; max-width:400px; width:90%; text-align:center; position:relative;">
+    <div style="background:#ededed; border-radius:50%; width:100px; height:100px; margin:0 auto 24px auto; display:flex; align-items:center; justify-content:center;">
+      <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" alt="Trash Icon" style="width:54px; height:54px;">
+    </div>
+    <div style="font-size:1.45rem; font-weight:600; margin-bottom:8px;">You are about to delete your profile</div>
+    <div style="color:#888; font-size:1.1rem; margin-bottom:32px;">Are you sure?</div>
+    <div style="display:flex; justify-content:flex-end; gap:12px;">
+      <button id="cancelDeleteBtn" style="background:#eee; color:#444; border:none; border-radius:8px; padding:10px 28px; font-size:1.1rem; cursor:pointer;">Cancel</button>
+      <button id="confirmDeleteBtn" style="background:#e43e2b; color:#fff; border:none; border-radius:8px; padding:10px 28px; font-size:1.1rem; cursor:pointer;">Delete</button>
+    </div>
   </div>
 </div>
 
@@ -229,5 +257,26 @@ passwordInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') {
     saveSecurityBtn.click();
   }
+});
+
+// Delete account modal logic
+const deleteLink = document.querySelector('.delete-link');
+const deleteModal = document.getElementById('deleteModal');
+const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+deleteLink.addEventListener('click', function(e) {
+  e.preventDefault();
+  deleteModal.classList.add('active');
+});
+
+cancelDeleteBtn.addEventListener('click', function() {
+  deleteModal.classList.remove('active');
+});
+
+confirmDeleteBtn.addEventListener('click', function() {
+  // TODO: Add your account deletion logic here (AJAX or redirect)
+  alert('Account deleted! (Implement actual deletion logic)');
+  deleteModal.classList.remove('active');
 });
 </script> 
