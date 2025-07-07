@@ -3,7 +3,7 @@ session_start();
 $scriptPath = $_SERVER['PHP_SELF'];
 $isIndex = (basename($scriptPath) === 'index.php');
 $headerClass = $isIndex ? 'transparent' : 'white-bg';
-$basePath = '/assets'; // root-relative path (Hostinger safe)
+$basePath = '/php-final-proj/assets'; // root-relative path for localhost
 $currentPage = basename($scriptPath);
 ?>
 <!DOCTYPE html>
@@ -39,16 +39,16 @@ $currentPage = basename($scriptPath);
           style="height: 40px;">
       </div>
       <ul class="nav-links">
-        <li><a href="/index.php" class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>">Home</a></li>
-        <li><a href="/pages/explore.php" class="<?php echo ($currentPage == 'explore.php' || $currentPage == 'view_experience.php') ? 'active' : ''; ?>">Explore</a></li>
-        <li><a href="/pages/manage.php" class="<?php echo ($currentPage == 'manage.php') ? 'active' : ''; ?>">Manage</a></li>
-        <li><a href="/pages/about.php" class="<?php echo ($currentPage == 'about.php') ? 'active' : ''; ?>">About Us</a></li>
+        <li><a href="/php-final-proj/index.php" class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>">Home</a></li>
+        <li><a href="/php-final-proj/pages/explore.php" class="<?php echo ($currentPage == 'explore.php' || $currentPage == 'view_experience.php') ? 'active' : ''; ?>">Explore</a></li>
+        <li><a href="/php-final-proj/pages/manage.php" class="<?php echo ($currentPage == 'manage.php') ? 'active' : ''; ?>">Manage</a></li>
+        <li><a href="/php-final-proj/pages/about.php" class="<?php echo ($currentPage == 'about.php') ? 'active' : ''; ?>">About Us</a></li>
       </ul>
       <div class="login-link">
         <?php if (isset($_SESSION['user_id'])): ?>
-          <a href="/logout.php">Log Out</a>
+          <a href="/php-final-proj/logout.php">Log Out</a>
         <?php else: ?>
-          <a href="/pages/login.php">Log In</a>
+          <a href="/php-final-proj/pages/login.php">Log In</a>
         <?php endif; ?>
       </div>
     </nav>

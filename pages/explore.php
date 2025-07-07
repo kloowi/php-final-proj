@@ -1,3 +1,4 @@
+<?php include '../includes/header-index.php'; ?>
 <?php
 require_once '../includes/db_connect-hostinger.php';
 
@@ -31,6 +32,7 @@ foreach ($experiences as $experience) {
         $categorized_experiences['Historical & Cultural Sites'][] = $experience;
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +43,6 @@ foreach ($experiences as $experience) {
     <link rel="stylesheet" href="../assets/css/cards.css">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
     <div class="container">
         <?php foreach ($categorized_experiences as $category_title => $category_experiences): ?>
             <?php if (!empty($category_experiences)): ?>
