@@ -33,7 +33,7 @@
     <div class="experience">
         <img src="assets/images/index/intramuros.jpg" alt="Intramuros">
         <div class="experience-details">
-            <h4>Intramuros Heritage Walk</h4>
+            <h4>IntrFAFFAFFAamuros Heritage Walk</h4>
             <p>Walk through History in the stone fortress of Fort Santiago. Explore cobbled paths, lush gardens, and preserved Spanish-era architecture.</p>
         </div>
     </div>
