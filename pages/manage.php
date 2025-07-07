@@ -1,3 +1,6 @@
 <?php include '../includes/header.php'; ?>
 
-<h1>Under Construction</h1>
+<div class="content">
+  <h1>Welcome to the Manage Page</h1>
+  <p>This section allows you to manage your experiences.</p>
+</div>
