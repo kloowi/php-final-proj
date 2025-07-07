@@ -1,5 +1,6 @@
 <?php include 'includes/header-index.php'; ?>
-<link rel="stylesheet" href="assets/css/index.css">
+<link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
+
 
 <div class="hero">
     <h1>Your gateway to discovering Manila like a local.</h1>

@@ -60,7 +60,7 @@ foreach ($experiences as $experience) {
                             $image_path = '../assets/images/experience_1.jpg';
                         }
                         ?>
-                        <a href="view_experience.php?id=<?php echo $experience['experience_id']; ?>" style="text-decoration: none; color: inherit;">
+                        <a href="view-testlocal.php?id=<?php echo $experience['experience_id']; ?>" style="text-decoration: none; color: inherit;">
                             <div class="card">
                                 <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($experience['title']); ?>" class="card-img">
                                 <div class="card-content">
