@@ -95,10 +95,10 @@ include '../includes/header.php';
       <strong><?php echo htmlspecialchars($title); ?></strong>
       <span class="price">PHP <?php echo number_format($total_price, 2); ?></span>
       <?php if ($selected_date): ?>
-        <p><strong>Select Date:</strong> <?php echo htmlspecialchars($selected_date); ?></p>
+        <p><strong>Date:</strong> <?php echo htmlspecialchars($selected_date); ?></p>
       <?php endif; ?>
       <?php if ($selected_time): ?>
-        <p><strong>Start With:</strong> <?php echo htmlspecialchars($selected_time); ?></p>
+        <p><strong>Time:</strong> <?php echo htmlspecialchars($selected_time); ?></p>
       <?php endif; ?>
       <?php if ($guest_count > 1): ?>
         <p><strong>Guests:</strong> <?php echo $guest_count; ?> people</p>

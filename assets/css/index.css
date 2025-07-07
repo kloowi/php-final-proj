@@ -117,18 +117,19 @@
 }
 
 .popular-section h3 {
-    color: #1E90FF;
-    margin-bottom: 30px;
+    color: #272727;
+    margin-bottom: 20px;
+    font-size: 25px;
 }
 
 .experience {
     display: flex;
     align-items: flex-start;
     margin-bottom: 30px;
-    background: #f9f9f9;
+    background: #fdfdfd;
     padding: 15px;
     border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border: 1px solid #e4e4e4;
 }
 
 .experience img {
