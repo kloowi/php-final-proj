@@ -1,6 +1,4 @@
 <?php include 'includes/header-index.php'; ?>
-<link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
-
 
 <div class="hero">
     <h1>Your gateway to discovering Manila like a local.</h1>
@@ -15,12 +13,12 @@
     <div class="intro-text">
         <h2>Join us for an adventure!</h2>
         <p>Explore Manila's hidden gems, guided by locals. From food crawls to heritage walks — your story starts here.</p>
-        <div class="features">
+        <!-- <div class="features">
             <div>
                 <img src="assets/images/index/v10_27.png" alt="Features" width="40">
                 <p>Feature</p>
             </div>
-        </div>
+        </div> -->
         <a href="pages/explore.php" class="explore-btn">Explore</a>
     </div>
     <div class="intro-image">
@@ -56,4 +54,4 @@
     </div>
 </div>
 
-<?php include 'includes/footer-index.php'; ?>
+<?php include 'includes/footer.php'; ?>
