@@ -1,5 +1,13 @@
 <?php include 'includes/header-index.php'; ?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guest Details - <?php echo htmlspecialchars($experience_title); ?></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="assets/css/index.css">
+</head>
+<body>
 <div class="hero">
     <h1>Your gateway to discovering Manila like a local.</h1>
     <div class="search-box">
@@ -55,3 +63,4 @@
 </div>
 
 <?php include 'includes/footer.php'; ?>
+</body>

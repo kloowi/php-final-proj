@@ -1,6 +1,5 @@
-CREATE DATABASE stepintomanila;
 
-CREATE TABLE IF NOT EXISTS Admin (
+CREATE TABLE Admin (
     username VARCHAR(50) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL
 );
