@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+    overflow-y: scroll;
+}
+
+.nav-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+}
+
+nav a.active {
+    text-decoration: underline;
+}
+
+nav a.login {
+    margin-left: auto;
+}
+
+/* ✅ Fixed and centered hero section */
+.hero-image {
+    width: 100%;
+    background: url('../assets/images/index/MANILA.jpg') no-repeat center center;
+    background-size: cover;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-text {
+    font-size: 36px;
+    font-weight: bold;
+    background: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    color: #007bff;
+    text-align: center;
+    max-width: 90%;
+}
+
+.content {
+    padding: 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+label {
+    font-weight: 500;
+    color: #007bff;
+}
+
+select {
+    display: block;
+    margin: 10px 0 30px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    width: 220px;
+}
+
+/* ✅ Styled dropdown */
+label[for="filter"] {
+    font-weight: 600;
+    color: #337ab7;
+    display: block;
+    margin-bottom: 8px;
+}
+
+select#filter {
+    padding: 10px 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10"><path fill="%23333" d="M7 10L0 0h14z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    width: 250px;
+}
+
+select#filter:hover,
+select#filter:focus {
+    border-color: #66afe9;
+}
+
+.booking-card {
+    background: #fafafa;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 20px;
+    text-align: left;
+    vertical-align: top;
+}
+
+thead {
+    border-bottom: 2px solid #007bff;
+    background-color: white;
+}
+
+.manage-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.manage-btn:hover {
+    background-color: #0056b3;
+}
