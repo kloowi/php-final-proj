@@ -1,22 +1,21 @@
 <?php
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    // Redirect to login page with return URL
-    $redirect_url = urlencode($_SERVER['REQUEST_URI']);
-    header("Location: login.php?redirect=" . $redirect_url);
-    exit;
-}
-
 // Get experience details from URL parameters
 $experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : 0;
 $title = isset($_GET['title']) ? $_GET['title'] : '';
 $price = isset($_GET['price']) ? (float)$_GET['price'] : 0;
 
+// Store booking details in session for later use
+$_SESSION['booking_details'] = [
+    'experience_id' => $experience_id,
+    'title' => $title,
+    'price' => $price
+];
+
 // Validate that we have the required parameters
 if (!$experience_id || !$title || !$price) {
-    header('Location: explore-testlocal.php');
+    header('Location: explore.php');
     exit;
 }
 ?>

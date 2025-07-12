@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../includes/db_connect.php';
+require_once '../includes/db_config.php';
 
 // Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
@@ -12,14 +12,14 @@ if (isset($_SESSION['user_id'])) {
 
 $error_message = '';
 $success_message = '';
-$redirect_url = $_GET['redirect'] ?? '../index.php';
+$redirect_url = $_GET['redirect'] ?? '';
 
 // Handle Login
 if (isset($_POST['login'])) {
     $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    $redirect_url = $_POST['redirect_url'] ?? '../index.php';
+    $redirect_url = $_POST['redirect_url'] ?? '';
     
     if (empty($username) || empty($email) || empty($password)) {
         $error_message = 'Please fill in all fields.';
@@ -33,8 +33,14 @@ if (isset($_POST['login'])) {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['user_data'] = $user;
                 $success_message = 'Login successful!';
-                // Redirect to view account page after login
-                header('Location: view_account.php');
+                
+                // If redirect URL contains guest_details.php, it means we came from Book Now
+                if (!empty($redirect_url) && strpos($redirect_url, 'guest_details.php') !== false) {
+                    header('Location: ' . $redirect_url);
+                } else {
+                    // For direct login from header, go to view_account
+                    header('Location: view_account.php');
+                }
                 exit;
             } else {
                 $error_message = 'Invalid username, email, or password.';
@@ -52,7 +58,7 @@ if (isset($_POST['signup'])) {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
-    $redirect_url = $_POST['redirect_url'] ?? '../index.php';
+    $redirect_url = $_POST['redirect_url'] ?? '';
     
     if (empty($full_name) || empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
         $error_message = 'Please fill in all fields.';
@@ -62,6 +68,10 @@ if (isset($_POST['signup'])) {
         $error_message = 'Password must be at least 6 characters long.';
     } else {
         try {
+            if (!$pdo) {
+                throw new Exception("Database connection is not available");
+            }
+
             // Check if username or email already exists
             $stmt = $pdo->prepare("SELECT username FROM Users WHERE username = ? OR email = ?");
             $stmt->execute([$username, $email]);
@@ -73,15 +83,36 @@ if (isset($_POST['signup'])) {
                 // Hash password and insert new user
                 $password_hash = password_hash($password, PASSWORD_DEFAULT);
                 $stmt = $pdo->prepare("INSERT INTO Users (username, email, password_hash, full_name) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$username, $email, $password_hash, $full_name]);
                 
-                $success_message = 'Account created successfully! You can now login.';
-                // After successful signup, redirect to view account page
-                header('Location: view_account.php');
-                exit;
+                // Enable error logging
+                error_log("Attempting to insert new user: " . $username);
+                
+                if ($stmt->execute([$username, $email, $password_hash, $full_name])) {
+                    $success_message = 'Account created successfully! Please login to continue.';
+                    error_log("User created successfully: " . $username);
+                    // Clear any existing session
+                    session_unset();
+                    session_destroy();
+                    session_start();
+                    // Store success message in session to show after redirect
+                    $_SESSION['signup_success'] = true;
+                    
+                    // If we came from Book Now button (guest_details in redirect_url)
+                    if (!empty($redirect_url) && strpos($redirect_url, 'guest_details.php') !== false) {
+                        header('Location: login.php?redirect=' . urlencode($redirect_url));
+                    } else {
+                        // For direct signup from header, just go to login
+                        header('Location: login.php');
+                    }
+                    exit;
+                } else {
+                    $error_message = 'Failed to create account. Please try again.';
+                    error_log("Failed to insert user. SQL Error: " . implode(", ", $stmt->errorInfo()));
+                }
             }
-        } catch (PDOException $e) {
-            $error_message = 'Database error. Please try again.';
+        } catch (Exception $e) {
+            $error_message = 'Database error: ' . $e->getMessage();
+            error_log("Signup error: " . $e->getMessage());
         }
     }
 }
@@ -92,7 +123,7 @@ if (isset($_POST['signup'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login/Sign Up Form</title>
+    <title>Log In/Sign Up Form</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -118,7 +149,7 @@ if (isset($_POST['signup'])) {
 
             <!-- Login Form -->
             <div id="loginForm">
-                <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-left">Login</h2>
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-left">Log In</h2>
 
                 <form method="POST" action="">
                     <input type="hidden" name="redirect_url" value="<?php echo htmlspecialchars($redirect_url); ?>">
@@ -154,34 +185,14 @@ if (isset($_POST['signup'])) {
                         <a href="#" class="text-blue-600 hover:underline">Forgot Password?</a>
                     </div>
 
-                    <button type="submit" name="login" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 mb-3 font-medium flex items-center justify-center">
+                    <button type="submit" name="login" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 mb-6 font-medium flex items-center justify-center">
                         LOGIN
                         <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
                 </form>
-                
-                <button id="showSignUp" class="w-full bg-blue-100 text-blue-700 py-2 rounded-lg hover:bg-blue-200 transition-colors duration-200 mb-6 font-medium flex items-center justify-center">
-                    SIGN UP
-                    <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
-
-                <div class="flex items-center mb-6">
-                    <hr class="flex-grow border-gray-300">
-                    <span class="mx-4 text-gray-500 text-sm">OR</span>
-                    <hr class="flex-grow border-gray-300">
-                </div>
-
-                <button class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 mb-3">
-                    <img src="google logo.png" alt="Google Logo" class="w-5 h-5 mr-2">
-                    Login with Google
-                </button>
-                <button class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 mb-6">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/1024px-2021_Facebook_icon.svg.png" alt="Facebook Logo" class="w-5 h-5 mr-2">
-                    Login with Facebook
-                </button>
 
                 <div class="text-center text-sm text-gray-600">
-                    Already have an account? <a href="#" id="showLoginFromLogin" class="text-blue-600 hover:underline font-medium">Signin</a>
+                    Don't have an account yet? <a href="#" id="showSignUp" class="text-blue-600 hover:underline font-medium">Sign Up</a>
                 </div>
             </div>
 
@@ -226,34 +237,14 @@ if (isset($_POST['signup'])) {
                         </div>
                     </div>
 
-                    <button type="submit" name="signup" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 mb-3 font-medium flex items-center justify-center">
+                    <button type="submit" name="signup" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 mb-6 font-medium flex items-center justify-center">
                         SIGN UP
                         <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </button>
                 </form>
 
-                <button id="showLoginFromSignup" class="w-full bg-blue-100 text-blue-700 py-2 rounded-lg hover:bg-blue-200 transition-colors duration-200 mb-6 font-medium flex items-center justify-center">
-                    BACK TO LOGIN
-                    <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
-
-                <div class="flex items-center mb-6">
-                    <hr class="flex-grow border-gray-300">
-                    <span class="mx-4 text-gray-500 text-sm">OR</span>
-                    <hr class="flex-grow border-gray-300">
-                </div>
-
-                <button class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 mb-3">
-                    <img src="google logo.png" alt="Google Logo" class="w-5 h-5 mr-2">
-                    Login with Google
-                </button>
-                <button class="w-full bg-white border border-gray-300 text-gray-700 py-2 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors duration-200 mb-6">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/1024px-2021_Facebook_icon.svg.png" alt="Facebook Logo" class="w-5 h-5 mr-2">
-                    Login with Facebook
-                </button>
-
                 <div class="text-center text-sm text-gray-600">
-                    Already have an account? <a href="#" id="showLoginFromSignup" class="text-blue-600 hover:underline font-medium">Signin</a>
+                    Already have an account? <a href="#" id="showLoginFromSignup" class="text-blue-600 hover:underline font-medium">Log In</a>
                 </div>
             </div>
         </div>

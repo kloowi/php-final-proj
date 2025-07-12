@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include '../includes/header.php'; 
-require_once '../includes/db_connect.php';
+require_once '../includes/db_config.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {

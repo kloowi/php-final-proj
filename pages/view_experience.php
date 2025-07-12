@@ -10,7 +10,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once '../includes/db_connect-hostinger.php';
+require_once '../includes/db_config.php';
 
 // Get experience ID from URL parameter with proper validation
 $experience_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -193,7 +193,7 @@ include '../includes/header.php';
                 <?php if ($isLoggedIn): ?>
                     <a href="guest_details.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($experience['title'] ?? ''); ?>&price=<?php echo $experience['price'] ?? 0; ?>" class="book-btn">Book Now!</a>
                 <?php else: ?>
-                    <a href="login.php?redirect=view_experience.php?id=<?php echo $experience_id; ?>" class="book-btn">Book Now!</a>
+                    <a href="login.php?redirect=<?php echo urlencode('guest_details.php?experience_id=' . $experience_id . '&title=' . urlencode($experience['title'] ?? '') . '&price=' . ($experience['price'] ?? 0)); ?>" class="book-btn">Book Now!</a>
                 <?php endif; ?>
             </div>
         </div>

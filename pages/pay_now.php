@@ -3,22 +3,29 @@ session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+    // Store current URL in session for redirect after login
+    $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
+    header('Location: login.php');
     exit;
 }
 
 // Get experience details from URL parameters or session
-$experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : 0;
-$title = isset($_GET['title']) ? $_GET['title'] : '';
-$price = isset($_GET['price']) ? (float)$_GET['price'] : 0;
+$experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : ($_SESSION['booking_details']['experience_id'] ?? 0);
+$title = isset($_GET['title']) ? $_GET['title'] : ($_SESSION['booking_details']['title'] ?? '');
+$price = isset($_GET['price']) ? (float)$_GET['price'] : ($_SESSION['booking_details']['price'] ?? 0);
 $selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : '';
 $selected_time = isset($_GET['selected_time']) ? $_GET['selected_time'] : '';
 $guest_count = isset($_GET['guest_count']) ? (int)$_GET['guest_count'] : 1;
 
+// Clear booking details from session as they're no longer needed
+if (isset($_SESSION['booking_details'])) {
+    unset($_SESSION['booking_details']);
+}
+
 // If we have experience_id, fetch the full experience details from database
 $experience = null;
 if ($experience_id > 0) {
-    require_once '../includes/db_connect.php';
+    require_once '../includes/db_config.php';
     try {
         $stmt = $pdo->prepare('SELECT * FROM Experiences WHERE experience_id = ?');
         $stmt->execute([$experience_id]);
