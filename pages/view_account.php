@@ -37,7 +37,7 @@ try {
     <div class="account-card">
       <div class="account-section">
         <div class="account-section-title">
-          <img src="https://cdn-icons-png.flaticon.com/512/266/266033.png" alt="Avatar Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Personal Information
+          <img src="../assets/images/acc/personalinfo.png" alt="Avatar Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Personal Information
           <span style="flex:1"></span>
           <button id="edit-name-btn" style="background:none;border:none;cursor:pointer;margin-left:8px;vertical-align:middle;">
             <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="Edit Icon" style="width: 18px; vertical-align: middle;">
@@ -50,7 +50,7 @@ try {
       </div>
       <div class="account-section">
         <div class="account-section-title">
-          <img src="https://icons.iconarchive.com/icons/icons8/windows-8/512/Security-Password-2-icon.png" alt="Security Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Sign in &amp; Security
+          <img src="../assets/images/acc/signin.png" alt="Security Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Sign in &amp; Security
           <span style="flex:1"></span>
           <button id="edit-security-btn" style="background:none;border:none;cursor:pointer;margin-left:8px;vertical-align:middle;">
             <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="Edit Icon" style="width: 18px; vertical-align: middle;">
@@ -66,7 +66,7 @@ try {
       </div>
       <div class="account-section">
         <div class="account-section-title">
-          <img src="https://img.icons8.com/ios-filled/50/000000/info.png" alt="Info Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Manage Account
+          <img src="../assets/images/acc/manage.png" alt="Info Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Manage Account
           <span style="flex:1"></span>
         </div>
         <a href="#" class="delete-link">delete account</a>
@@ -155,80 +155,139 @@ editSecurityBtn.addEventListener('click', function() {
   emailInput.style.color = '#222';
   passwordInput.readOnly = false;
   passwordInput.type = 'text';
+  passwordInput.value = ''; // Clear the dots and allow user to enter new password
+  passwordInput.placeholder = 'Enter new password';
   passwordInput.style.color = '#222';
   emailInput.focus();
   saveSecurityBtn.style.display = 'inline-block';
   editSecurityBtn.style.display = 'none';
 });
 
+const originalEmail = emailInput.value;
+const originalPassword = '••••••••';
+
 saveSecurityBtn.addEventListener('click', function() {
   const newEmail = emailInput.value.trim();
   const newPassword = passwordInput.value;
-  
-  if (newEmail === '' || !newEmail.includes('@')) {
-    alert('Please enter a valid email address');
+  let emailChanged = newEmail !== originalEmail;
+  let passwordChanged = newPassword && newPassword !== originalPassword && newPassword !== '';
+
+  if (!emailChanged && !passwordChanged) {
+    alert('No changes to save.');
     return;
   }
-  
-  if (newPassword.length < 6) {
-    alert('Password must be at least 6 characters long');
-    return;
+
+  // Helper to reset UI
+  function resetSecurityUI() {
+    emailInput.readOnly = true;
+    emailInput.style.color = '#bbb';
+    passwordInput.readOnly = true;
+    passwordInput.type = 'password';
+    passwordInput.value = '••••••••';
+    passwordInput.placeholder = '';
+    passwordInput.style.color = '#bbb';
+    saveSecurityBtn.style.display = 'none';
+    editSecurityBtn.style.display = 'inline-block';
   }
-  
-  // Send AJAX request to update email and password
-  const formData = new FormData();
-  formData.append('action', 'update_email');
-  formData.append('email', newEmail);
-  
-  fetch('update_account.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      // Now update password
-      const passwordFormData = new FormData();
-      passwordFormData.append('action', 'update_password');
-      passwordFormData.append('password', newPassword);
-      
-      return fetch('update_account.php', {
-        method: 'POST',
-        body: passwordFormData
-      });
-    } else {
-      throw new Error(data.message);
+
+  // Update email if changed
+  if (emailChanged) {
+    if (newEmail === '' || !newEmail.includes('@')) {
+      alert('Please enter a valid email address');
+      return;
     }
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      emailInput.readOnly = true;
-      emailInput.style.color = '#bbb';
-      passwordInput.readOnly = true;
-      passwordInput.type = 'password';
-      passwordInput.value = '••••••••';
-      passwordInput.style.color = '#bbb';
-      saveSecurityBtn.style.display = 'none';
-      editSecurityBtn.style.display = 'inline-block';
-      alert('Email and password updated successfully');
-    } else {
-      alert(data.message);
+    const formData = new FormData();
+    formData.append('action', 'update_email');
+    formData.append('email', newEmail);
+    fetch('update_account.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        if (!passwordChanged) {
+          resetSecurityUI();
+          alert('Email updated successfully');
+        } else {
+          // If password also changed, update password next
+          updatePassword();
+        }
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(error => {
+      alert('Error updating email: ' + error.message);
+    });
+  } else if (passwordChanged) {
+    // Only password changed
+    updatePassword();
+  }
+
+  function updatePassword() {
+    if (newPassword.length < 6) {
+      alert('Password must be at least 6 characters long');
+      return;
     }
-  })
-  .catch(error => {
-    alert('Error updating security settings: ' + error.message);
-  });
+    const passwordFormData = new FormData();
+    passwordFormData.append('action', 'update_password');
+    passwordFormData.append('password', newPassword);
+    fetch('update_account.php', {
+      method: 'POST',
+      body: passwordFormData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        resetSecurityUI();
+        if (emailChanged) {
+          alert('Email and password updated successfully');
+        } else {
+          alert('Password updated successfully');
+        }
+      } else {
+        alert('Error updating password: ' + data.message);
+      }
+    })
+    .catch(error => {
+      alert('Error updating password: ' + error.message);
+    });
+  }
 });
 
 emailInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') {
     saveSecurityBtn.click();
   }
+  if (e.key === 'Escape') {
+    // Cancel editing and revert to original state
+    emailInput.readOnly = true;
+    emailInput.style.color = '#bbb';
+    passwordInput.readOnly = true;
+    passwordInput.type = 'password';
+    passwordInput.value = '••••••••';
+    passwordInput.placeholder = '';
+    passwordInput.style.color = '#bbb';
+    saveSecurityBtn.style.display = 'none';
+    editSecurityBtn.style.display = 'inline-block';
+  }
 });
 passwordInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') {
     saveSecurityBtn.click();
+  }
+  if (e.key === 'Escape') {
+    // Cancel editing and revert to original state
+    emailInput.readOnly = true;
+    emailInput.style.color = '#bbb';
+    passwordInput.readOnly = true;
+    passwordInput.type = 'password';
+    passwordInput.value = '••••••••';
+    passwordInput.placeholder = '';
+    passwordInput.style.color = '#bbb';
+    saveSecurityBtn.style.display = 'none';
+    editSecurityBtn.style.display = 'inline-block';
   }
 });
 
@@ -270,5 +329,17 @@ confirmDeleteBtn.addEventListener('click', function() {
     alert('Error deleting account. Please try again.');
     deleteModal.classList.remove('active');
   });
+});
+</script> 
+<script>
+// Always redirect user icon in header to view_account.php when clicked
+window.addEventListener('DOMContentLoaded', function() {
+  var loginLink = document.querySelector('.login-link a');
+  if (loginLink) {
+    loginLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = 'view_account.php';
+    });
+  }
 });
 </script> 
