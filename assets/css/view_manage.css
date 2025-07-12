@@ -11,7 +11,6 @@ body {
     padding: 0 20px;
 }
 
-/* Booking Summary */
 .summary-box {
     background: #fff;
     border-radius: 12px;
@@ -27,19 +26,30 @@ body {
 .summary-box div {
     flex: 1;
     padding: 10px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .summary-box .label {
     color: #007bff;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 24px;
 }
 
 .summary-box .code {
     font-weight: bold;
     font-size: 18px;
     text-align: right;
+}
+
+.code-value {
+    color: #007bff;
+}
+
+.summary-box div:nth-child(2) {
+    text-align: right;
+    font-style: italic;
+    margin-right: 0;
+    flex-basis: auto;
 }
 
 /* Card Section */
@@ -49,33 +59,32 @@ body {
     border-radius: 12px;
     margin-bottom: 30px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: left;
 }
 
-/* Card Titles */
 .card h3,
 .section-title {
     margin-bottom: 18px;
     font-size: 20px;
     font-weight: bold;
-    color: #007bff;
+    color: #222;
 }
 
-/* Experience Row Layout */
 .experience-details {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
-    flex-wrap: wrap;
-    text-align: center;
+    flex-wrap: nowrap;
+    text-align: left;
 }
 
 .experience-main {
     flex: 1;
     color: #007bff;
-    font-weight: 600;
-    font-size: 1em;
-    text-align: center;
+    font-weight: 700;
+    font-size: 1.4em;
+    text-align: left;
+    padding-left: 16px;
 }
 
 .experience-detail {
@@ -89,7 +98,32 @@ body {
     font-size: 1em;
 }
 
-/* Guest Info */
+.experience-right {
+    display: flex;
+    flex: 2;
+    gap: 40px;  /* Reverted back to original 40px spacing */
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.experience-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    min-width: 120px;  /* Reverted back to original 120px min-width */
+    text-align: right;
+}
+
+.experience-col .label,
+.experience-col span:not(.label) {
+    font-size: 16px;
+}
+
+.experience-col .label {
+    font-style: italic;
+}
+
 .guest-block {
     margin-top: 5px;
     margin-bottom: 12px;
@@ -115,7 +149,6 @@ body {
     color: #333;
 }
 
-/* Margin Utilities */
 .mt-16 {
     margin-top: 16px;
 }
@@ -154,22 +187,34 @@ body {
 
 .hero-image {
     width: 100%;
-    background: url('../assets/images/index/MANILA.jpg') no-repeat center center;
-    background-size: cover;
-    height: 280px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 260px;
+    position: relative;
+    overflow: visible;
+}
+
+.hero-image img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    left: 0;
+    top: 0;
+    z-index: 1;
 }
 
 .overlay-text {
-    font-size: 36px;
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 30px;
     font-weight: bold;
     background: white;
-    padding: 20px 40px;
+    padding: 12px 28px;
     border-radius: 10px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    color: #007bff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+    color: #2196f3;
     text-align: center;
-    max-width: 90%;
+    max-width: 420px;
 }
