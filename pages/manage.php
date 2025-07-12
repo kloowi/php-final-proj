@@ -101,7 +101,9 @@ $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $t
                                 <?php endforeach; ?>
                             </ol>
                         </td>
-                        <td><button class="manage-btn">Manage</button></td>
+                        <td>
+                            <a href="view_manage.php?code=<?= urlencode($booking['code']) ?>" class="manage-btn">Manage</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
