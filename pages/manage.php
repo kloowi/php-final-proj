@@ -37,11 +37,8 @@ $filter = $_GET['filter'] ?? '';
 $today = date('Y-m-d');
 $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $today) {
     $bookingDate = date('Y-m-d', strtotime($booking['date']));
-    if ($filter === 'upcoming') {
-        return $bookingDate >= $today;
-    } elseif ($filter === 'past') {
-        return $bookingDate < $today;
-    }
+    if ($filter === 'upcoming') return $bookingDate >= $today;
+    if ($filter === 'past') return $bookingDate < $today;
     return true;
 });
 ?>
@@ -102,7 +99,7 @@ $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $t
                             </ol>
                         </td>
                         <td>
-                            <a href="view_manage.php?code=<?= $booking['code'] ?>" class="manage-btn">Manage</a>
+                            <a href="view_manage.php?code=<?= urlencode($booking['code']) ?>" class="manage-btn">Manage</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
