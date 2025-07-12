@@ -1,4 +1,33 @@
-<?php include '../includes/header.php'; ?>
+<?php 
+session_start();
+include '../includes/header.php'; 
+require_once '../includes/db_connect.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+// Fetch user data from database
+try {
+    $stmt = $pdo->prepare("SELECT user_id, username, email, full_name FROM Users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch();
+    
+    if (!$user) {
+        // User not found in database, redirect to login
+        session_destroy();
+        header('Location: login.php');
+        exit;
+    }
+} catch (PDOException $e) {
+    // Database error, redirect to login
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
+?>
 <link rel="stylesheet" href="../assets/css/view_account.css">
 
 <div class="account-viewport-center">
@@ -15,7 +44,7 @@
           </button>
         </div>
         <div class="account-section-content">Name:
-          <input type="text" id="account-name" value="John Doe" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:200px;outline:none;" readonly>
+          <input type="text" id="account-name" value="<?php echo htmlspecialchars($user['full_name']); ?>" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:200px;outline:none;" readonly>
           <button id="save-name-btn" style="display:none;background:#2992f5;color:#fff;border:none;border-radius:4px;padding:2px 10px;margin-left:8px;cursor:pointer;font-size:0.95rem;">Save</button>
         </div>
       </div>
@@ -28,11 +57,11 @@
           </button>
         </div>
         <div class="account-section-content">Email:
-          <input type="email" id="account-email" value="johndoe@gmail.com" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:220px;outline:none;" readonly>
+          <input type="email" id="account-email" value="<?php echo htmlspecialchars($user['email']); ?>" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:220px;outline:none;" readonly>
           <button id="save-security-btn" style="display:none;background:#2992f5;color:#fff;border:none;border-radius:4px;padding:2px 10px;margin-left:8px;cursor:pointer;font-size:0.95rem;">Save</button>
         </div>
         <div class="account-section-content">Password:
-          <input type="password" id="account-password" value="password123" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:120px;outline:none;" readonly>
+          <input type="password" id="account-password" value="••••••••" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:120px;outline:none;" readonly>
         </div>
       </div>
       <div class="account-section">
@@ -43,7 +72,7 @@
         <a href="#" class="delete-link">delete account</a>
       </div>
     </div>
-    <a href="../index.php" class="logout-btn">Logout</a>
+    <a href="../logout.php" class="logout-btn">Logout</a>
   </div>
 </div>
 
@@ -77,11 +106,36 @@ editNameBtn.addEventListener('click', function() {
 });
 
 saveNameBtn.addEventListener('click', function() {
-  nameInput.readOnly = true;
-  nameInput.style.color = '#bbb';
-  saveNameBtn.style.display = 'none';
-  editNameBtn.style.display = 'inline-block';
-  // Here you would add AJAX to save the new name to the server
+  const newName = nameInput.value.trim();
+  
+  if (newName === '') {
+    alert('Name cannot be empty');
+    return;
+  }
+  
+  // Send AJAX request to update name
+  fetch('update_account.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'action=update_name&full_name=' + encodeURIComponent(newName)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      nameInput.readOnly = true;
+      nameInput.style.color = '#bbb';
+      saveNameBtn.style.display = 'none';
+      editNameBtn.style.display = 'inline-block';
+      alert(data.message);
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(error => {
+    alert('Error updating name. Please try again.');
+  });
 });
 
 nameInput.addEventListener('keydown', function(e) {
@@ -108,14 +162,63 @@ editSecurityBtn.addEventListener('click', function() {
 });
 
 saveSecurityBtn.addEventListener('click', function() {
-  emailInput.readOnly = true;
-  emailInput.style.color = '#bbb';
-  passwordInput.readOnly = true;
-  passwordInput.type = 'password';
-  passwordInput.style.color = '#bbb';
-  saveSecurityBtn.style.display = 'none';
-  editSecurityBtn.style.display = 'inline-block';
-  // Here you would add AJAX to save the new email/password to the server
+  const newEmail = emailInput.value.trim();
+  const newPassword = passwordInput.value;
+  
+  if (newEmail === '' || !newEmail.includes('@')) {
+    alert('Please enter a valid email address');
+    return;
+  }
+  
+  if (newPassword.length < 6) {
+    alert('Password must be at least 6 characters long');
+    return;
+  }
+  
+  // Send AJAX request to update email and password
+  const formData = new FormData();
+  formData.append('action', 'update_email');
+  formData.append('email', newEmail);
+  
+  fetch('update_account.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      // Now update password
+      const passwordFormData = new FormData();
+      passwordFormData.append('action', 'update_password');
+      passwordFormData.append('password', newPassword);
+      
+      return fetch('update_account.php', {
+        method: 'POST',
+        body: passwordFormData
+      });
+    } else {
+      throw new Error(data.message);
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      emailInput.readOnly = true;
+      emailInput.style.color = '#bbb';
+      passwordInput.readOnly = true;
+      passwordInput.type = 'password';
+      passwordInput.value = '••••••••';
+      passwordInput.style.color = '#bbb';
+      saveSecurityBtn.style.display = 'none';
+      editSecurityBtn.style.display = 'inline-block';
+      alert('Email and password updated successfully');
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(error => {
+    alert('Error updating security settings: ' + error.message);
+  });
 });
 
 emailInput.addEventListener('keydown', function(e) {
@@ -145,8 +248,27 @@ cancelDeleteBtn.addEventListener('click', function() {
 });
 
 confirmDeleteBtn.addEventListener('click', function() {
-  // TODO: Add your account deletion logic here (AJAX or redirect)
-  alert('Account deleted! (Implement actual deletion logic)');
-  deleteModal.classList.remove('active');
+  // Send AJAX request to delete account
+  fetch('delete_account.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert(data.message);
+      // Redirect to index.php
+      window.location.href = data.redirect;
+    } else {
+      alert(data.message);
+      deleteModal.classList.remove('active');
+    }
+  })
+  .catch(error => {
+    alert('Error deleting account. Please try again.');
+    deleteModal.classList.remove('active');
+  });
 });
 </script> 

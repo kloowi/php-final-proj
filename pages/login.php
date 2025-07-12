@@ -33,8 +33,8 @@ if (isset($_POST['login'])) {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['user_data'] = $user;
                 $success_message = 'Login successful!';
-                // Redirect to the intended page or home page
-                header('Location: ' . $redirect_url);
+                // Redirect to view account page after login
+                header('Location: view_account.php');
                 exit;
             } else {
                 $error_message = 'Invalid username, email, or password.';
@@ -76,8 +76,8 @@ if (isset($_POST['signup'])) {
                 $stmt->execute([$username, $email, $password_hash, $full_name]);
                 
                 $success_message = 'Account created successfully! You can now login.';
-                // After successful signup, redirect to the intended page
-                header('Location: ' . $redirect_url);
+                // After successful signup, redirect to view account page
+                header('Location: view_account.php');
                 exit;
             }
         } catch (PDOException $e) {
