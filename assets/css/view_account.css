@@ -238,4 +238,22 @@ body {
 .modal-btn.delete {
   background: #e43e2b;
   color: #fff;
+}
+
+/* Override login link in header for view account page */
+.login-link a {
+  font-size: 0;
+  text-decoration: none;
+}
+
+.login-link a::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('../images/review-icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: middle;
 } 
