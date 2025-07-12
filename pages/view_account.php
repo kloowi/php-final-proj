@@ -1,135 +1,5 @@
 <?php include '../includes/header.php'; ?>
-
-<style>
-body {
-  background: #fff;
-  background: #f6f8fa;
-}
-.account-container {
-  max-width: 1200px;
-  margin: 120px auto 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.account-title {
-  background: #fafafa;
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  text-align: center;
-  font-size: 2.625rem;
-  font-weight: 700;
-  color: #2992f5;
-  padding: 18px 0 10px 0;
-  margin-top: 40px;
-  margin-bottom: 10px;
-  width: 100%;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.account-subtitle {
-  color: #888;
-  margin-bottom: 50px;
-  font-size: 1rem;
-  text-align: left;
-  width: 100%;
-  margin-left: 20px;
-}
-.account-card {
-  width: 100%;
-  max-width: 1200px;
-  background: #fafafa;
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
-  padding: 0;
-  overflow: hidden;
-  margin-bottom: 32px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.account-section {
-  padding: 32px 48px 24px 48px;
-  border-bottom: 1px solid #e0e0e0;
-  transition: background 0.2s;
-}
-.account-section:last-child {
-  border-bottom: none;
-  padding-bottom: 32px;
-}
-.account-section:hover {
-  background: #f0f4f8;
-}
-.account-section-title {
-  font-weight: 700;
-  font-size: 1.325rem;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.account-section-title .icon {
-  font-size: 1.2em;
-  color: #2992f5;
-}
-.account-section-content {
-  margin-left: 28px;
-  color: #888;
-  font-size: 1.225rem;
-  line-height: 1.5;
-}
-.account-section-content span {
-  color: #888;
-  margin-left: 8px;
-  font-size: 1.225rem;
-  line-height: 1.5;
-}
-.delete-link {
-  color: #e43e2b;
-  text-decoration: none;
-  font-weight: 500;
-  margin-left: 28px;
-  display: inline-block;
-  margin-top: 4px;
-}
-.logout-btn {
-  display: block;
-  background: #2992f5;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 14px 44px;
-  font-size: 1.225rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-  margin-left: 48px;
-  margin-top: 48px;
-  box-shadow: 0 2px 8px rgba(41,146,245,0.08);
-}
-.logout-btn:hover {
-  background: #1877c9;
-  box-shadow: 0 4px 16px rgba(41,146,245,0.13);
-}
-#account-name, #account-email, #account-password {
-  font-size: 1.125rem;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-#deleteModal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0; top: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0,0,0,0.18);
-  align-items: center;
-  justify-content: center;
-}
-#deleteModal.active {
-  display: flex;
-}
-</style>
+<link rel="stylesheet" href="../assets/css/view_account.css">
 
 <div class="account-container">
   <div class="account-title">My Account</div>
@@ -178,16 +48,16 @@ body {
 </div>
 
 <!-- Delete Account Modal -->
-<div id="deleteModal" style="position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.18); align-items:center; justify-content:center;">
-  <div style="background:#fff; border-radius:18px; box-shadow:0 8px 32px rgba(0,0,0,0.18); padding:48px 36px 32px 36px; max-width:400px; width:90%; text-align:center; position:relative;">
-    <div style="background:#ededed; border-radius:50%; width:100px; height:100px; margin:0 auto 24px auto; display:flex; align-items:center; justify-content:center;">
-      <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" alt="Trash Icon" style="width:54px; height:54px;">
+<div id="deleteModal">
+  <div class="modal-content">
+    <div class="modal-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" alt="Trash Icon" style="width: 54px; height: 54px;">
     </div>
-    <div style="font-size:1.45rem; font-weight:600; margin-bottom:8px;">You are about to delete your profile</div>
-    <div style="color:#888; font-size:1.1rem; margin-bottom:32px;">Are you sure?</div>
-    <div style="display:flex; justify-content:flex-end; gap:12px;">
-      <button id="cancelDeleteBtn" style="background:#eee; color:#444; border:none; border-radius:8px; padding:10px 28px; font-size:1.1rem; cursor:pointer;">Cancel</button>
-      <button id="confirmDeleteBtn" style="background:#e43e2b; color:#fff; border:none; border-radius:8px; padding:10px 28px; font-size:1.1rem; cursor:pointer;">Delete</button>
+    <div class="modal-title">You are about to delete your profile</div>
+    <div class="modal-subtitle">Are you sure?</div>
+    <div class="modal-buttons">
+      <button id="cancelDeleteBtn" class="modal-btn cancel">Cancel</button>
+      <button id="confirmDeleteBtn" class="modal-btn delete">Delete</button>
     </div>
   </div>
 </div>
