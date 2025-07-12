@@ -54,7 +54,7 @@ if (!$booking) {
 
 <section class="content">
     <!-- Booking Summary -->
-    <div class="summary-box">
+    <div class="summary-box mt-18">
         <div><span class="label"><?= $booking['status'] ?></span></div>
         <div>Booked on<br><?= $booking['booked_on'] ?></div>
         <div class="code">Book Reference No.<br><?= $booking['code'] ?></div>
@@ -62,7 +62,7 @@ if (!$booking) {
 
     <!-- Experience Details -->
     <h3 class="section-title">Experience Details</h3>
-    <div class="card">
+    <div class="card mt-16">
         <div class="experience-row">
             <div class="experience-main">
                 <?= $booking['experience'] ?>
@@ -77,7 +77,7 @@ if (!$booking) {
 
     <!-- Guest Details -->
     <h3 class="section-title">Guest Details</h3>
-    <div class="card">
+    <div class="card mt-16">
         <?php foreach ($booking['guests'] as $guest): ?>
             <div class="guest-block">
                 <span class="guest-name"><?= $guest ?></span>

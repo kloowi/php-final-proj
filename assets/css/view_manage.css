@@ -7,7 +7,7 @@ body {
 
 .content {
     max-width: 1100px;
-    margin: 60px auto;
+    margin: 100px auto 60px auto; /* Increased top spacing */
     padding: 0 20px;
 }
 
@@ -135,4 +135,20 @@ body {
     color: #222;
     font-weight: 500;
     font-size: 1em;
+}
+
+.mt-18 {
+    margin-top: 36px;
+}
+
+.mt-48 {
+    margin-top: 48px;
+}
+
+.mt-32 {
+    margin-top: 16px;
+}
+
+.mt-16 {
+    margin-top: 16px;
 }
