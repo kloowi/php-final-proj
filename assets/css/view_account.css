@@ -1,95 +1,101 @@
 body {
-  background: #fff;
   background: #f6f8fa;
+  font-size: 15px;
 }
 
-.account-container {
-  max-width: 1200px;
-  margin: 120px auto 0 auto;
+.account-viewport-center {
+  min-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+}
+
+.account-container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .account-title {
   background: #fafafa;
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
   text-align: center;
-  font-size: 2.625rem;
+  font-size: 2.1rem;
   font-weight: 700;
   color: #2992f5;
-  padding: 18px 0 10px 0;
-  margin-top: 40px;
+  padding: 14px 0 8px 0;
+  margin-top: 28px;
   margin-bottom: 10px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .account-subtitle {
   color: #888;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   font-size: 1rem;
   text-align: left;
   width: 100%;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .account-card {
   width: 100%;
-  max-width: 1200px;
+  max-width: 900px;
   background: #fafafa;
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
   padding: 0;
   overflow: hidden;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .account-section {
-  padding: 32px 48px 24px 48px;
+  padding: 22px 32px 16px 32px;
   border-bottom: 1px solid #e0e0e0;
   transition: background 0.2s;
 }
 
 .account-section:last-child {
   border-bottom: none;
-  padding-bottom: 32px;
-}
-
-.account-section:hover {
-  background: #f0f4f8;
+  padding-bottom: 22px;
 }
 
 .account-section-title {
   font-weight: 700;
-  font-size: 1.325rem;
-  margin-bottom: 8px;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.account-section-title .icon {
-  font-size: 1.2em;
-  color: #2992f5;
+.account-section-title img {
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 8px !important;
 }
 
 .account-section-content {
-  margin-left: 28px;
+  margin-left: 22px;
   color: #888;
-  font-size: 1.225rem;
+  font-size: 1.05rem;
   line-height: 1.5;
 }
 
 .account-section-content span {
   color: #888;
   margin-left: 8px;
-  font-size: 1.225rem;
+  font-size: 1.05rem;
   line-height: 1.5;
 }
 
@@ -97,26 +103,35 @@ body {
   color: #e43e2b;
   text-decoration: none;
   font-weight: 500;
-  margin-left: 28px;
+  margin-left: 22px;
   display: inline-block;
-  margin-top: 4px;
+  margin-top: 3px;
+  font-size: 1rem;
 }
 
 .logout-btn {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #2992f5;
   color: #fff;
   border: none;
   border-radius: 10px;
-  padding: 14px 44px;
-  font-size: 1.225rem;
+  padding: 7px 0;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  margin-left: 48px;
-  margin-top: 48px;
+  width: 120px;
+  margin-left: 0;              /* <-- align fully left */
+  margin-top: 24px;
+  margin-right: auto;          /* <-- prevent center or right alignment */
+  margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(41,146,245,0.08);
+  text-align: center;
 }
+
+
 
 .logout-btn:hover {
   background: #1877c9;
@@ -124,9 +139,24 @@ body {
 }
 
 #account-name, #account-email, #account-password {
-  font-size: 1.125rem;
-  padding: 2px 6px;
+  font-size: 1rem;
+  padding: 2px 8px;
   border-radius: 4px;
+}
+
+#edit-name-btn img, #edit-security-btn img {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+#edit-name-btn, #edit-security-btn {
+  margin-left: 6px !important;
+}
+
+#save-name-btn, #save-security-btn {
+  font-size: 1rem !important;
+  padding: 2px 12px !important;
+  border-radius: 4px !important;
 }
 
 /* Modal styles */
@@ -138,7 +168,7 @@ body {
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.18);
+  background: rgba(0,0,0,0.13);
   align-items: center;
   justify-content: center;
 }
@@ -149,10 +179,10 @@ body {
 
 .modal-content {
   background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  padding: 48px 36px 32px 36px;
-  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  padding: 24px 18px 18px 18px;
+  max-width: 320px;
   width: 90%;
   text-align: center;
   position: relative;
@@ -161,37 +191,42 @@ body {
 .modal-icon {
   background: #ededed;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 24px auto;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.modal-icon img {
+  width: 20px !important;
+  height: 20px !important;
+}
+
 .modal-title {
-  font-size: 1.45rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .modal-subtitle {
   color: #888;
-  font-size: 1.1rem;
-  margin-bottom: 32px;
+  font-size: 1rem;
+  margin-bottom: 16px;
 }
 
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 10px;
 }
 
 .modal-btn {
   border: none;
-  border-radius: 8px;
-  padding: 10px 28px;
-  font-size: 1.1rem;
+  border-radius: 5px;
+  padding: 7px 18px;
+  font-size: 1rem;
   cursor: pointer;
 }
 

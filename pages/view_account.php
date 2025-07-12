@@ -1,49 +1,49 @@
 <?php include '../includes/header.php'; ?>
 <link rel="stylesheet" href="../assets/css/view_account.css">
 
-<div class="account-container">
-  <div class="account-title">My Account</div>
-  <div class="account-subtitle">Manage your StepIntoManila profile and security settings</div>
-  <div class="account-card">
-    <div class="account-section">
-      <div class="account-section-title">
-        <img src="https://cdn-icons-png.flaticon.com/512/266/266033.png" alt="Avatar Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Personal Information
-        <span style="flex:1"></span>
-        <button id="edit-name-btn" style="background:none;border:none;cursor:pointer;margin-left:8px;vertical-align:middle;">
-          <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="Edit Icon" style="width: 18px; vertical-align: middle;">
-        </button>
+<div class="account-viewport-center">
+  <div class="account-container">
+    <div class="account-title">My Account</div>
+    <div class="account-subtitle">Manage your StepIntoManila profile and security settings</div>
+    <div class="account-card">
+      <div class="account-section">
+        <div class="account-section-title">
+          <img src="https://cdn-icons-png.flaticon.com/512/266/266033.png" alt="Avatar Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Personal Information
+          <span style="flex:1"></span>
+          <button id="edit-name-btn" style="background:none;border:none;cursor:pointer;margin-left:8px;vertical-align:middle;">
+            <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="Edit Icon" style="width: 18px; vertical-align: middle;">
+          </button>
+        </div>
+        <div class="account-section-content">Name:
+          <input type="text" id="account-name" value="John Doe" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:200px;outline:none;" readonly>
+          <button id="save-name-btn" style="display:none;background:#2992f5;color:#fff;border:none;border-radius:4px;padding:2px 10px;margin-left:8px;cursor:pointer;font-size:0.95rem;">Save</button>
+        </div>
       </div>
-      <div class="account-section-content">Name:
-        <input type="text" id="account-name" value="John Doe" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:200px;outline:none;" readonly>
-        <button id="save-name-btn" style="display:none;background:#2992f5;color:#fff;border:none;border-radius:4px;padding:2px 10px;margin-left:8px;cursor:pointer;font-size:0.95rem;">Save</button>
+      <div class="account-section">
+        <div class="account-section-title">
+          <img src="https://icons.iconarchive.com/icons/icons8/windows-8/512/Security-Password-2-icon.png" alt="Security Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Sign in &amp; Security
+          <span style="flex:1"></span>
+          <button id="edit-security-btn" style="background:none;border:none;cursor:pointer;margin-left:8px;vertical-align:middle;">
+            <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="Edit Icon" style="width: 18px; vertical-align: middle;">
+          </button>
+        </div>
+        <div class="account-section-content">Email:
+          <input type="email" id="account-email" value="johndoe@gmail.com" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:220px;outline:none;" readonly>
+          <button id="save-security-btn" style="display:none;background:#2992f5;color:#fff;border:none;border-radius:4px;padding:2px 10px;margin-left:8px;cursor:pointer;font-size:0.95rem;">Save</button>
+        </div>
+        <div class="account-section-content">Password:
+          <input type="password" id="account-password" value="password123" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:120px;outline:none;" readonly>
+        </div>
+      </div>
+      <div class="account-section">
+        <div class="account-section-title">
+          <img src="https://img.icons8.com/ios-filled/50/000000/info.png" alt="Info Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Manage Account
+          <span style="flex:1"></span>
+        </div>
+        <a href="#" class="delete-link">delete account</a>
       </div>
     </div>
-    <div class="account-section">
-      <div class="account-section-title">
-        <img src="https://icons.iconarchive.com/icons/icons8/windows-8/512/Security-Password-2-icon.png" alt="Security Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Sign in &amp; Security
-        <span style="flex:1"></span>
-        <button id="edit-security-btn" style="background:none;border:none;cursor:pointer;margin-left:8px;vertical-align:middle;">
-          <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="Edit Icon" style="width: 18px; vertical-align: middle;">
-        </button>
-      </div>
-      <div class="account-section-content">Email:
-        <input type="email" id="account-email" value="johndoe@gmail.com" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:220px;outline:none;" readonly>
-        <button id="save-security-btn" style="display:none;background:#2992f5;color:#fff;border:none;border-radius:4px;padding:2px 10px;margin-left:8px;cursor:pointer;font-size:0.95rem;">Save</button>
-      </div>
-      <div class="account-section-content">Password:
-        <input type="password" id="account-password" value="password123" style="border:none;background:transparent;color:#bbb;font-size:1rem;margin-left:8px;width:120px;outline:none;" readonly>
-      </div>
-    </div>
-    <div class="account-section">
-      <div class="account-section-title">
-        <img src="https://img.icons8.com/ios-filled/50/000000/info.png" alt="Info Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Manage Account
-        <span style="flex:1"></span>
-      </div>
-      <a href="#" class="delete-link">delete account</a>
-    </div>
-  </div>
-  <div style="max-width: 1200px; margin: 0 auto; width: 100%;">
-    <button class="logout-btn" style="margin-left: 0;">Logout</button>
+    <a href="../index.php" class="logout-btn">Logout</a>
   </div>
 </div>
 
