@@ -50,7 +50,9 @@ if (!$booking) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
+<section class="hero-image">
+    <div class="overlay-text">Manage Booking</div>
+</section>
 <section class="content">
     <a href="manage.php" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Manage</a>
     <!-- Booking Summary -->
