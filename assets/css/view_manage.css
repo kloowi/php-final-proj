@@ -142,8 +142,9 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 80px;       /* Adds space from the header */
-    margin-left: 4px;      /* Slight indent from the left */
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: 0;
     transition: background-color 0.3s ease;
 }
 
