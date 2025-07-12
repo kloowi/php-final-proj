@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php include '../includes/header-index.php'; ?>
 <?php
 require_once '../includes/db_connect-hostinger.php';

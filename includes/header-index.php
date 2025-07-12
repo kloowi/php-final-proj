@@ -1,10 +1,16 @@
 <?php
+session_start();
+
+// Detect if current page is index.php (in root)
 $scriptPath = $_SERVER['SCRIPT_NAME'];
 $isIndex = (basename($scriptPath) === 'index.php');
+
+// Set dynamic values
 $headerClass = $isIndex ? 'transparent' : 'white-bg';
-$basePath = '/assets';
-$currentPage = basename($scriptPath);
+$basePath = $isIndex ? 'assets' : '../assets';
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +21,6 @@ $currentPage = basename($scriptPath);
   <!-- ✅ Proper CSS paths -->
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/style.css">
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/header.css">
-  <link rel="stylesheet" href="<?php echo $basePath; ?>/css/index.css">
 
   <!-- ✅ Script for index only -->
   <?php if ($isIndex): ?>
@@ -33,10 +38,17 @@ $currentPage = basename($scriptPath);
           style="height: 40px;">
       </div>
       <ul class="nav-links">
-        <li><a href="/index.php" class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>">Home</a></li>
-        <li><a href="/pages/explore.php" class="<?php echo ($currentPage == 'explore.php' || $currentPage == 'view_experience.php') ? 'active' : ''; ?>">Explore</a></li>
-        <li><a href="/pages/manage.php" class="<?php echo ($currentPage == 'manage.php') ? 'active' : ''; ?>">Manage</a></li>
-        <li><a href="/pages/about.php" class="<?php echo ($currentPage == 'about.php') ? 'active' : ''; ?>">About Us</a></li>
+        <li><a href="<?php echo $isIndex ? 'index.php' : '../index.php'; ?>"
+               class="<?php echo ($currentPage == 'index.php') ? 'active' : ''; ?>">Home</a></li>
+
+        <li><a href="<?php echo $isIndex ? 'pages/explore.php' : 'explore.php'; ?>"
+               class="<?php echo ($currentPage == 'explore.php' || $currentPage == 'view_experience.php') ? 'active' : ''; ?>">Explore</a></li>
+
+        <li><a href="<?php echo $isIndex ? 'pages/manage.php' : 'manage.php'; ?>"
+               class="<?php echo ($currentPage == 'manage.php') ? 'active' : ''; ?>">Manage</a></li>
+
+        <li><a href="<?php echo $isIndex ? 'pages/about.php' : 'about.php'; ?>"
+               class="<?php echo ($currentPage == 'about.php') ? 'active' : ''; ?>">About Us</a></li>
       </ul>
       <div class="login-link">
         <?php if (isset($_SESSION['user_id'])): ?>
