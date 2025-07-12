@@ -3,27 +3,25 @@ body {
     background-color: #fafafa;
     margin: 0;
     padding: 0;
-    font-size: 13px;
 }
 
 .content {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 10px;
+    max-width: 1100px;
+    margin: 20px auto 60px auto;
+    padding: 0 20px;
 }
 
 /* Booking Summary */
 .summary-box {
     background: #fff;
-    border-radius: 10px;
-    padding: 14px 18px;
+    border-radius: 12px;
+    padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    margin-bottom: 35px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     flex-wrap: wrap;
-    font-size: 13px;
 }
 
 .summary-box div {
@@ -35,102 +33,142 @@ body {
 .summary-box .label {
     color: #007bff;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .summary-box .code {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     text-align: right;
 }
 
 /* Card Section */
 .card {
     background: #fff;
-    padding: 12px 18px 16px 18px;
-    border-radius: 10px;
-    margin-bottom: 18px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-    font-size: 13px;
+    padding: 30px 30px 25px 30px; /* Increased top padding from 18px to 40px */
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Card Titles */
-h3, .section-title {
-    margin-top: 18px;
-    margin-bottom: 8px;
-    font-size: 1.05rem;
-    font-weight: 700;
+.card h3,
+.section-title {
+    margin-bottom: 18px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
 }
 
-/* Structured Experience Layout */
-.experience-row {
-    display: grid;
-    grid-template-columns: 1.2fr 2.8fr;
-    gap: 0 8px;
-    align-items: flex-start;
+/* Experience Row Layout */
+.experience-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    text-align: center;
 }
 
-.card .experience-row p {
-    margin: 0;
-    font-size: 13px;
+.experience-main {
+    flex: 1;
+    color: #007bff;
+    font-weight: 600;
+    font-size: 1em;
+    text-align: center;
 }
 
-/* Guest List */
+.experience-detail {
+    flex: 1;
+    font-size: 0.95em;
+}
+
+.experience-detail .label {
+    color: #222;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+/* Guest Info */
+.guest-block {
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
 .guest-name {
     color: #007bff;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 0;
+    display: block;
+}
+
+.guest-experience {
+    color: #777;
+    font-size: 14px;
+    margin-top: 0;
     display: block;
 }
 
 .label {
     font-weight: bold;
     color: #333;
-    font-size: 13px;
 }
 
-.guest-block {
-    margin-bottom: 10px;
+/* Margin Utilities */
+.mt-16 {
+    margin-top: 16px;
+}
+.mt-18 {
+    margin-top: 18px;
+}
+.mt-32 {
+    margin-top: 32px;
+}
+.mt-48 {
+    margin-top: 48px;
 }
 
-.guest-experience {
-    color: #777;
-    font-size: 12px;
-    margin-top: 0;
-    display: block;
-}
-
-.experience-main {
-    color: #007bff;
-    font-weight: 600;
-    font-size: 0.93em;
-    white-space: pre-line;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    text-align: left;
-    height: 100%;
-    padding-top: 0;
-    margin-top: 0;
-}
-
-.experience-details {
-    display: flex;
-    justify-content: space-between;
+.back-btn {
+    background: #067bff;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
     align-items: center;
+    gap: 8px;
+    margin-top: 80px;       /* Adds space from the header */
+    margin-left: 4px;      /* Slight indent from the left */
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #0463d0;
+}
+
+.hero-image {
     width: 100%;
+    background: url('../assets/images/index/MANILA.jpg') no-repeat center center;
+    background-size: cover;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.experience-detail {
-    min-width: 70px;
+.overlay-text {
+    font-size: 36px;
+    font-weight: bold;
+    background: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    color: #007bff;
     text-align: center;
-    font-size: 0.93em;
-    font-weight: 400;
-}
-
-.experience-detail .label {
-    color: #222;
-    font-weight: 500;
-    font-size: 0.98em;
+    max-width: 90%;
 }

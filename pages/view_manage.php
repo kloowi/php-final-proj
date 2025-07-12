@@ -34,8 +34,6 @@ $bookings = [
 
 // Get booking code from query string
 $bookingCode = $_GET['code'] ?? null;
-
-// Fetch the booking details
 $booking = $bookings[$bookingCode] ?? null;
 
 if (!$booking) {
@@ -49,12 +47,14 @@ if (!$booking) {
     <meta charset="UTF-8">
     <title>Manage Booking</title>
     <link rel="stylesheet" href="<?php echo $basePath; ?>/css/view_manage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
 <section class="content">
+    <a href="manage.php" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Manage</a>
     <!-- Booking Summary -->
-    <div class="summary-box">
+    <div class="summary-box mt-48">
         <div><span class="label"><?= $booking['status'] ?></span></div>
         <div>Booked on<br><?= $booking['booked_on'] ?></div>
         <div class="code">Book Reference No.<br><?= $booking['code'] ?></div>
@@ -62,22 +62,24 @@ if (!$booking) {
 
     <!-- Experience Details -->
     <h3 class="section-title">Experience Details</h3>
-    <div class="card">
-        <div class="experience-row">
-            <div class="experience-main">
-                <?= $booking['experience'] ?>
+    <div class="card mt-16">
+        <div class="experience-details">
+            <div class="experience-main"><?= $booking['experience'] ?></div>
+            <div class="experience-detail">
+                <span class="label">Date</span><br><?= $booking['date'] ?>
             </div>
-            <div class="experience-details">
-                <div class="experience-detail"><span class="label">Date</span><br><?= $booking['date'] ?></div>
-                <div class="experience-detail"><span class="label">Time</span><br><?= $booking['start_time'] ?> - <?= $booking['end_time'] ?></div>
-                <div class="experience-detail"><span class="label">Guest Number</span><br><?= count($booking['guests']) ?></div>
+            <div class="experience-detail">
+                <span class="label">Time</span><br><?= $booking['start_time'] ?> - <?= $booking['end_time'] ?>
+            </div>
+            <div class="experience-detail">
+                <span class="label">Guest Number</span><br><?= count($booking['guests']) ?>
             </div>
         </div>
     </div>
 
     <!-- Guest Details -->
     <h3 class="section-title">Guest Details</h3>
-    <div class="card">
+    <div class="card mt-16">
         <?php foreach ($booking['guests'] as $guest): ?>
             <div class="guest-block">
                 <span class="guest-name"><?= $guest ?></span>
