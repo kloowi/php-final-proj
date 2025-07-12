@@ -1,0 +1,247 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  background: #f6f8fa;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.confirmation-container {
+  width: 100%;
+  min-height: 100vh;
+  background: rgba(255,255,255,1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 106px; /* Account for header height */
+}
+
+.confirmation-card {
+  width: 100%;
+  max-width: 507px;
+  background: rgba(250,250,250,1);
+  /* border: 1px solid rgba(111,111,111,1); */
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.13);
+  padding: 40px;
+  text-align: center;
+  position: relative;
+}
+
+/* Success Icon */
+.success-icon {
+  width: 100px;
+  height: 100px;
+  background: #4CAF50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px auto;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.checkmark-icon {
+  width: 50px;
+  height: 50px;
+  filter: brightness(0) invert(1);
+}
+
+/* Main Title */
+.main-title {
+  color: rgba(57,57,57,1);
+  font-family: 'Arial', sans-serif;
+  font-weight: 600;
+  font-size: 40px;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+/* Order Number */
+.order-number-container {
+  background: rgba(237,237,237,1);
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  display: inline-block;
+}
+
+.order-label {
+  color: rgba(118,118,118,1);
+  font-weight: 600;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.order-number {
+  color: rgba(57,57,57,1);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* Confirmation Message */
+.confirmation-message {
+  color: rgba(78,78,78,1);
+  font-weight: 500;
+  font-size: 20px;
+  margin: 30px 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Booking Details */
+.booking-details {
+  background: #fff;
+  border-radius: 15px;
+  padding: 25px;
+  margin: 30px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  color: rgba(78,78,78,1);
+  font-weight: 500;
+  font-size: 18px;
+  text-align: left;
+}
+
+.detail-value {
+  color: rgba(78,78,78,1);
+  font-weight: 500;
+  font-size: 18px;
+  text-align: right;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: rgba(41,146,245,1);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1877c9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(41,146,245,0.3);
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: rgba(41,146,245,1);
+  border: 2px solid rgba(41,146,245,1);
+}
+
+.btn-secondary:hover {
+  background: rgba(41,146,245,1);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Additional Info */
+.additional-info {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.additional-info p {
+  color: rgba(118,118,118,1);
+  font-size: 14px;
+  margin: 8px 0;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .confirmation-container {
+    padding: 10px;
+    margin-top: 80px;
+  }
+  
+  .confirmation-card {
+    padding: 30px 20px;
+    max-width: 100%;
+  }
+  
+  .main-title {
+    font-size: 32px;
+  }
+  
+  .confirmation-message {
+    font-size: 18px;
+  }
+  
+  .detail-label,
+  .detail-value {
+    font-size: 16px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .confirmation-card {
+    padding: 25px 15px;
+  }
+  
+  .main-title {
+    font-size: 28px;
+  }
+  
+  .success-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .checkmark-icon {
+    width: 40px;
+    height: 40px;
+  }
+} 
