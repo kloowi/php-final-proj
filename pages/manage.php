@@ -6,7 +6,7 @@ $headerClass = $isIndex ? 'transparent' : 'white-bg';
 $basePath = $isIndex ? 'assets' : '../assets';
 $currentPage = basename($scriptPath);
 
-include '../includes/header.php';
+include '../includes/header-index.php';
 
 // Sample bookings
 $bookings = [
@@ -102,7 +102,7 @@ $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $t
                             </ol>
                         </td>
                         <td>
-                            <a href="view_manage.php?code=<?= urlencode($booking['code']) ?>" class="manage-btn">Manage</a>
+                            <a href="view_manage.php?code=<?= $booking['code'] ?>" class="manage-btn">Manage</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -6,24 +6,39 @@ $headerClass = $isIndex ? 'transparent' : 'white-bg';
 $basePath = $isIndex ? 'assets' : '../assets';
 $currentPage = basename($scriptPath);
 
-include '../includes/header.php';
+include '../includes/header-index.php';
 
-// Mock booking data
-$bookingCode = $_GET['code'] ?? null;
-
-$booking = [
-    'code' => 'A1BC23',
-    'status' => 'Confirmed',
-    'booked_on' => '3 Jul 2025',
-    'experience' => 'Fort Santiago (Intramuros)',
-    'date' => '18 Jul 2025',
-    'start_time' => '9:00',
-    'end_time' => '11:00',
-    'guests' => ['Chloe Carbonell', 'Miryl De Leon', 'Alliah Montes', 'Olen Tamayo']
+// Mock multiple bookings
+$bookings = [
+    'A1BC23' => [
+        'code' => 'A1BC23',
+        'status' => 'Confirmed',
+        'booked_on' => '3 Jul 2025',
+        'experience' => 'Fort Santiago (Intramuros)',
+        'date' => '18 Jul 2025',
+        'start_time' => '9:00',
+        'end_time' => '11:00',
+        'guests' => ['Chloe Carbonell', 'Miryl De Leon', 'Alliah Montes', 'Olen Tamayo']
+    ],
+    'X9YZ88' => [
+        'code' => 'X9YZ88',
+        'status' => 'Completed',
+        'booked_on' => '15 Jun 2025',
+        'experience' => 'Rizal Park Tour',
+        'date' => '25 Jun 2025',
+        'start_time' => '2:00',
+        'end_time' => '4:00',
+        'guests' => ['Chloe Carbonell']
+    ]
 ];
 
-// Validate booking code
-if (!$bookingCode || $bookingCode !== $booking['code']) {
+// Get booking code from query string
+$bookingCode = $_GET['code'] ?? null;
+
+// Fetch the booking details
+$booking = $bookings[$bookingCode] ?? null;
+
+if (!$booking) {
     echo "<p style='padding: 30px;'>Invalid booking code.</p>";
     exit;
 }
@@ -32,9 +47,7 @@ if (!$bookingCode || $bookingCode !== $booking['code']) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manage</title>
-    <!-- ✅ Include both shared and page-specific CSS -->
-    <link rel="stylesheet" href="<?php echo $basePath; ?>/css/manage.css">
+    <title>Manage Booking</title>
     <link rel="stylesheet" href="<?php echo $basePath; ?>/css/view_manage.css">
 </head>
 <body>
@@ -48,21 +61,28 @@ if (!$bookingCode || $bookingCode !== $booking['code']) {
     </div>
 
     <!-- Experience Details -->
+    <h3 class="section-title">Experience Details</h3>
     <div class="card">
-        <h3>Experience Details</h3>
-        <p><span class="label">Experience:</span> 
-           <a href="#" class="experience-link"><?= $booking['experience'] ?></a></p>
-        <p><span class="label">Date:</span> <?= $booking['date'] ?></p>
-        <p><span class="label">Time:</span> <?= $booking['start_time'] ?> - <?= $booking['end_time'] ?></p>
-        <p><span class="label">Guest Number:</span> <?= count($booking['guests']) ?></p>
+        <div class="experience-row">
+            <div class="experience-main">
+                <?= $booking['experience'] ?>
+            </div>
+            <div class="experience-details">
+                <div class="experience-detail"><span class="label">Date</span><br><?= $booking['date'] ?></div>
+                <div class="experience-detail"><span class="label">Time</span><br><?= $booking['start_time'] ?> - <?= $booking['end_time'] ?></div>
+                <div class="experience-detail"><span class="label">Guest Number</span><br><?= count($booking['guests']) ?></div>
+            </div>
+        </div>
     </div>
 
     <!-- Guest Details -->
+    <h3 class="section-title">Guest Details</h3>
     <div class="card">
-        <h3>Guest Details</h3>
         <?php foreach ($booking['guests'] as $guest): ?>
-            <p><span class="guest-name"><?= $guest ?></span><br>
-               <span class="guest-experience"><?= $booking['experience'] ?></span></p>
+            <div class="guest-block">
+                <span class="guest-name"><?= $guest ?></span>
+                <span class="guest-experience"><?= $booking['experience'] ?></span>
+            </div>
         <?php endforeach; ?>
     </div>
 </section>
