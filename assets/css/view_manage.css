@@ -7,7 +7,7 @@ body {
 
 .content {
     max-width: 1100px;
-    margin: 100px auto 60px auto; /* Increased top spacing */
+    margin: 60px auto;
     padding: 0 20px;
 }
 
@@ -45,48 +45,62 @@ body {
 /* Card Section */
 .card {
     background: #fff;
-    padding: 18px 30px 25px 30px;
+    padding: 30px 30px 25px 30px; /* Increased top padding from 18px to 40px */
     border-radius: 12px;
     margin-bottom: 30px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Card Titles */
-.card h3 {
+.card h3,
+.section-title {
     margin-bottom: 18px;
-    font-size: 18px;
-    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
 }
 
-/* Structured Experience Layout */
-.experience-row {
-    display: grid;
-    grid-template-columns: 1.2fr 2.8fr;
-    gap: 0 10px;
-    align-items: flex-start;
+/* Experience Row Layout */
+.experience-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    text-align: center;
 }
 
-.card .experience-row p {
-    margin: 0;
-    font-size: 14px;
+.experience-main {
+    flex: 1;
+    color: #007bff;
+    font-weight: 600;
+    font-size: 1em;
+    text-align: center;
 }
 
-/* Guest List */
+.experience-detail {
+    flex: 1;
+    font-size: 0.95em;
+}
+
+.experience-detail .label {
+    color: #222;
+    font-weight: 500;
+    font-size: 1em;
+}
+
+/* Guest Info */
+.guest-block {
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
 .guest-name {
     color: #007bff;
     font-weight: 600;
     font-size: 15px;
     margin-bottom: 0;
     display: block;
-}
-
-.label {
-    font-weight: bold;
-    color: #333;
-}
-
-.guest-block {
-    margin-bottom: 16px;
 }
 
 .guest-experience {
@@ -96,59 +110,42 @@ body {
     display: block;
 }
 
-.section-title {
-    color: #007bff;
-    margin-bottom: 12px;
-    font-size: 1.5em;
+.label {
     font-weight: bold;
+    color: #333;
 }
 
-.experience-main {
-    color: #007bff;
-    font-weight: 600;
-    font-size: 0.98em;
-    white-space: pre-line;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    text-align: left;
-    height: 100%;
-    padding-top: 0;
-    margin-top: 0;
+/* Margin Utilities */
+.mt-16 {
+    margin-top: 16px;
 }
-
-.experience-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.experience-detail {
-    min-width: 90px;
-    text-align: center;
-    font-size: 0.95em;
-    font-weight: 400;
-}
-
-.experience-detail .label {
-    color: #222;
-    font-weight: 500;
-    font-size: 1em;
-}
-
 .mt-18 {
-    margin-top: 36px;
+    margin-top: 18px;
 }
-
+.mt-32 {
+    margin-top: 32px;
+}
 .mt-48 {
     margin-top: 48px;
 }
 
-.mt-32 {
-    margin-top: 16px;
+.back-btn {
+    background: #067bff;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
 }
 
-.mt-16 {
-    margin-top: 16px;
+.back-btn:hover {
+    background: #0463d0;
 }
