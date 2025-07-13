@@ -46,9 +46,10 @@ if (!$experience_id || !$title || !$price) {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Guest Details</title>
+  <title>StepIntoManila</title>
   <link rel="stylesheet" href="../assets/css/guest_details.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <body>
 <?php include '../includes/header.php'; ?>

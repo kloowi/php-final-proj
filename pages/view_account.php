@@ -28,7 +28,12 @@ try {
     exit;
 }
 ?>
-<link rel="stylesheet" href="../assets/css/view.css">
+<head>
+    <meta charset="UTF-8">
+    <title>StepIntoManila</title>
+    <link rel="stylesheet" href="../assets/css/view.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
+</head>
 <div class="account-container">
   <div class="account-box">
     <h2 class="account-title">Account Details</h2>

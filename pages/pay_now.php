@@ -66,9 +66,15 @@ if ($experience && !empty($experience['image_url'])) {
     $image_path = '../assets/images/experiences/exp_6867c00ab3bef3.06653871.jpg';
 }
 
-include '../includes/header.php'; 
 ?>
-<link rel="stylesheet" href="../assets/css/payment.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StepIntoManila</title>
+    <link rel="stylesheet" href="../assets/css/payment.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
+</head>
 <body>
 
 <div class="checkout-hero">

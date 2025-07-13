@@ -39,8 +39,9 @@ foreach ($experiences as $experience) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Explore Manila</title>
+    <title>StepIntoManila</title>
     <link rel="stylesheet" href="../assets/css/cards.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <body>
     <div class="container">

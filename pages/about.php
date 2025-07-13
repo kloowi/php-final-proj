@@ -1,5 +1,10 @@
 <?php include '../includes/header.php'; ?>
-<link rel="stylesheet" href="../assets/css/about.css">
+<head>
+    <meta charset="UTF-8">
+    <title>StepIntoManila</title>
+    <link rel="stylesheet" href="../assets/css/about.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
+</head>
 
 <div class="about-section">
   <h2>About StepIntoManila</h2>
