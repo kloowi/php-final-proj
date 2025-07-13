@@ -1,9 +1,16 @@
+Here’s the fully corrected template you can copy-and-paste. I’ve:
+
+* Normalized your radio `value` attributes to `card`, `qrph`, and `banktransfer`
+* Matched each `<div id="…-fields">` to those values
+* Fixed a stray `</div>`
+* Updated the JS mapping to use the same keys
+
+```php
 <?php 
 session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    // Store current URL in session for redirect after login
     $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
     header('Location: login.php');
     exit;
@@ -11,29 +18,27 @@ if (!isset($_SESSION['user_id'])) {
 
 // Accept POST from guest_details.php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $experience_id = isset($_POST['experience_id']) ? (int)$_POST['experience_id'] : 0;
-    $title = $_POST['title'] ?? '';
-    $price = isset($_POST['price']) ? (float)$_POST['price'] : 0;
-    $selected_date = $_POST['selected_date'] ?? '';
-    $selected_time = $_POST['selected_time'] ?? '';
-    $guest_count = isset($_POST['guest_count']) ? (int)$_POST['guest_count'] : 1;
-    $guest_names = $_POST['guest_name'] ?? [];
+    $experience_id   = isset($_POST['experience_id'])   ? (int)   $_POST['experience_id']   : 0;
+    $title           = $_POST['title']                  ?? '';
+    $price           = isset($_POST['price'])           ? (float) $_POST['price']          : 0;
+    $selected_date   = $_POST['selected_date']          ?? '';
+    $selected_time   = $_POST['selected_time']          ?? '';
+    $guest_count     = isset($_POST['guest_count'])     ? (int)   $_POST['guest_count']     : 1;
+    $guest_names     = $_POST['guest_name']             ?? [];
 } else {
-    $experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : ($_SESSION['booking_details']['experience_id'] ?? 0);
-    $title = isset($_GET['title']) ? $_GET['title'] : ($_SESSION['booking_details']['title'] ?? '');
-    $price = isset($_GET['price']) ? (float)$_GET['price'] : ($_SESSION['booking_details']['price'] ?? 0);
-    $selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : '';
-    $selected_time = isset($_GET['selected_time']) ? $_GET['selected_time'] : '';
-    $guest_count = isset($_GET['guest_count']) ? (int)$_GET['guest_count'] : 1;
-    $guest_names = [];
+    $experience_id   = isset($_GET['experience_id'])    ? (int)   $_GET['experience_id']    : ($_SESSION['booking_details']['experience_id'] ?? 0);
+    $title           = isset($_GET['title'])            ? $_GET['title']                    : ($_SESSION['booking_details']['title']         ?? '');
+    $price           = isset($_GET['price'])            ? (float) $_GET['price']            : ($_SESSION['booking_details']['price']         ?? 0);
+    $selected_date   = isset($_GET['selected_date'])    ? $_GET['selected_date']            : '';
+    $selected_time   = isset($_GET['selected_time'])    ? $_GET['selected_time']            : '';
+    $guest_count     = isset($_GET['guest_count'])      ? (int)   $_GET['guest_count']      : 1;
+    $guest_names     = [];
 }
 
-// Clear booking details from session as they're no longer needed
 if (isset($_SESSION['booking_details'])) {
     unset($_SESSION['booking_details']);
 }
 
-// If we have experience_id, fetch the full experience details from database
 $experience = null;
 if ($experience_id > 0) {
     require_once '../includes/db_config.php';
@@ -41,28 +46,21 @@ if ($experience_id > 0) {
         $stmt = $pdo->prepare('SELECT * FROM Experiences WHERE experience_id = ?');
         $stmt->execute([$experience_id]);
         $experience = $stmt->fetch(PDO::FETCH_ASSOC);
-        
         if ($experience) {
             $title = $experience['title'];
             $price = $experience['price'];
         }
-    } catch (PDOException $e) {
-        // Handle database error silently
-    }
+    } catch (PDOException $e) {}
 }
 
-// Calculate total price
 $total_price = $price * $guest_count;
 
-// Handle image path
-$image_path = '';
 if ($experience && !empty($experience['image_url'])) {
     $image_path = $experience['image_url'];
     if (!preg_match('/^https?:\/\//', $image_path)) {
         $image_path = '../' . $image_path;
     }
 } else {
-    // Fallback image
     $image_path = '../assets/images/experiences/exp_6867c00ab3bef3.06653871.jpg';
 }
 
@@ -76,65 +74,132 @@ if ($experience && !empty($experience['image_url'])) {
     <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <body>
-
-<div class="checkout-hero">
-  <img src="../assets/images/booking/v157_303.png" alt="Banner Image">
-  <div class="checkout-title">Checkout</div>
-</div>
-
-<div class="checkout-container">
-  <!-- Payment Box -->
-  <div class="payment-box">
-    <h3>Payment</h3>
-    <form action="process_payment.php" method="POST">
-      <input type="hidden" name="experience_id" value="<?php echo $experience_id; ?>">
-      <input type="hidden" name="title" value="<?php echo htmlspecialchars($title); ?>">
-      <input type="hidden" name="price" value="<?php echo $price; ?>">
-      <input type="hidden" name="selected_date" value="<?php echo htmlspecialchars($selected_date); ?>">
-      <input type="hidden" name="selected_time" value="<?php echo htmlspecialchars($selected_time); ?>">
-      <input type="hidden" name="guest_count" value="<?php echo $guest_count; ?>">
-      <?php if (!empty($guest_names)) {
-        foreach ($guest_names as $gname) {
-          echo '<input type="hidden" name="guest_name[]" value="' . htmlspecialchars($gname) . '">';
-        }
-      } ?>
-      
-      <label><input type="radio" name="payment_method" value="card" checked> Card</label>
-      <label><input type="radio" name="payment_method" value="bank"> Bank</label>
-      <label><input type="radio" name="payment_method" value="transfer"> Transfer</label>
-
-      <input type="text" name="card_number" placeholder="1234 5678 9101 1121" required>
-      <div class="inline-fields">
-        <input type="text" name="expiry" placeholder="MM/YY" required>
-        <input type="text" name="cvv" placeholder="123" required>
-      </div>
-
-      <div class="checkout-buttons">
-        <a href="guest_details.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($title); ?>&price=<?php echo $price; ?>" class="cancel-btn">Cancel</a>
-        <button type="submit" class="confirm-btn">Confirm</button>
-      </div>
-    </form>
+  <div class="checkout-hero">
+    <img src="../assets/images/booking/v157_303.png" alt="Banner Image">
+    <div class="checkout-title">Checkout</div>
   </div>
 
-  <!-- Order Summary Box -->
-  <div class="summary-box">
-    <h3>Order Summary</h3>
-    <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($title); ?>">
-    <div class="summary-details">
-      <strong><?php echo htmlspecialchars($title); ?></strong>
-      <span class="price">PHP <?php echo number_format($total_price, 2); ?></span>
-      <?php if ($selected_date): ?>
-        <p><strong>Date:</strong> <?php echo htmlspecialchars($selected_date); ?></p>
-      <?php endif; ?>
-      <?php if ($selected_time): ?>
-        <p><strong>Time:</strong> <?php echo htmlspecialchars($selected_time); ?></p>
-      <?php endif; ?>
-      <?php if ($guest_count > 1): ?>
-        <p><strong>Guests:</strong> <?php echo $guest_count; ?> people</p>
-      <?php endif; ?>
+  <div class="checkout-container">
+    <!-- Payment Box -->
+    <div class="payment-box">
+      <h3>Payment</h3>
+      <form action="confirmation.php" method="POST" id="paynow-form">
+        <!-- Hidden booking fields -->
+        <input type="hidden" name="experience_id"   value="<?= $experience_id ?>">
+        <input type="hidden" name="title"           value="<?= htmlspecialchars($title, ENT_QUOTES) ?>">
+        <input type="hidden" name="price"           value="<?= $price ?>">
+        <input type="hidden" name="selected_date"   value="<?= htmlspecialchars($selected_date, ENT_QUOTES) ?>">
+        <input type="hidden" name="selected_time"   value="<?= htmlspecialchars($selected_time, ENT_QUOTES) ?>">
+        <input type="hidden" name="guest_count"     value="<?= $guest_count ?>">
+        <?php foreach ($guest_names as $gname): ?>
+          <input type="hidden" name="guest_name[]" value="<?= htmlspecialchars($gname, ENT_QUOTES) ?>">
+        <?php endforeach; ?>
+
+        <!-- Payment method radios -->
+        <div class="payment-methods">
+          <label><input type="radio" name="payment_method" value="card"          checked> Card</label>
+          <label><input type="radio" name="payment_method" value="qrph"> QR PH</label>
+          <label><input type="radio" name="payment_method" value="banktransfer"> Bank Transfer</label>
+        </div>
+
+        <!-- Card fields -->
+        <div class="payment-details" id="card-fields">
+          <label>
+            Name on Card
+            <input type="text" name="card_name" placeholder="John Doe" required>
+          </label>
+          <label>
+            Card Number
+            <input type="text" name="card_number" placeholder="1234 5678 9101 1121" required>
+          </label>
+          <div class="inline-fields">
+            <label>
+              Expiry Date
+              <input type="text" name="expiry" placeholder="MM/YY" required>
+            </label>
+            <label>
+              CVV
+              <input type="text" name="cvv" placeholder="123" required>
+            </label>
+          </div>
+        </div>
+
+        <div class="payment-details" id="qrph-fields" style="display:none; text-align:center;">
+          <p>Scan this QR with any partner’s QR PH app:</p>
+          <img
+            src="../assets/images/booking/IMG_8045.jpg"
+            alt="QR PH code"
+            style="max-width: 150px; width: auto; height: auto; display: block; margin: 0 auto;"
+          >
+        </div>
+
+        <!-- Bank Transfer fields -->
+        <div class="payment-details" id="banktransfer-fields" style="display:none;">
+          <label>
+            Recipient Name
+            <input type="text" name="bank_recipient" placeholder="John Doe" required>
+          </label>
+          <label>
+            Account Number
+            <input type="text" name="bank_account" placeholder="1234 5678 9101 1121" required>
+          </label>
+          <label>
+            Bank Name
+            <input type="text" name="bank_name" placeholder="ex. Bank of the Philippines" required>
+          </label>
+          <label>
+            Branch
+            <input type="text" name="bank_branch" placeholder="Main Branch" required>
+          </label>
+        </div>
+
+        <!-- Buttons -->
+        <div class="checkout-buttons">
+          <a href="guest_details.php?experience_id=<?= $experience_id ?>&title=<?= urlencode($title) ?>&price=<?= $price ?>" class="cancel-btn">Cancel</a>
+          <button type="submit" class="confirm-btn">Confirm</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Order Summary Box -->
+    <div class="summary-box">
+      <h3>Order Summary</h3>
+      <img src="<?= htmlspecialchars($image_path, ENT_QUOTES) ?>" alt="<?= htmlspecialchars($title, ENT_QUOTES) ?>">
+      <div class="summary-details">
+        <strong><?= htmlspecialchars($title, ENT_QUOTES) ?></strong>
+        <span class="price">PHP <?= number_format($total_price, 2) ?></span>
+        <?php if ($selected_date): ?>
+          <p><strong>Date:</strong> <?= htmlspecialchars($selected_date, ENT_QUOTES) ?></p>
+        <?php endif; ?>
+        <?php if ($selected_time): ?>
+          <p><strong>Time:</strong> <?= htmlspecialchars($selected_time, ENT_QUOTES) ?></p>
+        <?php endif; ?>
+        <?php if ($guest_count > 1): ?>
+          <p><strong>Guests:</strong> <?= $guest_count ?> people</p>
+        <?php endif; ?>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Toggle script -->
+  <script>
+    const radios   = document.querySelectorAll('input[name="payment_method"]');
+    const sections = {
+      card:          document.getElementById('card-fields'),
+      qrph:          document.getElementById('qrph-fields'),
+      banktransfer:  document.getElementById('banktransfer-fields'),
+    };
+
+    function updatePaymentFields() {
+      const sel = document.querySelector('input[name="payment_method"]:checked').value;
+      Object.values(sections).forEach(div => div.style.display = 'none');
+      sections[sel].style.display = 'block';
+    }
+
+    radios.forEach(r => r.addEventListener('change', updatePaymentFields));
+    window.addEventListener('DOMContentLoaded', updatePaymentFields);
+  </script>
 </body>
+
 <?php include '../includes/footer.php'; ?>
+```
