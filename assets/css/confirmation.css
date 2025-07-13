@@ -13,44 +13,44 @@ body {
 
 .confirmation-container {
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   background: rgba(255,255,255,1);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  margin-top: 106px; 
+  margin-top: 80px;
 }
 
 .confirmation-card {
   width: 100%;
-  max-width: 507px;
+  max-width: 340px;
   background: rgba(250,250,250,1);
   /* border: 1px solid rgba(111,111,111,1); */
   border: 1px solid #e0e0e0;
   border-radius: 20px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.13);
-  padding: 40px;
+  padding: 20px 12px;
   text-align: center;
   position: relative;
 }
 
 /* Success Icon */
 .success-icon {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   background: #4CAF50;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 10px auto;
   box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .checkmark-icon {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   filter: brightness(0) invert(1);
 }
 
@@ -59,8 +59,8 @@ body {
   color: rgba(57,57,57,1);
   font-family: 'Arial', sans-serif;
   font-weight: 600;
-  font-size: 40px;
-  margin: 0 0 20px 0;
+  font-size: 26px;
+  margin: 0 0 8px 0;
   text-align: center;
 }
 
@@ -69,21 +69,21 @@ body {
   background: rgba(237,237,237,1);
   padding: 15px 20px;
   border-radius: 10px;
-  margin: 20px 0;
+  margin: 10px 0;
   display: inline-block;
 }
 
 .order-label {
   color: rgba(118,118,118,1);
   font-weight: 600;
-  font-size: 18px;
+  font-size: 14px;
   margin-right: 10px;
 }
 
 .order-number {
   color: rgba(57,57,57,1);
   font-weight: 600;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 /* Confirmation Message */
@@ -100,8 +100,8 @@ body {
 .booking-details {
   background: #fff;
   border-radius: 15px;
-  padding: 25px;
-  margin: 30px 0;
+  padding: 16px;
+  margin: 16px 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
@@ -109,7 +109,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 6px 0;
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -120,14 +120,14 @@ body {
 .detail-label {
   color: rgba(78,78,78,1);
   font-weight: 500;
-  font-size: 18px;
+  font-size: 14px;
   text-align: left;
 }
 
 .detail-value {
   color: rgba(78,78,78,1);
   font-weight: 500;
-  font-size: 18px;
+  font-size: 14px;
   text-align: right;
 }
 
@@ -136,7 +136,7 @@ body {
   display: flex;
   gap: 15px;
   justify-content: center;
-  margin: 30px 0;
+  margin: 16px 0;
   flex-wrap: wrap;
 }
 
