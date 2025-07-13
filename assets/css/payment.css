@@ -47,7 +47,8 @@ body {
   flex-wrap: wrap;
 }
 
-.payment-box, .summary-box {
+.payment-box,
+.summary-box {
   background: #fff;
   border-radius: 12px;
   padding: 30px;
