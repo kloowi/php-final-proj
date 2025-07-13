@@ -396,14 +396,14 @@ window.addEventListener('click', function(event) {
   }
 });
 
-// Always redirect user icon in header to view_account.php when clicked
+// Always redirect user icon in header to viewacc.php when clicked
 window.addEventListener('DOMContentLoaded', function() {
   var loginLink = document.querySelector('.login-link a');
   if (loginLink) {
     loginLink.addEventListener('click', function(e) {
       e.preventDefault();
-      window.location.href = 'view_account.php';
+      window.location.href = 'viewacc.php';
     });
   }
 });
-</script> 
+</script>

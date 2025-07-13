@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../includes/db_connect.php';
+require_once '../includes/db_config.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -82,6 +82,47 @@ try {
             } else {
                 $response['message'] = 'No changes made';
             }
+        }
+    }
+    // Handle gender update
+    elseif (isset($_POST['action']) && $_POST['action'] === 'update_gender' && isset($_POST['gender'])) {
+        $gender = trim($_POST['gender']);
+        
+        // Allow empty gender (nullable)
+        $stmt = $pdo->prepare("UPDATE Users SET gender = ? WHERE user_id = ?");
+        $stmt->execute([$gender ?: null, $user_id]);
+        
+        if ($stmt->rowCount() > 0) {
+            $response['success'] = true;
+            $response['message'] = 'Gender updated successfully';
+        } else {
+            $response['message'] = 'No changes made';
+        }
+    }
+    // Handle birthday update
+    elseif (isset($_POST['action']) && $_POST['action'] === 'update_birthday' && isset($_POST['birthday'])) {
+        $birthday = trim($_POST['birthday']);
+        
+        // Allow empty birthday (nullable)
+        if (empty($birthday)) {
+            $stmt = $pdo->prepare("UPDATE Users SET birthday = NULL WHERE user_id = ?");
+            $stmt->execute([$user_id]);
+        } else {
+            // Validate date format
+            $date = DateTime::createFromFormat('Y-m-d', $birthday);
+            if (!$date || $date->format('Y-m-d') !== $birthday) {
+                $response['message'] = 'Please enter a valid date (YYYY-MM-DD)';
+            } else {
+                $stmt = $pdo->prepare("UPDATE Users SET birthday = ? WHERE user_id = ?");
+                $stmt->execute([$birthday, $user_id]);
+            }
+        }
+        
+        if ($stmt->rowCount() > 0) {
+            $response['success'] = true;
+            $response['message'] = 'Birthday updated successfully';
+        } else {
+            $response['message'] = 'No changes made';
         }
     }
     else {
