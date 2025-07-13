@@ -74,5 +74,3 @@ if (!$total) $total = '1,234';
         </div>
     </div>
 </div>
-
-<?php include '../includes/footer.php'; ?> 
