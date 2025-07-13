@@ -100,7 +100,12 @@ include '../includes/header.php';
             $image_path = '../assets/images/experience_1.jpg';
         }
         ?>
-        <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($experience['title'] ?? 'Experience'); ?>">
+        <div class="image-container">
+            <img src="<?php echo htmlspecialchars($image_path); ?>" alt="<?php echo htmlspecialchars($experience['title'] ?? 'Experience'); ?>" id="experience-image">
+            <button class="enlarge-btn" onclick="openImageModal()">
+                <i class="fas fa-expand"></i>
+            </button>
+        </div>
 
         <!-- Title and Price -->
         <div class="title-price">
@@ -220,6 +225,52 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+});
+</script>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeImageModal()">&times;</span>
+        <img id="modalImage" src="" alt="Enlarged image">
+    </div>
+</div>
+
+<!-- Image Modal JavaScript -->
+<script>
+function openImageModal() {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const experienceImg = document.getElementById('experience-image');
+    
+    modalImg.src = experienceImg.src;
+    modalImg.alt = experienceImg.alt;
+    modal.style.display = 'flex';
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside the image
+document.getElementById('imageModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeImageModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeImageModal();
+    }
 });
 </script>
 
