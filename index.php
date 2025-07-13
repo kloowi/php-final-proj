@@ -5,8 +5,10 @@
   <meta charset="UTF-8">
   <title>Guest Details - <?php echo htmlspecialchars($experience_title); ?></title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/index.css">
   <script src="assets/js/index.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 <div class="hero">
@@ -39,7 +41,29 @@
     <div class="intro-text">
         <h2>Join us for an adventure!</h2>
         <p>Explore Manila's hidden gems, guided by locals. From food crawls to heritage walks — your story starts here.</p>
-        <img src="assets/images/index/features.png" alt="Adventure">
+        <h2>⠀</h2>
+        <div class="features-icons-row" style="display: flex; gap: 32px; justify-content: center; align-items: flex-end; margin: 18px 0;">
+          <div class="feature-icon-label" style="display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 2.1rem; color: #1a73e8;">
+            <span class="material-icons" style="font-size: 2.1rem;">map</span>
+            <span style="font-size: 0.95rem; color: #888; margin-top: 6px; font-weight: 500;">Smart Itinerary</span>
+          </div>
+          <div class="feature-icon-label" style="display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 2.1rem; color: #1a73e8;">
+            <span class="material-icons" style="font-size: 2.1rem;">flash_on</span>
+            <span style="font-size: 0.95rem; color: #888; margin-top: 6px; font-weight: 500;">Instant Booking</span>
+          </div>
+          <div class="feature-icon-label" style="display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 2.1rem; color: #1a73e8;">
+            <span class="material-icons" style="font-size: 2.1rem;">local_offer</span>
+            <span style="font-size: 0.95rem; color: #888; margin-top: 6px; font-weight: 500;">Best Deals</span>
+          </div>
+          <div class="feature-icon-label" style="display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 2.1rem; color: #1a73e8;">
+            <span class="material-icons" style="font-size: 2.1rem;">grade</span>
+            <span style="font-size: 0.95rem; color: #888; margin-top: 6px; font-weight: 500;">Top Picks</span>
+          </div>
+          <div class="feature-icon-label" style="display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 2.1rem; color: #1a73e8;">
+            <span class="material-icons" style="font-size: 2.1rem;">support_agent</span>
+            <span style="font-size: 0.95rem; color: #888; margin-top: 6px; font-weight: 500;">24/7 Support</span>
+          </div>
+        </div>
         <a href="pages/explore.php" class="explore-btn">Explore</a>
     </div>
     <div class="intro-image">
