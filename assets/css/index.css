@@ -201,8 +201,13 @@
     max-width: 500px;
 }
 
+.intro-text img {
+    max-width: 200px;
+    height: auto;
+}
+
 .intro-image img {
-    max-width: 300px;
+    max-width: 400px;
     border-radius: 15px;
 }
 
@@ -234,6 +239,12 @@
 
 .explore-btn:hover {
     background-color: #0463d0;
+}
+
+.intro-text .explore-btn {
+    display: block;
+    text-align: left;
+    width: fit-content;
 }
 
 .popular-section {

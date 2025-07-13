@@ -39,10 +39,11 @@
     <div class="intro-text">
         <h2>Join us for an adventure!</h2>
         <p>Explore Manila's hidden gems, guided by locals. From food crawls to heritage walks — your story starts here.</p>
+        <img src="assets/images/index/features.png" alt="Adventure">
         <a href="pages/explore.php" class="explore-btn">Explore</a>
     </div>
     <div class="intro-image">
-        <img src="assets/images/index/v10_33.png" alt="Adventure">
+        <img src="assets/images/index/main-index.png" alt="Adventure">
     </div>
 </div>
 <div class="popular-section">
