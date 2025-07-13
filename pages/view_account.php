@@ -37,7 +37,7 @@ try {
     <div class="account-card">
       <div class="account-section">
         <div class="account-section-title">
-          Personal Information
+          <img src="../assets/images/acc/personalinfo.png" alt="Avatar Icon" style="width: 22px; height: 22px; vertical-align: middle; margin-right: 8px;"> Personal Information
           <span style="flex:1"></span>
           <button id="edit-name-btn" style="background:none;border:none;cursor:pointer;margin-left:8px;vertical-align:middle;">
             <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="Edit Icon" style="width: 18px; vertical-align: middle;">
