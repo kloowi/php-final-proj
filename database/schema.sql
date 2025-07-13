@@ -39,15 +39,12 @@ CREATE TABLE Bookings (
     user_id INT NOT NULL,
     experience_id INT NOT NULL,
     booking_date DATE NOT NULL,
+    selected_time VARCHAR(20),
     number_of_guests INT NOT NULL CHECK (number_of_guests > 0),
     status VARCHAR(20) NOT NULL CHECK (status IN ('confirmed', 'cancelled', 'pending')),
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (experience_id) REFERENCES Experiences(experience_id)
 );
-
--- For existing databases, add booking_code if missing
-ALTER TABLE Bookings ADD COLUMN booking_code VARCHAR(6) NOT NULL UNIQUE AFTER booking_id;
-ALTER TABLE Bookings ADD COLUMN selected_time VARCHAR(20) AFTER booking_date;
 
 CREATE TABLE Payment (
     payment_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -66,12 +63,12 @@ CREATE TABLE Reviews (
     category VARCHAR(255) NOT NULL
 );
 
-INSERT INTO Admin (username, password_hash)
-VALUES ('admin', '$2y$10$6hMYSzevKv94GwgetbdzBe5qluhB2a..lAQ3XiRN9006mT1ZvECzC');
-
 CREATE TABLE Booking_Guests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     booking_id INT NOT NULL,
     guest_name VARCHAR(255) NOT NULL,
     FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
 );
+
+INSERT INTO Admin (username, password_hash)
+VALUES ('admin', '$2y$10$6hMYSzevKv94GwgetbdzBe5qluhB2a..lAQ3XiRN9006mT1ZvECzC');
