@@ -9,13 +9,24 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Get experience details from URL parameters or session
-$experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : ($_SESSION['booking_details']['experience_id'] ?? 0);
-$title = isset($_GET['title']) ? $_GET['title'] : ($_SESSION['booking_details']['title'] ?? '');
-$price = isset($_GET['price']) ? (float)$_GET['price'] : ($_SESSION['booking_details']['price'] ?? 0);
-$selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : '';
-$selected_time = isset($_GET['selected_time']) ? $_GET['selected_time'] : '';
-$guest_count = isset($_GET['guest_count']) ? (int)$_GET['guest_count'] : 1;
+// Accept POST from guest_details.php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $experience_id = isset($_POST['experience_id']) ? (int)$_POST['experience_id'] : 0;
+    $title = $_POST['title'] ?? '';
+    $price = isset($_POST['price']) ? (float)$_POST['price'] : 0;
+    $selected_date = $_POST['selected_date'] ?? '';
+    $selected_time = $_POST['selected_time'] ?? '';
+    $guest_count = isset($_POST['guest_count']) ? (int)$_POST['guest_count'] : 1;
+    $guest_names = $_POST['guest_name'] ?? [];
+} else {
+    $experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : ($_SESSION['booking_details']['experience_id'] ?? 0);
+    $title = isset($_GET['title']) ? $_GET['title'] : ($_SESSION['booking_details']['title'] ?? '');
+    $price = isset($_GET['price']) ? (float)$_GET['price'] : ($_SESSION['booking_details']['price'] ?? 0);
+    $selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : '';
+    $selected_time = isset($_GET['selected_time']) ? $_GET['selected_time'] : '';
+    $guest_count = isset($_GET['guest_count']) ? (int)$_GET['guest_count'] : 1;
+    $guest_names = [];
+}
 
 // Clear booking details from session as they're no longer needed
 if (isset($_SESSION['booking_details'])) {
@@ -76,6 +87,11 @@ include '../includes/header.php';
       <input type="hidden" name="selected_date" value="<?php echo htmlspecialchars($selected_date); ?>">
       <input type="hidden" name="selected_time" value="<?php echo htmlspecialchars($selected_time); ?>">
       <input type="hidden" name="guest_count" value="<?php echo $guest_count; ?>">
+      <?php if (!empty($guest_names)) {
+        foreach ($guest_names as $gname) {
+          echo '<input type="hidden" name="guest_name[]" value="' . htmlspecialchars($gname) . '">';
+        }
+      } ?>
       
       <label><input type="radio" name="payment_method" value="card" checked> Card</label>
       <label><input type="radio" name="payment_method" value="bank"> Bank</label>

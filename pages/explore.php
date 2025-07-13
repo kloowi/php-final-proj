@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php include '../includes/header-index.php'; ?>
 <?php
-require_once '../includes/db_connect-hostinger.php';
+require_once '../includes/db_config.php';
 
 $experiences = [];
 if ($pdo) {
@@ -33,7 +33,6 @@ foreach ($experiences as $experience) {
         $categorized_experiences['Historical & Cultural Sites'][] = $experience;
     }
 }
-
 ?>
 
 <!DOCTYPE html>
