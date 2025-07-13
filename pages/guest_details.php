@@ -110,8 +110,16 @@ if (!$experience_id || !$title || !$price) {
     inline: true,
     minDate: "today",
     dateFormat: "Y-m-d",
-    onChange: function(selectedDates, dateStr) {
-      document.getElementById("selected-date").value = dateStr;
+    onChange: function(selectedDates, dateStr, instance) {
+      const prevDate = instance._lastSelectedDateStr;
+      if (prevDate === dateStr) {
+        // Unselect if clicking the same date
+        instance.clear();
+        document.getElementById("selected-date").value = '';
+      } else {
+        document.getElementById("selected-date").value = dateStr;
+      }
+      instance._lastSelectedDateStr = dateStr;
     }
   });
 
@@ -146,12 +154,18 @@ if (!$experience_id || !$title || !$price) {
     if (timeOptions && timeInput) {
       timeOptions.addEventListener('click', function(e) {
         if (e.target.classList.contains('time-btn')) {
-          // Remove active from all
-          timeOptions.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
-          // Set active
-          e.target.classList.add('active');
-          // Set value
-          timeInput.value = e.target.getAttribute('data-time');
+          if (e.target.classList.contains('active')) {
+            // If already active, unselect it
+            e.target.classList.remove('active');
+            timeInput.value = '';
+          } else {
+            // Remove active from all
+            timeOptions.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+            // Set active
+            e.target.classList.add('active');
+            // Set value
+            timeInput.value = e.target.getAttribute('data-time');
+          }
         }
       });
     }
