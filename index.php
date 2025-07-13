@@ -6,15 +6,34 @@
   <title>Guest Details - <?php echo htmlspecialchars($experience_title); ?></title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="assets/css/index.css">
+  <script src="assets/js/index.js" defer></script>
 </head>
 <body>
 <div class="hero">
-    <h1>Your gateway to discovering Manila like a local.</h1>
-    <div class="search-box">
-        <h3>Search Experiences</h3>
-        <input type="text" placeholder="Search...">
-        <button>Search Vacation</button>
+    <div class="slideshow-container">
+        <div class="slide active" style="background-image: url('assets/images/index/slideshow/Slideshow1.jpg')"></div>
+        <div class="slide" style="background-image: url('assets/images/index/slideshow/Slideshow2.jpg')"></div>
+        <div class="slide" style="background-image: url('assets/images/index/slideshow/Slideshow3.jpg')"></div>
+        <div class="slide" style="background-image: url('assets/images/index/slideshow/Slideshow4.jpg')"></div>
+        <div class="slide" style="background-image: url('assets/images/index/slideshow/Slideshow5.jpg')"></div>
     </div>
+    
+    <div class="hero-content">
+        <h1>Your gateway to discovering Manila like a local.</h1>
+        <div class="search-box">
+            <h3>Search Experiences</h3>
+            <input type="text" placeholder="Search...">
+            <button>Search Vacation</button>
+        </div>
+    </div>
+    
+    <div class="slideshow-nav">
+        <div class="nav-circle active" data-slide="0"></div>
+        <div class="nav-circle" data-slide="1"></div>
+        <div class="nav-circle" data-slide="2"></div>
+    </div>
+    
+    <!-- Removed slideshow-arrows section -->
 </div>
 
 <div class="intro-section">
@@ -30,10 +49,10 @@
         <a href="/pages/explore.php" class="explore-btn">Explore</a>
     </div>
     <div class="intro-image">
-        <img src="<?php echo $basePath; ?>/images/index/v10_33.png" alt="Adventure">
+        <img src="assets/images/v10_33.png" alt="Adventure">
     </div>
 </div>
-
+index/
 <div class="popular-section">
     <h3>Most Popular Experiences</h3>
 
@@ -62,4 +81,4 @@
     </div>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes/footer-index.php'; ?>
