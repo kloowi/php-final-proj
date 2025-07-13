@@ -263,16 +263,14 @@ body {
     left: 50%;
     bottom: 50px;
     transform: translateX(-50%);
-    z-index: 10;
-    font-size: 30px;
+    background: #fff;
+    padding: 14px 40px;
+    font-size: 24px;
     font-weight: bold;
-    background: white;
-    padding: 12px 28px;
-    border-radius: 10px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
-    color: #2196f3;
-    text-align: center;
-    max-width: 420px;
+    color: #007bff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    z-index: 10;
 }
 
 .payment-details-row {

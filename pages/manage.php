@@ -74,9 +74,9 @@ include '../includes/header-index.php';
                         <td>
                             <strong><?= htmlspecialchars($booking['booking_code']) ?></strong><br>
                             <?= htmlspecialchars(ucfirst($booking['status'])) ?><br><br>
-                            Booked for:<br> <?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?><br>
+                            <br> <span class="booking-date"><?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?></span><br>
                         </td>
-                        <td><?= htmlspecialchars($booking['experience']) ?></td>
+                        <td><span class="experience-title"><?= htmlspecialchars($booking['experience']) ?></span></td>
                         <td>
                             <a href="view_manage.php?code=<?= urlencode($booking['booking_code']) ?>" class="manage-btn">View Details</a>
                         </td>
