@@ -1,10 +1,11 @@
-* {
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Helvetica Neue', sans-serif;
 }
 
+<<<<<<< HEAD
 body {
     background-color: #fff;
     color: #333;
@@ -33,81 +34,102 @@ nav a.login {
 }
 
 /* ✅ Fixed and centered hero section */
+=======
+>>>>>>> f1c66078217421ad2a662f466485f950b4ce0182
 .hero-image {
     width: 100%;
-    background: url('../assets/images/index/MANILA.jpg') no-repeat center center;
-    background-size: cover;
-    height: 280px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 260px;
+    position: relative;
+    overflow: visible;
+}
+
+.hero-image img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    left: 0;
+    top: 0;
+    z-index: 1;
 }
 
 .overlay-text {
-    font-size: 36px;
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 30px;
     font-weight: bold;
     background: white;
-    padding: 20px 40px;
+    padding: 12px 28px;
     border-radius: 10px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    color: #007bff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+    color: #2196f3;
     text-align: center;
-    max-width: 90%;
+    max-width: 420px;
 }
 
 .content {
-    padding: 50px;
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 1100px;
+    margin: 64px auto 40px auto;
+    padding: 0 20px;
 }
 
-label {
-    font-weight: 500;
+.filter-form {
+    margin-bottom: 24px;
+}
+
+.filter-form label {
+    font-weight: bold;
     color: #007bff;
 }
 
-select {
-    display: block;
-    margin: 10px 0 30px;
-    padding: 12px;
+.filter-form select {
+    padding: 8px 14px;
     border-radius: 8px;
-    border: 1px solid #ddd;
-    width: 220px;
-}
-
-/* ✅ Styled dropdown */
-label[for="filter"] {
-    font-weight: 600;
-    color: #337ab7;
-    display: block;
-    margin-bottom: 8px;
-}
-
-select#filter {
-    padding: 10px 14px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-    appearance: none;
+    border: 1.5px solid #bfc9d9;
     background-color: #fff;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10"><path fill="%23333" d="M7 10L0 0h14z"/></svg>');
+    color: #222;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(33,150,243,0.06);
+    appearance: none;
     background-repeat: no-repeat;
     background-position: right 12px center;
-    background-size: 12px;
-    width: 250px;
+    background-size: 18px;
+    cursor: pointer;
+    min-width: 180px;
+    max-width: 240px;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-select#filter:hover,
-select#filter:focus {
-    border-color: #66afe9;
+.filter-form select:focus,
+.filter-form select:hover {
+    border-color: #2196f3;
+    box-shadow: 0 3px 10px rgba(33,150,243,0.10);
+    outline: none;
+}
+
+.filter-form select:disabled,
+.filter-form select option[disabled] {
+    color: #bfc9d9;
+}
+
+select::-ms-expand {
+    display: none;
 }
 
 .booking-card {
-    background: #fafafa;
+    background: #fff;
     border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     overflow-x: auto;
+}
+
+.booking-card tbody tr:not(:last-child) {
+    border-bottom: 1px solid #2196f3;
 }
 
 table {
@@ -115,27 +137,52 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
-    padding: 20px;
-    text-align: left;
-    vertical-align: top;
-}
-
 thead {
     border-bottom: 2px solid #007bff;
-    background-color: white;
+}
+
+th, td {
+    text-align: left;
+    padding: 22px 24px;
+    vertical-align: middle;
+}
+
+th:last-child, td:last-child {
+    text-align: center;
+    width: 160px;
+}
+
+th:nth-child(1), td:nth-child(1) {
+    width: 38%;
+}
+th:nth-child(2), td:nth-child(2) {
+    width: 38%;
+}
+
+th {
+    font-weight: 600;
+    color: #333;
+}
+
+td ol {
+    margin: 0;
+    padding-left: 18px;
 }
 
 .manage-btn {
-    padding: 10px 20px;
+    display: inline-block;
     background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 10px;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+    margin: 0 auto;
 }
 
 .manage-btn:hover {
-    background-color: #0056b3;
+    background-color: #005ecb;
 }

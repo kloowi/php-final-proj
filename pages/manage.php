@@ -37,11 +37,8 @@ $filter = $_GET['filter'] ?? '';
 $today = date('Y-m-d');
 $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $today) {
     $bookingDate = date('Y-m-d', strtotime($booking['date']));
-    if ($filter === 'upcoming') {
-        return $bookingDate >= $today;
-    } elseif ($filter === 'past') {
-        return $bookingDate < $today;
-    }
+    if ($filter === 'upcoming') return $bookingDate >= $today;
+    if ($filter === 'past') return $bookingDate < $today;
     return true;
 });
 ?>
@@ -54,6 +51,7 @@ $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $t
 </head>
 <body>
 <section class="hero-image">
+    <img src="<?php echo $basePath; ?>/images/index/MANILA.jpg" alt="Manila Skyline">
     <div class="overlay-text">My Bookings</div>
 </section>
 
@@ -73,14 +71,12 @@ $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $t
             <tr>
                 <th>Booking Details</th>
                 <th>Experience</th>
-                <th>Date and Time</th>
-                <th>Guests</th>
-                <th>Action</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <?php if (empty($filteredBookings)): ?>
-                <tr><td colspan="5">No bookings found for this filter.</td></tr>
+                <tr><td colspan="3">No bookings found for this filter.</td></tr>
             <?php else: ?>
                 <?php foreach ($filteredBookings as $booking): ?>
                     <tr>
@@ -91,18 +87,7 @@ $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $t
                         </td>
                         <td><?= htmlspecialchars($booking['experience']) ?></td>
                         <td>
-                            <?= htmlspecialchars($booking['date']) ?><br>
-                            <?= htmlspecialchars($booking['start_time']) ?> – <?= htmlspecialchars($booking['end_time']) ?>
-                        </td>
-                        <td>
-                            <ol>
-                                <?php foreach ($booking['guests'] as $guest): ?>
-                                    <li><?= htmlspecialchars($guest) ?></li>
-                                <?php endforeach; ?>
-                            </ol>
-                        </td>
-                        <td>
-                            <a href="view_manage.php?code=<?= $booking['code'] ?>" class="manage-btn">Manage</a>
+                            <a href="view_manage.php?code=<?= urlencode($booking['code']) ?>" class="manage-btn">View Details</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

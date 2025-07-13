@@ -45,16 +45,18 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                class="<?php echo ($currentPage == 'explore.php' || $currentPage == 'view_experience.php') ? 'active' : ''; ?>">Explore</a></li>
 
         <li><a href="<?php echo $isIndex ? 'pages/manage.php' : 'manage.php'; ?>"
-               class="<?php echo ($currentPage == 'manage.php' || $currentPage == 'view_manage,php') ? 'active' : ''; ?>">Manage</a></li>
+               class="<?php echo ($currentPage == 'manage.php' || $currentPage == 'view_manage.php') ? 'active' : ''; ?>">Manage</a></li>
 
         <li><a href="<?php echo $isIndex ? 'pages/about.php' : 'about.php'; ?>"
                class="<?php echo ($currentPage == 'about.php') ? 'active' : ''; ?>">About Us</a></li>
       </ul>
       <div class="login-link">
-        <?php if (isset($_SESSION['user_id'])): ?>
-          <a href="/logout.php">Log Out</a>
+        <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_data'])): ?>
+          <a href="<?php echo $isIndex ? 'pages/view_account.php' : 'view_account.php'; ?>" class="user-greeting">
+            Hi, <?php echo htmlspecialchars($_SESSION['user_data']['username']); ?>
+          </a>
         <?php else: ?>
-          <a href="/pages/login.php">Log In</a>
+          <a href="<?php echo $isIndex ? 'pages/login.php' : 'login.php'; ?>">Log In</a>
         <?php endif; ?>
       </div>
     </nav>
