@@ -32,9 +32,10 @@ include '../includes/header-index.php';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Booking</title>
+    <title>StepIntoManila</title>
     <link rel="stylesheet" href="../assets/css/view_manage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <body>
 <section class="hero-image">

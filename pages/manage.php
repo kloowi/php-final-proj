@@ -36,8 +36,9 @@ include '../includes/header-index.php';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Bookings</title>
+    <title>StepIntoManila</title>
     <link rel="stylesheet" href="../assets/css/manage.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <body>
 <section class="hero-image">

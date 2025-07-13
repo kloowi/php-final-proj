@@ -292,9 +292,15 @@ body {
   color: #fff;
 }
 
-.time-btn:hover {
-  background: #e6f0ff;
-  color: #007bff;
+.time-btn:hover:not(.active):not(:active) {
+  background: #4da3ff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.time-btn:active {
+  background: #007bff;
+  color: #fff;
   border-color: #007bff;
 }
 

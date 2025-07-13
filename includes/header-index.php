@@ -16,11 +16,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Discover Manila</title>
+  <title>StepIntoManila</title>
 
   <!-- ✅ Proper CSS paths -->
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/style.css">
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/header.css">
+  <link rel="icon" type="image/png" href="<?php echo $basePath; ?>/images/logo/blue-logo.png">
 
   <!-- ✅ Script for index only -->
   <?php if ($isIndex): ?>
@@ -52,8 +53,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
       </ul>
       <div class="login-link">
         <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_data'])): ?>
-          <a href="<?php echo $isIndex ? 'pages/view_account.php' : 'view_account.php'; ?>" class="user-greeting">
-            Hi, <?php echo htmlspecialchars($_SESSION['user_data']['username']); ?>
+          <a href="<?php echo $isIndex ? 'pages/view_account.php' : 'view_account.php'; ?>" class="user-greeting" style="display: flex; align-items: center; justify-content: center;">
+            <?php $initial = strtoupper(substr($_SESSION['user_data']['username'], 0, 1)); ?>
+            <span class="user-greeting-initial"> <?php echo $initial; ?> </span>
           </a>
         <?php else: ?>
           <a href="<?php echo $isIndex ? 'pages/login.php' : 'login.php'; ?>">Log In</a>

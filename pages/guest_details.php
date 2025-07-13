@@ -46,9 +46,10 @@ if (!$experience_id || !$title || !$price) {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Guest Details</title>
+  <title>StepIntoManila</title>
   <link rel="stylesheet" href="../assets/css/guest_details.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <body>
 <?php include '../includes/header.php'; ?>
@@ -109,8 +110,16 @@ if (!$experience_id || !$title || !$price) {
     inline: true,
     minDate: "today",
     dateFormat: "Y-m-d",
-    onChange: function(selectedDates, dateStr) {
-      document.getElementById("selected-date").value = dateStr;
+    onChange: function(selectedDates, dateStr, instance) {
+      const prevDate = instance._lastSelectedDateStr;
+      if (prevDate === dateStr) {
+        // Unselect if clicking the same date
+        instance.clear();
+        document.getElementById("selected-date").value = '';
+      } else {
+        document.getElementById("selected-date").value = dateStr;
+      }
+      instance._lastSelectedDateStr = dateStr;
     }
   });
 
@@ -145,12 +154,18 @@ if (!$experience_id || !$title || !$price) {
     if (timeOptions && timeInput) {
       timeOptions.addEventListener('click', function(e) {
         if (e.target.classList.contains('time-btn')) {
-          // Remove active from all
-          timeOptions.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
-          // Set active
-          e.target.classList.add('active');
-          // Set value
-          timeInput.value = e.target.getAttribute('data-time');
+          if (e.target.classList.contains('active')) {
+            // If already active, unselect it
+            e.target.classList.remove('active');
+            timeInput.value = '';
+          } else {
+            // Remove active from all
+            timeOptions.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+            // Set active
+            e.target.classList.add('active');
+            // Set value
+            timeInput.value = e.target.getAttribute('data-time');
+          }
         }
       });
     }

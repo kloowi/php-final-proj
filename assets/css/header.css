@@ -69,15 +69,23 @@
 /* Main Nav */
 .main-nav {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   box-sizing: border-box;
 }
 
+.logo {
+  flex: 0 0 auto;
+}
+
 .main-nav .nav-links {
   display: flex;
   gap: 1.5rem;
+  justify-content: center;
+  flex: 1;
+  margin: 0;
 }
 
 .main-nav .nav-links li {
@@ -100,6 +108,12 @@
   border-radius: 0;
   box-shadow: none;
   font-weight: bold;
+}
+
+.login-link {
+  min-width: 80px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .login-link a {
@@ -146,5 +160,26 @@
 
 .site-header.white-bg .user-greeting:hover {
   background-color: rgba(0, 128, 255, 0.2);
+} 
+
+.user-greeting-initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #2196f3;
+  color: #fff;
+  font-weight: normal;
+  font-size: 15px;
+} 
+
+.user-greeting-text {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 } 
 

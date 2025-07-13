@@ -72,11 +72,15 @@ if (!empty($experience['category']) && $pdo) {
     }
 }
 
-include '../includes/header.php'; 
 ?>
 
-<link rel="stylesheet" href="../assets/css/view_experience.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>StepIntoManila</title>
+    <link rel="stylesheet" href="../assets/css/view_experience.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
+</head>
 
 <div class="page-wrapper">
     <div class="experience-card">
