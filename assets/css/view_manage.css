@@ -52,79 +52,134 @@ body {
     flex-basis: auto;
 }
 
-/* Card Section */
-.card {
+/* --- Unified Booking Card Styles --- */
+.unified-booking-card {
     background: #fff;
-    padding: 30px 30px 25px 30px; /* Increased top padding from 18px to 40px */
     border-radius: 12px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    text-align: left;
-}
-
-.card h3,
-.section-title {
-    margin-bottom: 18px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #222;
-}
-
-.experience-details {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    flex-wrap: nowrap;
-    text-align: left;
-}
-
-.experience-main {
-    flex: 1;
-    color: #007bff;
-    font-weight: 700;
-    font-size: 1.4em;
-    text-align: left;
-    padding-left: 16px;
-}
-
-.experience-detail {
-    flex: 1;
-    font-size: 0.95em;
-}
-
-.experience-detail .label {
-    color: #222;
-    font-weight: 500;
-    font-size: 1em;
-}
-
-.experience-right {
-    display: flex;
-    flex: 2;
-    gap: 40px;  /* Reverted back to original 40px spacing */
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
-.experience-col {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    padding: 25px 28px 28px 28px;
+    max-width: 700px;
+    margin: -70px auto 0 auto;
     display: flex;
     flex-direction: column;
+    gap: 0px;
+    font-size: 0.97em;
+}
+.booking-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #ececec;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.experience-title {
+    color: #397cff;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.booking-code {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #444;
+    letter-spacing: 1px;
+    margin-left: 24px;
+    white-space: nowrap;
+}
+.booking-card-body {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: space-between;
+}
+.booking-card-left, .booking-card-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+.booking-card-right {
     align-items: flex-end;
-    justify-content: center;
-    min-width: 120px;  /* Reverted back to original 120px min-width */
     text-align: right;
 }
-
-.experience-col .label {
-    font-style: normal;
-    font-weight: 600;
-    color: #222;
-    font-size: 16px;
+.detail-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2px;
 }
-.experience-col span:not(.label) {
-    font-size: 16px;
-    font-style: italic;
+.detail-label {
+    color: #888;
+    font-size: 0.97em;
     font-weight: 400;
+}
+.detail-value {
+    color: #222;
+    font-size: 1em;
+    font-weight: 500;
+    margin-top: 1px;
+}
+.email-value {
+    color: #888;
+    font-size: 0.93em;
+    font-weight: 400;
+}
+.booking-card-footer {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 30px;
+    gap: 12px;
+}
+.total-label {
+    font-size: 1em;
+    color: #888;
+    font-weight: 400;
+    margin-right: 10px;
+}
+.total-value {
+    font-size: 1.7em;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+/* Remove old card/section styles for this page */
+.summary-box, .card, .section-title, .payment-details-flex, .guest-details-flex, .guest-details-align, .guest-details-align-center, .payment-status-title, .payment-details-right, .payment-detail-col, .guest-detail-col, .guest-label, .guest-value, .guest-label-bold, .guest-value-block, .guest-detail-col-align, .guest-details-spacer {
+    display: none !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Responsive for mobile */
+@media (max-width: 700px) {
+    .unified-booking-card {
+        padding: 18px 8px 18px 8px;
+        max-width: 98vw;
+    }
+    .booking-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .booking-card-body {
+        flex-direction: column;
+        gap: 18px;
+    }
+    .booking-card-right {
+        align-items: flex-start;
+        text-align: left;
+    }
+    .booking-card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+    .booking-code {
+        margin-left: 0;
+    }
 }
 
 .guest-block {
@@ -168,7 +223,7 @@ body {
 .back-btn {
     background: #067bff;
     color: white;
-    padding: 12px 24px;
+    padding: 10px 20px;
     border: none;
     border-radius: 10px;
     font-weight: bold;
@@ -178,9 +233,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 0;
-    margin-left: 0;
-    margin-bottom: 0;
+    margin: 0;
     transition: background-color 0.3s ease;
 }
 
@@ -198,7 +251,7 @@ body {
 .hero-image img {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 70%;
     object-fit: cover;
     left: 0;
     top: 0;
@@ -208,7 +261,7 @@ body {
 .overlay-text {
     position: absolute;
     left: 50%;
-    bottom: -30px;
+    bottom: 50px;
     transform: translateX(-50%);
     z-index: 10;
     font-size: 30px;
@@ -347,4 +400,15 @@ body {
 
 .guest-details-align-center {
     align-items: center;
+}
+
+.card-back-btn-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: -20px;
+}
+.back-btn {
+    font-size: 14px;
+    padding: 10px 20px;
 }

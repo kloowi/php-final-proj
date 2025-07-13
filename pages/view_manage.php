@@ -12,9 +12,10 @@ $bookingCode = $_GET['code'] ?? null;
 $booking = null;
 
 if ($pdo && $bookingCode) {
-    $sql = "SELECT b.*, e.title AS experience_title, e.location, e.price
+    $sql = "SELECT b.*, e.title AS experience_title, e.location, e.price, e.duration, u.full_name, u.email
             FROM Bookings b
             JOIN Experiences e ON b.experience_id = e.experience_id
+            JOIN Users u ON b.user_id = u.user_id
             WHERE b.booking_code = ? AND b.user_id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$bookingCode, $user_id]);
@@ -24,6 +25,22 @@ if ($pdo && $bookingCode) {
 if (!$booking) {
     echo "<p style='padding: 30px;'>Invalid booking code.</p>";
     exit;
+}
+
+// Fetch payment info
+$payment = null;
+if ($pdo) {
+    $stmt = $pdo->prepare('SELECT * FROM Payment WHERE booking_id = ? ORDER BY payment_id DESC LIMIT 1');
+    $stmt->execute([$booking['booking_id']]);
+    $payment = $stmt->fetch();
+}
+
+// Fetch guest names
+$guests = [];
+if ($pdo) {
+    $stmt = $pdo->prepare('SELECT guest_name FROM Booking_Guests WHERE booking_id = ?');
+    $stmt->execute([$booking['booking_id']]);
+    $guests = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 include '../includes/header-index.php';
@@ -40,104 +57,60 @@ include '../includes/header-index.php';
 <body>
 <section class="hero-image">
     <img src="../assets/images/index/MANILA.jpg" alt="Manila Skyline">
-    <div class="overlay-text">View Booking</div>
+    <div class="overlay-text">Booking Details</div>
 </section>
 <section class="content">
-    <a href="manage.php" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
-    <!-- Booking Summary -->
-    <div class="summary-box mt-48">
-        <div><span class="label"><?= htmlspecialchars(ucfirst($booking['status'])) ?></span></div>
-        <div>Booked for<br><?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?></div>
-        <div class="code">Book Reference No.<br><span class="code-value"><?= htmlspecialchars($booking['booking_code']) ?></span></div>
-    </div>
-
-    <!-- Experience Details -->
-    <h3 class="section-title">Experience Details</h3>
-    <div class="card mt-16">
-        <div class="experience-details">
-            <div class="experience-main"><?= htmlspecialchars($booking['experience_title']) ?></div>
-            <div class="experience-right">
-                <div class="experience-col">
-                    <span class="label">Date</span>
-                    <span><?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?></span>
+    <!-- Unified Booking Card -->
+    <div class="unified-booking-card">
+        <div class="booking-card-header">
+            <div class="booking-card-title">
+                <span class="experience-title"><?= htmlspecialchars($booking['experience_title']) ?></span>
+            </div>
+            <div class="booking-code">
+                <?= htmlspecialchars($booking['booking_code']) ?>
+            </div>
+        </div>
+        <div class="booking-card-body">
+            <div class="booking-card-left">
+                <div class="detail-row">
+                    <span class="detail-label">Date</span>
+                    <span class="detail-value"><b><?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?></b></span>
                 </div>
-                <div class="experience-col">
-                    <span class="label">Time</span>
-                    <span><?= isset($booking['selected_time']) ? htmlspecialchars($booking['selected_time']) : 'N/A' ?></span>
+                <div class="detail-row">
+                    <span class="detail-label">Duration</span>
+                    <span class="detail-value"><b><?= isset($booking['selected_time']) ? htmlspecialchars($booking['selected_time']) : (isset($booking['duration']) ? htmlspecialchars($booking['duration']) : 'N/A') ?></b></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Method</span>
+                    <span class="detail-value"><b><?= $payment ? htmlspecialchars($payment['payment_method']) : 'N/A' ?></b></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Date</span>
+                    <span class="detail-value"><b><?= $payment ? htmlspecialchars(date('M d, Y', strtotime($payment['payment_date']))) : 'N/A' ?></b></span>
+                </div>
+            </div>
+            <div class="booking-card-right">
+                <div class="detail-row">
+                    <span class="detail-label">Account Name</span>
+                    <span class="detail-value"><b><?= htmlspecialchars(strtoupper($booking['full_name'])) ?></b><br><span class="email-value"><?= htmlspecialchars($booking['email']) ?></span></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Total Number of Guests</span>
+                    <span class="detail-value"><b><?= htmlspecialchars($booking['number_of_guests']) ?></b></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Guest Names</span>
+                    <span class="detail-value"><b><?= $guests ? htmlspecialchars(implode(', ', $guests)) : 'N/A' ?></b></span>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Payment Details -->
-    <h3 class="section-title">Payment Details</h3>
-    <div class="card mt-16 payment-details-flex">
-        <div class="payment-status-title">Paid</div>
-        <div class="payment-details-right">
-        <?php
-        // Fetch payment info
-        $payment = null;
-        if ($pdo) {
-            $stmt = $pdo->prepare('SELECT * FROM Payment WHERE booking_id = ? ORDER BY payment_id DESC LIMIT 1');
-            $stmt->execute([$booking['booking_id']]);
-            $payment = $stmt->fetch();
-        }
-        ?>
-        <?php if ($payment): ?>
-            <div class="payment-detail-col">
-                <span class="payment-label">Amount Paid</span>
-                <span class="payment-value">₱<?= htmlspecialchars(number_format($payment['amount'], 2)) ?></span>
-            </div>
-            <div class="payment-detail-col">
-                <span class="payment-label">Payment Method</span>
-                <span class="payment-value"><?= htmlspecialchars($payment['payment_method']) ?></span>
-            </div>
-            <div class="payment-detail-col">
-                <span class="payment-label">Payment Date</span>
-                <span class="payment-value"><?= htmlspecialchars(date('M d, Y H:i', strtotime($payment['payment_date']))) ?></span>
-            </div>
-            <div class="payment-detail-col">
-                <span class="payment-label">Payment Status</span>
-                <span class="payment-value"><?= htmlspecialchars(ucfirst($payment['status'])) ?></span>
-            </div>
-        <?php else: ?>
-            <div>No payment record found.</div>
-        <?php endif; ?>
+        <div class="booking-card-footer">
+            <div class="total-label">Total</div>
+            <div class="total-value">₱<?= $payment ? htmlspecialchars(number_format($payment['amount'], 2)) : '0.00' ?></div>
         </div>
     </div>
-
-    <!-- Guest Details -->
-    <h3 class="section-title">Guest Details</h3>
-    <div class="card mt-16 guest-details-flex guest-details-align guest-details-align-center">
-        <div class="payment-status-title">Registered</div>
-        <div class="guest-details-right">
-            <div class="guest-detail-col guest-detail-col-align">
-                <span class="guest-label guest-label-bold">Number of Guests</span>
-                <span class="guest-value guest-value-block"><?= htmlspecialchars($booking['number_of_guests']) ?></span>
-            </div>
-            <div class="guest-detail-col guest-detail-col-align">
-                <span class="guest-label guest-label-bold">Guest Names</span>
-                <?php
-                // Fetch guest names
-                $guests = [];
-                if ($pdo) {
-                    $stmt = $pdo->prepare('SELECT guest_name FROM Booking_Guests WHERE booking_id = ?');
-                    $stmt->execute([$booking['booking_id']]);
-                    $guests = $stmt->fetchAll(PDO::FETCH_COLUMN);
-                }
-                ?>
-                <?php if ($guests): ?>
-                    <?php foreach ($guests as $guest): ?>
-                        <span class="guest-value guest-value-block"><?= htmlspecialchars($guest) ?></span>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <span class="guest-value guest-value-block">No guest details found.</span>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
+    
 </section>
-
 <?php include '../includes/footer.php'; ?>
 </body>
 </html>
