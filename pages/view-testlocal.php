@@ -157,7 +157,7 @@ include '../includes/header.php';
                 <?php if ($isLoggedIn): ?>
                     <a href="guest_details.php?experience_id=<?php echo $experience_id; ?>&title=<?php echo urlencode($experience['title']); ?>&price=<?php echo $experience['price']; ?>" class="book-btn">Book Now!</a>
                 <?php else: ?>
-                    <a href="login.php?redirect=view-testlocal.php?id=<?php echo $experience_id; ?>" class="book-btn">Book</a>
+                    <a href="login.php?redirect=<?php echo urlencode('guest_details.php?experience_id=' . $experience_id . '&title=' . urlencode($experience['title']) . '&price=' . $experience['price']); ?>" class="book-btn">Book Now!</a>
                 <?php endif; ?>
             </div>
         </div>

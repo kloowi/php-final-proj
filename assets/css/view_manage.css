@@ -115,13 +115,16 @@ body {
     text-align: right;
 }
 
-.experience-col .label,
-.experience-col span:not(.label) {
+.experience-col .label {
+    font-style: normal;
+    font-weight: 600;
+    color: #222;
     font-size: 16px;
 }
-
-.experience-col .label {
+.experience-col span:not(.label) {
+    font-size: 16px;
     font-style: italic;
+    font-weight: 400;
 }
 
 .guest-block {
@@ -217,4 +220,131 @@ body {
     color: #2196f3;
     text-align: center;
     max-width: 420px;
+}
+
+.payment-details-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 64px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+.payment-col {
+    min-width: 140px;
+    font-size: 16px;
+}
+.payment-col:nth-child(3) {
+    min-width: 180px;
+}
+
+.payment-details-flex {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    flex-wrap: nowrap;
+    text-align: left;
+}
+.payment-status-title {
+    color: #007bff;
+    font-size: 1.4em;
+    font-weight: 700;
+    flex: 1;
+    text-align: left;
+    padding-left: 16px;
+    margin-bottom: 0;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+}
+.payment-details-right {
+    display: flex;
+    flex: 2;
+    gap: 40px;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.payment-detail-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    min-width: 120px;
+    text-align: right;
+}
+.payment-label {
+    font-style: normal;
+    color: #222;
+    font-size: 16px;
+    font-weight: 600;
+}
+.payment-value {
+    font-size: 16px;
+    font-weight: 400;
+    color: #222;
+    font-style: italic;
+}
+
+.guest-details-flex {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+.guest-detail-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 180px;
+    text-align: left;
+}
+.guest-label {
+    font-weight: 600;
+    color: #222;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+.guest-value {
+    font-size: 16px;
+    font-style: italic;
+    color: #222;
+    margin-bottom: 2px;
+}
+
+/* Guest Details Section Alignment */
+.guest-details-align {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    justify-content: flex-end;
+}
+.guest-details-spacer {
+    flex: 1;
+}
+.guest-details-right {
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+    justify-content: flex-end;
+}
+.guest-detail-col-align {
+    align-items: flex-end;
+    text-align: right;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+}
+.guest-label-bold {
+    font-weight: 600;
+    color: #222;
+    font-size: 16px;
+}
+.guest-value-block {
+    display: block;
+}
+
+.guest-details-align-center {
+    align-items: center;
 }

@@ -101,6 +101,12 @@ select::-ms-expand {
     border-bottom: 1px solid #2196f3;
 }
 
+/* Add style for booking code */
+.booking-card strong {
+    color: #007bff;
+    font-size: 1.1em;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;

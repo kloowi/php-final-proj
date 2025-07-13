@@ -1,57 +1,47 @@
 <?php
 session_start();
-$scriptPath = $_SERVER['SCRIPT_NAME'];
-$isIndex = (basename($scriptPath) === 'index.php');
-$headerClass = $isIndex ? 'transparent' : 'white-bg';
-$basePath = $isIndex ? 'assets' : '../assets';
-$currentPage = basename($scriptPath);
+require_once '../includes/db_config.php';
 
-include '../includes/header-index.php';
+$user_id = $_SESSION['user_id'] ?? null;
+if (!$user_id) {
+    header('Location: login.php');
+    exit;
+}
 
-// Sample bookings
-$bookings = [
-    [
-        'code' => 'A1BC23',
-        'status' => 'Confirmed',
-        'booked_on' => '3 Jul 2025',
-        'experience' => 'Fort Santiago (Intramuros)',
-        'date' => '18 Jul 2025',
-        'start_time' => '9:00 AM',
-        'end_time' => '11:00 AM',
-        'guests' => ['Chloe Carbonell', 'Miryl De Leon', 'Alliah Montes', 'Olen Tamayo']
-    ],
-    [
-        'code' => 'X9YZ88',
-        'status' => 'Completed',
-        'booked_on' => '15 Jun 2025',
-        'experience' => 'Rizal Park Tour',
-        'date' => '25 Jun 2025',
-        'start_time' => '2:00 PM',
-        'end_time' => '4:00 PM',
-        'guests' => ['Chloe Carbonell']
-    ]
-];
-
-// Filter logic
 $filter = $_GET['filter'] ?? '';
 $today = date('Y-m-d');
+$bookings = [];
+
+if ($pdo) {
+    $sql = "SELECT b.booking_code, b.status, b.booking_date, b.number_of_guests, e.title AS experience
+            FROM Bookings b
+            JOIN Experiences e ON b.experience_id = e.experience_id
+            WHERE b.user_id = ?
+            ORDER BY b.booking_date DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$user_id]);
+    $bookings = $stmt->fetchAll();
+}
+
 $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $today) {
-    $bookingDate = date('Y-m-d', strtotime($booking['date']));
+    $bookingDate = $booking['booking_date'];
     if ($filter === 'upcoming') return $bookingDate >= $today;
     if ($filter === 'past') return $bookingDate < $today;
     return true;
 });
+
+include '../includes/header-index.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>My Bookings</title>
-    <link rel="stylesheet" href="<?php echo $basePath; ?>/css/manage.css">
+    <link rel="stylesheet" href="../assets/css/manage.css">
 </head>
 <body>
 <section class="hero-image">
-    <img src="<?php echo $basePath; ?>/images/index/MANILA.jpg" alt="Manila Skyline">
+    <img src="../assets/images/index/MANILA.jpg" alt="Manila Skyline">
     <div class="overlay-text">My Bookings</div>
 </section>
 
@@ -81,13 +71,13 @@ $filteredBookings = array_filter($bookings, function ($booking) use ($filter, $t
                 <?php foreach ($filteredBookings as $booking): ?>
                     <tr>
                         <td>
-                            <strong><?= htmlspecialchars($booking['code']) ?></strong><br>
-                            <?= htmlspecialchars($booking['status']) ?><br><br>
-                            Booked on:<br> <?= htmlspecialchars($booking['booked_on']) ?>
+                            <strong><?= htmlspecialchars($booking['booking_code']) ?></strong><br>
+                            <?= htmlspecialchars(ucfirst($booking['status'])) ?><br><br>
+                            Booked for:<br> <?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?><br>
                         </td>
                         <td><?= htmlspecialchars($booking['experience']) ?></td>
                         <td>
-                            <a href="view_manage.php?code=<?= urlencode($booking['code']) ?>" class="manage-btn">View Details</a>
+                            <a href="view_manage.php?code=<?= urlencode($booking['booking_code']) ?>" class="manage-btn">View Details</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
