@@ -13,9 +13,10 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Discover Manila</title>
+  <title>StepIntoManila</title>
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/style.css">
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/header.css">
+  <link rel="icon" type="image/png" href="<?php echo $basePath; ?>/images/logo/blue-logo.png">
   <script>
     const BASE_URL = "<?php echo dirname($_SERVER['SCRIPT_NAME']); ?>";
   </script>

@@ -16,11 +16,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Discover Manila</title>
+  <title>StepIntoManila</title>
 
   <!-- ✅ Proper CSS paths -->
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/style.css">
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/header.css">
+  <link rel="icon" type="image/png" href="<?php echo $basePath; ?>/images/logo/blue-logo.png">
 
   <!-- ✅ Script for index only -->
   <?php if ($isIndex): ?>
