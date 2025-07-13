@@ -65,7 +65,8 @@ body {
 }
 
 .flatpickr-calendar {
-  width: 100% !important;
+  width: 80% !important;
+  max-width: 250px !important;
   border-radius: 12px !important;
   box-shadow: none !important;
 }
