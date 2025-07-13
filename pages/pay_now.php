@@ -1,12 +1,5 @@
-Here’s the fully corrected template you can copy-and-paste. I’ve:
 
-* Normalized your radio `value` attributes to `card`, `qrph`, and `banktransfer`
-* Matched each `<div id="…-fields">` to those values
-* Fixed a stray `</div>`
-* Updated the JS mapping to use the same keys
-
-```php
-<?php 
+<?php include '../includes/header.php'; 
 session_start();
 
 // Check if user is logged in
