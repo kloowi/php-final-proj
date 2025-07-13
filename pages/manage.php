@@ -4,7 +4,7 @@ require_once '../includes/db_config.php';
 
 $user_id = $_SESSION['user_id'] ?? null;
 if (!$user_id) {
-    header('Location: login.php');
+    header('Location: login.php?redirect=manage.php');
     exit;
 }
 

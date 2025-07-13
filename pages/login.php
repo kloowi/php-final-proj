@@ -16,31 +16,41 @@ $redirect_url = $_GET['redirect'] ?? '';
 
 // Handle Login
 if (isset($_POST['login'])) {
-    $email = trim($_POST['email'] ?? '');
+    $loginValue = '';
+    $loginField = '';
+    if (!empty($_POST['username'])) {
+        $loginValue = trim($_POST['username']);
+        $loginField = 'username';
+    } elseif (!empty($_POST['email'])) {
+        $loginValue = trim($_POST['email']);
+        $loginField = 'email';
+    }
     $password = $_POST['password'] ?? '';
     $redirect_url = $_POST['redirect_url'] ?? '';
     
-    if (empty($email) || empty($password)) {
+    if (empty($loginValue) || empty($password)) {
         $error_message = 'Please fill in all fields.';
     } else {
         try {
-            // Check if email exists and verify password
-            $stmt = $pdo->prepare("SELECT user_id, username, email, password_hash, full_name FROM Users WHERE email = ?");
-            $stmt->execute([$email]);
+            // Check if username or email exists and verify password
+            $stmt = $pdo->prepare("SELECT user_id, username, email, password_hash, full_name FROM Users WHERE $loginField = ?");
+            $stmt->execute([$loginValue]);
             $user = $stmt->fetch();
 
             if ($user) {
-                // Email exists, check password
+                // Username exists, check password
                 if (password_verify($password, $user['password_hash'])) {
                     $_SESSION['user_id'] = $user['user_id'];
                     $_SESSION['user_data'] = $user;
+                    // REMEMBER ME LOGIC
+                    if (isset($_POST['remember_me'])) {
+                        // setcookie('rememberme', $user['user_id'] . ':' . $user['password_hash'], time() + (86400 * 30), "/");
+                    }
                     $success_message = 'Login successful!';
                     
-                    // If redirect URL contains guest_details.php, it means we came from Book Now
-                    if (!empty($redirect_url) && strpos($redirect_url, 'guest_details.php') !== false) {
+                    if (!empty($redirect_url)) {
                         header('Location: ' . $redirect_url);
                     } else {
-                        // For direct login from header, go to view_account
                         header('Location: view_account.php');
                     }
                     exit;
@@ -136,8 +146,9 @@ if (isset($_POST['signup'])) {
     <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 <body>
-    <div class="background-container">
+    <div class="background-container min-h-screen flex items-center justify-center">
         <div class="login-card p-8 rounded-2xl shadow-2xl w-11/12 max-w-md mx-auto sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5">
+            <!-- Removed the outer Log In heading above the card -->
             <!-- Login Form -->
             <div id="loginForm">
                 <div class="flex justify-between items-center mb-6">
@@ -155,8 +166,8 @@ if (isset($_POST['signup'])) {
 
                     <div class="mb-4">
                         <div class="relative">
-                            <input type="email" id="loginEmail" name="email" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="abc@email.com" required>
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <input type="text" id="loginUsername" name="username" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Username" required value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"></path><path d="M4 20v-1c0-2.21 3.58-4 8-4s8 1.79 8 4v1"></path></svg>
                         </div>
                     </div>
                     <div class="mb-4">
@@ -182,14 +193,8 @@ if (isset($_POST['signup'])) {
                     <?php endif; ?>
 
                     <div class="flex justify-between items-center mb-6 text-sm">
-                        <div class="flex items-center">
-                            <div class="toggle-switch mr-2">
-                                <input type="checkbox" id="rememberMe">
-                                <label for="rememberMe"></label>
-                            </div>
-                            <label for="rememberMe" class="text-gray-600">Remember Me</label>
-                        </div>
-                        <a href="#" class="text-blue-600 hover:underline">Forgot Password?</a>
+                        <a href="#" id="toggleEmailLogin" class="text-blue-600 hover:underline">Log In with email</a>
+                        <a href="forgot_password.php" class="text-blue-600 hover:underline">Forgot Password?</a>
                     </div>
 
                     <button type="submit" name="login" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 mb-6 font-medium flex items-center justify-center">
@@ -315,16 +320,19 @@ if (isset($_POST['signup'])) {
             // Close button functionality
             document.querySelectorAll('.close-button').forEach(button => {
                 button.addEventListener('click', function() {
-                    // Get the referrer (previous page)
-                    const previousPage = document.referrer;
-                    
-                    // If there's a previous page, go back to it
-                    if (previousPage && !previousPage.includes('login.php')) {
-                        window.location.href = previousPage;
-                    } else {
-                        // If no previous page or came from login, go to home
-                        window.location.href = '../index.php';
+                    const allowed = ['index.php', 'manage.php', 'view_experience.php'];
+                    const ref = document.referrer;
+                    let goTo = '../index.php'; // default
+
+                    if (ref) {
+                        for (const page of allowed) {
+                            if (ref.endsWith('/' + page) || ref.includes('/' + page + '?')) {
+                                goTo = ref;
+                                break;
+                            }
+                        }
                     }
+                    window.location.href = goTo;
                 });
             });
 
@@ -344,6 +352,29 @@ if (isset($_POST['signup'])) {
                     }
                 });
             });
+
+            // Toggle between username and email login
+            const toggleEmailLogin = document.getElementById('toggleEmailLogin');
+            const loginInput = document.getElementById('loginUsername');
+            let usingEmail = false;
+            if (toggleEmailLogin && loginInput) {
+                toggleEmailLogin.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (!usingEmail) {
+                        loginInput.type = 'email';
+                        loginInput.name = 'email';
+                        loginInput.placeholder = 'Email';
+                        toggleEmailLogin.textContent = 'Log In with username';
+                        usingEmail = true;
+                    } else {
+                        loginInput.type = 'text';
+                        loginInput.name = 'username';
+                        loginInput.placeholder = 'Username';
+                        toggleEmailLogin.textContent = 'Log In with email';
+                        usingEmail = false;
+                    }
+                });
+            }
         });
     </script>
 </body>
