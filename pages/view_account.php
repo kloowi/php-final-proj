@@ -75,11 +75,32 @@ try {
     <div style="margin-bottom: 20px;">
       <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" alt="Trash Icon" style="width: 54px; height: 54px;">
     </div>
-    <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">You are about to delete your profile</div>
-    <div style="color: #666; margin-bottom: 20px;">Are you sure?</div>
+    <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #dc3545;">Delete Account</div>
+    <div style="color: #666; margin-bottom: 15px; font-size: 14px;">This action cannot be undone. All your data including:</div>
+    <div style="color: #666; margin-bottom: 20px; font-size: 13px; text-align: left; background: #f8f9fa; padding: 10px; border-radius: 5px;">
+      • Personal information<br>
+      • Booking history<br>
+      • Payment records<br>
+      • Account settings
+    </div>
+    <div style="color: #dc3545; margin-bottom: 20px; font-size: 14px; font-weight: bold;">Are you absolutely sure?</div>
     <div style="display: flex; gap: 10px; justify-content: center;">
-      <button id="cancelDeleteBtn" style="background: #ccc; color: #333; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Cancel</button>
-      <button id="confirmDeleteBtn" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Delete</button>
+      <button id="cancelDeleteBtn" style="background: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 500;">Cancel</button>
+      <button id="confirmDeleteBtn" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 500;">Delete Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Success Modal -->
+<div id="deleteSuccessModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+  <div style="background-color: white; margin: 15% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 400px; text-align: center;">
+    <div style="margin-bottom: 20px;">
+      <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Success Icon" style="width: 54px; height: 54px;">
+    </div>
+    <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #28a745;">Account Deleted</div>
+    <div style="color: #666; margin-bottom: 20px; font-size: 14px;">Your account has been successfully deleted. You will be redirected to the homepage.</div>
+    <div style="display: flex; justify-content: center;">
+      <button id="redirectBtn" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: 500;">Continue</button>
     </div>
   </div>
 </div>
@@ -354,6 +375,8 @@ const deleteLink = document.getElementById('delete-account-link');
 const deleteModal = document.getElementById('deleteModal');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+const deleteSuccessModal = document.getElementById('deleteSuccessModal');
+const redirectBtn = document.getElementById('redirectBtn');
 
 deleteLink.addEventListener('click', function(e) {
   e.preventDefault();
@@ -365,6 +388,11 @@ cancelDeleteBtn.addEventListener('click', function() {
 });
 
 confirmDeleteBtn.addEventListener('click', function() {
+  // Disable the button to prevent double-clicking
+  confirmDeleteBtn.disabled = true;
+  confirmDeleteBtn.textContent = 'Deleting...';
+  confirmDeleteBtn.style.backgroundColor = '#6c757d';
+  
   // Send AJAX request to delete account
   fetch('delete_account.php', {
     method: 'POST',
@@ -372,27 +400,64 @@ confirmDeleteBtn.addEventListener('click', function() {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
   .then(data => {
     if (data.success) {
-      // Redirect to index.php
+      deleteModal.style.display = 'none';
+      deleteSuccessModal.style.display = 'block';
       setTimeout(() => {
         window.location.href = data.redirect;
-      }, 1000);
+      }, 3000); // Redirect after 3 seconds
     } else {
+      // Re-enable the button
+      confirmDeleteBtn.disabled = false;
+      confirmDeleteBtn.textContent = 'Delete Account';
+      confirmDeleteBtn.style.backgroundColor = '#dc3545';
+      
+      // Show error message
+      alert(data.message || 'Failed to delete account. Please try again.');
       deleteModal.style.display = 'none';
     }
   })
   .catch(error => {
     console.error('Error deleting account:', error);
+    
+    // Re-enable the button
+    confirmDeleteBtn.disabled = false;
+    confirmDeleteBtn.textContent = 'Delete Account';
+    confirmDeleteBtn.style.backgroundColor = '#dc3545';
+    
+    alert('An error occurred while deleting your account. Please try again.');
     deleteModal.style.display = 'none';
   });
+});
+
+// Redirect button in delete success modal
+redirectBtn.addEventListener('click', function() {
+  deleteSuccessModal.style.display = 'none';
+  window.location.href = '../index.php'; // Redirect to homepage
 });
 
 // Close modal when clicking outside
 window.addEventListener('click', function(event) {
   if (event.target === deleteModal) {
     deleteModal.style.display = 'none';
+  }
+  if (event.target === deleteSuccessModal) {
+    deleteSuccessModal.style.display = 'none';
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    deleteModal.style.display = 'none';
+    deleteSuccessModal.style.display = 'none';
   }
 });
 

@@ -21,24 +21,65 @@ $response = ['success' => false, 'message' => ''];
 try {
     $user_id = $_SESSION['user_id'];
     
-    // Delete the user from the database
-    $stmt = $pdo->prepare("DELETE FROM Users WHERE user_id = ?");
-    $stmt->execute([$user_id]);
+    // Start transaction to ensure data consistency
+    $pdo->beginTransaction();
     
-    if ($stmt->rowCount() > 0) {
-        // Clear session data
-        $_SESSION = array();
-        session_destroy();
-        
-        $response['success'] = true;
-        $response['message'] = 'Account deleted successfully';
-        $response['redirect'] = '../index.php';
+    // First, check if user has any active bookings
+    $stmt = $pdo->prepare("SELECT COUNT(*) as booking_count FROM Bookings WHERE user_id = ? AND status != 'cancelled'");
+    $stmt->execute([$user_id]);
+    $bookingCount = $stmt->fetch()['booking_count'];
+    
+    if ($bookingCount > 0) {
+        $response['message'] = 'Cannot delete account: You have active bookings. Please cancel all bookings first.';
+        $pdo->rollBack();
     } else {
-        $response['message'] = 'User not found or already deleted';
+        // Delete related data in the correct order (due to foreign key constraints)
+        
+        // 1. Delete payment records
+        $stmt = $pdo->prepare("DELETE p FROM Payment p 
+                              INNER JOIN Bookings b ON p.booking_id = b.booking_id 
+                              WHERE b.user_id = ?");
+        $stmt->execute([$user_id]);
+        
+        // 2. Delete booking guests
+        $stmt = $pdo->prepare("DELETE bg FROM Booking_Guests bg 
+                              INNER JOIN Bookings b ON bg.booking_id = b.booking_id 
+                              WHERE b.user_id = ?");
+        $stmt->execute([$user_id]);
+        
+        // 3. Delete bookings
+        $stmt = $pdo->prepare("DELETE FROM Bookings WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        
+        // 4. Finally, delete the user
+        $stmt = $pdo->prepare("DELETE FROM Users WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        
+        if ($stmt->rowCount() > 0) {
+            // Commit the transaction
+            $pdo->commit();
+            
+            // Clear session data
+            $_SESSION = array();
+            session_destroy();
+            
+            $response['success'] = true;
+            $response['message'] = 'Account and all related data deleted successfully';
+            $response['redirect'] = '../index.php';
+        } else {
+            $pdo->rollBack();
+            $response['message'] = 'User not found or already deleted';
+        }
     }
     
 } catch (PDOException $e) {
-    $response['message'] = 'Database error occurred while deleting account';
+    // Rollback transaction on error
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    
+    error_log("Delete account error: " . $e->getMessage());
+    $response['message'] = 'Database error occurred while deleting account. Please try again.';
 }
 
 // Return JSON response
