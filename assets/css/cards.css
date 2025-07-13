@@ -24,21 +24,14 @@ body {
     justify-content: center;
 }
 
-
 .card {
-  background-color: #fff;
+  background-color: transparent;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  padding: 12px; /* 👈 Creates space around image & text inside the card */
+  transition: none;
+  padding: 0px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  gap: 0px;
 }
 
 .card-img {
@@ -48,27 +41,28 @@ body {
   border-radius: 10px;
   display: block;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* .card-img:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-} */
+.card-img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
 
 .card-content {
-    padding: 12px 16px;
+    padding: 6px 6px;
 }
 
 .card-text-group {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 10px;
+    gap: 5px;
 }
 .card-title {
     font-size: 16px;
     font-weight: bold;
-    margin: 8px 0 4px;
+    margin: 4px 0 4px;
 }
 
 .card-subtitle {
@@ -94,7 +88,7 @@ body {
     color: #1a73e8;
     margin-left: 40px;
     white-space: nowrap;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 .experience-grid {
