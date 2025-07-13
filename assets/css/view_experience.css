@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 32px 20px 40px;
+    padding: 20px 20px 40px;
     background: #fff;
 }
 
@@ -12,20 +12,19 @@
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     padding: 30px;
-    max-width: 800px;
+    max-width: 700px;
     width: 100%;
     font-family: Arial, sans-serif;
     color: #333;
-    margin-top: 20px;
+    padding-top: 15px;
 }
 
 /* Image section */
 .experience-card img {
     width: 100%;
-    max-height: 400px;
+    max-height: 350px;
     object-fit: cover;
     border-radius: 10px;
-    margin-bottom: 20px;
 }
 
 /* Title and price */
@@ -63,7 +62,7 @@
 /* Description and review layout */
 .details-row {
     display: flex;
-    gap: 30px;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
@@ -307,11 +306,128 @@
     .details-row {
         flex-direction: column;
     }
-
+    
     .title-price {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+    }
+}
+
+/* Image Container and Enlarge Button */
+.image-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.image-container img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.enlarge-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.enlarge-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
+}
+
+/* Image Modal */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.close-modal {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.close-modal:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* Mobile responsiveness for modal */
+@media (max-width: 768px) {
+    .enlarge-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .modal-content {
+        max-width: 95%;
+        max-height: 95%;
+    }
+    
+    .close-modal {
+        top: -35px;
+        right: 0;
+        width: 35px;
+        height: 35px;
+        font-size: 30px;
     }
 }
 
