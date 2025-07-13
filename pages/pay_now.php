@@ -149,7 +149,13 @@ if ($experience && !empty($experience['image_url'])) {
         <!-- Buttons -->
         <div class="checkout-buttons">
           <a href="guest_details.php?experience_id=<?= $experience_id ?>&title=<?= urlencode($title) ?>&price=<?= $price ?>" class="cancel-btn">Cancel</a>
-          <button type="submit" class="confirm-btn">Confirm</button>
+          <button 
+              type="button" 
+              class="confirm-btn"
+              onclick="window.location.href='confirmation.php';"
+            >
+              Confirm
+          </button>
         </div>
       </form>
     </div>
