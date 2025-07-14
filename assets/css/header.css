@@ -10,14 +10,14 @@
   position: fixed;
   top: 0;
   left: 0;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
   margin: 0;
   padding: 0;
 }
 
 /* When header is white */
 .site-header.white-bg {
-  transition: all 0.3s ease;
+  transition: all 1s ease;
   background: #fff !important;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -28,7 +28,7 @@
 .site-header.white-bg .login-link a {
   background: transparent;
   color: #0080ff;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
 
 /* When header is transparent */
