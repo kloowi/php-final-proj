@@ -65,10 +65,6 @@ if ($pdo && $booking_code && $booking_id) {
                 <span class="detail-value"><?= htmlspecialchars($booking['number_of_guests'] ?? '-') ?></span>
             </div>
             <div class="detail-row">
-                <span class="detail-label">Guest Names</span>
-                <span class="detail-value"><?= $guests ? htmlspecialchars(implode(', ', $guests)) : '-' ?></span>
-            </div>
-            <div class="detail-row">
                 <span class="detail-label">Payment Method</span>
                 <span class="detail-value"><?= $payment ? htmlspecialchars(ucfirst($payment['payment_method'])) : '-' ?></span>
             </div>

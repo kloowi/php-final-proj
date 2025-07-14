@@ -24,13 +24,13 @@ try {
     // Start transaction to ensure data consistency
     $pdo->beginTransaction();
     
-    // First, check if user has any active bookings
-    $stmt = $pdo->prepare("SELECT COUNT(*) as booking_count FROM Bookings WHERE user_id = ? AND status != 'cancelled'");
+    // First, check if user has any bookings that are not completed
+    $stmt = $pdo->prepare("SELECT COUNT(*) as booking_count FROM Bookings WHERE user_id = ? AND status != 'completed'");
     $stmt->execute([$user_id]);
     $bookingCount = $stmt->fetch()['booking_count'];
     
     if ($bookingCount > 0) {
-        $response['message'] = 'Cannot delete account: You have active bookings. Please cancel all bookings first.';
+        $response['message'] = 'Cannot delete account: All bookings must be completed before deleting your account.';
         $pdo->rollBack();
     } else {
         // Delete related data in the correct order (due to foreign key constraints)
