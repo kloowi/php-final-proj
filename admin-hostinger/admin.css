@@ -5,7 +5,7 @@ body { font-family: Arial, sans-serif; background: #f4f6f8; }
 .sidebar-header h3 { margin: 0; font-size: 1.5em; color: #0080ff; letter-spacing: 1px; font-weight: 700; }
 .sidebar-nav { list-style: none; padding: 0; }
 .sidebar-nav li { margin: 0; }
-.sidebar-nav a { display: block; color: #222; padding: 12px 30px; text-decoration: none; transition: background 0.2s, color 0.2s; border-radius: 6px 0 0 6px; }
+.sidebar-nav a { display: block; color: #222; padding: 12px 30px; text-decoration: none; transition: background 0.2s, color 0.2s; border-radius: 6px 0 0 6px; white-space: nowrap; }
 .sidebar-nav a.active, .sidebar-nav a:hover { background: #e6f2ff; color: #0080ff; }
 .admin-content { background: #f4f6f8; min-height: 100vh; padding: 40px 40px 40px 40px; }
 .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }

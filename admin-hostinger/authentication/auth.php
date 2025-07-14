@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../includes/db_connect-hostinger.php';
+require_once __DIR__ . '/../../includes/db_config.php';
 
 // Helper: Check if admin is logged in
 function isAdminLoggedIn() {

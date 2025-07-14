@@ -2,7 +2,7 @@
 require_once './authentication/auth.php';
 requireAdminLogin();
 $admin = getCurrentAdmin();
-require_once '../includes/db_connect-hostinger.php';
+require_once '../includes/db_config.php';
 
 
 // Handle add/edit/delete
@@ -134,6 +134,7 @@ require_once 'edit_experience.php';
             <ul class="sidebar-nav">
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="experiences.php" class="active">Experiences</a></li>
+                <li><a href="add_review.php">Manage Reviews</a></li>
                 <li><a href="/php-final-proj-main/admin/authentication/logout.php">Logout</a></li>
             </ul>
         </div>

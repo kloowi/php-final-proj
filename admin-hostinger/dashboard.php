@@ -68,7 +68,7 @@ $experiences = $stmt->fetchAll();
         }
         .experiences-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr); /* Changed from 4 to 3 */
             gap: 48px;
             width: 100%;
             margin: 32px 0 48px 0;
@@ -155,7 +155,7 @@ $experiences = $stmt->fetchAll();
         }
         @media (max-width: 1400px) {
             .experiences-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(3, 1fr); /* Keep 3 per row for <=1400px */
             }
         }
         @media (max-width: 1100px) {
@@ -193,7 +193,7 @@ $experiences = $stmt->fetchAll();
                     <div class="card-title">Total Experiences</div>
                     <div class="card-value">
                         <?php
-                        require_once '../includes/db_connect-hostinger.php';
+                        require_once '../includes/db_config.php';
                         $count = $pdo->query('SELECT COUNT(*) FROM Experiences')->fetchColumn();
                         echo $count;
                         ?>
@@ -201,14 +201,17 @@ $experiences = $stmt->fetchAll();
                 </div>
             </div>
             <div class="admin-container">
-                <div style="position: relative; margin-bottom: 0; width: 130%;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; width: 100%;">
                     <h2 style="margin-top: 0; margin-bottom: 0;">Manage Experiences</h2>
-                    <a href="experiences.php" class="btn btn-primary" style="background: #0883f7; color: #fff; border-radius: 8px; font-size: 1em; font-weight: 400; padding: 10px 24px; border: none; box-shadow: none; position: absolute; right: 0; top: 0; display: inline-block;">Add New Experience</a>
+                    <div>
+                        <a href="experiences.php" class="btn btn-primary" style="background: #0883f7; color: #fff; border-radius: 8px; font-size: 1em; font-weight: 400; padding: 10px 24px; border: none; box-shadow: none; display: inline-block;">Add New Experience</a>
+                    </div>
                 </div>
-                <hr style="border: none; border-top: 2px solid #e5e7eb; width: 130%; margin: 28px 0 0 0;">
+                <hr style="border: none; border-top: 2px solid #e5e7eb; width: 100%; margin: 28px 0 0 0;">
 
                 <div class="experiences-grid">
-                    <?php foreach ($experiences as $experience): ?>
+                    <?php foreach (
+                        $experiences as $experience): ?>
                         <div class="experience-card">
                             <div class="experience-category" style="color: #4aa3ff; font-weight: 700; font-size: 1.05em; margin-bottom: 8px;">
                                 <?php echo htmlspecialchars($experience['category']); ?>
@@ -229,7 +232,6 @@ $experiences = $stmt->fetchAll();
                             <div style="color: #222; font-size: 0.98em; margin-bottom: 8px;">
                                 <?php echo htmlspecialchars(substr($experience['description'], 0, 100)) . '...'; ?>
                             </div>
-                            
                             <div class="experience-actions">
                                 <a href="experiences.php?edit=1<?php echo $experience['experience_id']; ?>" 
                                    class="btn btn-edit btn-sm">Edit</a>
@@ -242,10 +244,43 @@ $experiences = $stmt->fetchAll();
                         </div>
                     <?php endforeach; ?>
                 </div>
-                
                 <?php if (empty($experiences)): ?>
                     <p>No experiences found. <a href="experiences.php">Add your first experience</a></p>
                 <?php endif; ?>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 64px; width: 100%;">
+                    <h2 style="margin-top: 0; margin-bottom: 0;">Manage Reviews</h2>
+                    <a href="add_review.php" class="btn btn-primary" style="background: #4aa3ff; color: #fff; border-radius: 8px; font-size: 1em; font-weight: 400; padding: 10px 24px; border: none; box-shadow: none; display: inline-block;">Add Review</a>
+                </div>
+                <hr style="border: none; border-top: 2px solid #e5e7eb; width: 100%; margin: 28px 0 0 0;">
+                <?php
+                // Fetch reviews for display (frontend only, do not change backend logic)
+                require_once '../includes/db_config.php';
+                $reviews = $pdo->query('SELECT * FROM Reviews ORDER BY category ASC, rating DESC')->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+                <div style="margin: 32px 0 0 0;">
+                    <h3 style="font-size: 1.2em; font-weight: 700; margin-bottom: 18px;">All Reviews</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+                        <?php foreach ($reviews as $review): ?>
+                            <div style="background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(74,163,255,0.08); border: 1px solid #e5e7eb; padding: 18px;">
+                                <div style="font-weight: bold; color: #0080ff; font-size: 1.1em; margin-bottom: 4px;">
+                                    <?php echo htmlspecialchars($review['username']); ?>
+                                </div>
+                                <div style="color: #f5b50a; margin-bottom: 4px;">
+                                    <?php echo str_repeat('★', (int)$review['rating']); ?>
+                                </div>
+                                <div style="font-style: italic; color: #888; margin-bottom: 6px;">
+                                    <?php echo htmlspecialchars($review['category']); ?>
+                                </div>
+                                <div style="color: #222;">
+                                    <?php echo htmlspecialchars($review['description']); ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                        <?php if (empty($reviews)): ?>
+                            <div>No reviews found.</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
