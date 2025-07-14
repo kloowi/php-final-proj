@@ -28,7 +28,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <?php endif; ?>
 </head>
 <body>
-  <header class="site-header <?image.pngphp echo $headerClass; ?>" id="main-header">
+  <header class="site-header <?php echo $headerClass; ?>" id="main-header">
     <nav class="main-nav">
       <div class="logo">
         <a href="index.php">
