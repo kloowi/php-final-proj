@@ -51,6 +51,7 @@ footer {
     margin: 64px auto 40px auto;
     padding: 0 20px;
     padding-top: 56px;
+    flex: 1 0 auto;
 }
 
 .filter-form {
