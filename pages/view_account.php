@@ -166,11 +166,11 @@ function saveChanges() {
     
     if (action && data) {
       promises.push(
-        fetch('update_account.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+  fetch('update_account.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
           body: data
         }).then(response => response.json())
       );
@@ -197,9 +197,9 @@ function saveChanges() {
           saveBtn.textContent = originalText;
           saveBtn.style.backgroundColor = '';
         }, 2000);
-      }
-    })
-    .catch(error => {
+    }
+  })
+  .catch(error => {
       console.error('Error saving changes:', error);
     });
 }
@@ -280,10 +280,10 @@ let isPasswordEditing = false;
 
 passwordInput.addEventListener('click', function() {
   if (!isPasswordEditing) {
-    passwordInput.readOnly = false;
-    passwordInput.type = 'text';
+  passwordInput.readOnly = false;
+  passwordInput.type = 'text';
     passwordInput.value = '';
-    passwordInput.placeholder = 'Enter new password';
+  passwordInput.placeholder = 'Enter new password';
     passwordInput.style.backgroundColor = '#f9f9f9';
     passwordInput.style.border = '1px solid #2992f5';
     isPasswordEditing = true;
@@ -296,7 +296,7 @@ passwordInput.addEventListener('input', function() {
 
 passwordInput.addEventListener('blur', function() {
   if (isPasswordEditing) {
-    const newPassword = passwordInput.value;
+  const newPassword = passwordInput.value;
     
     if (newPassword === '') {
       passwordInput.value = '••••••••';
@@ -416,7 +416,7 @@ confirmDeleteBtn.addEventListener('click', function() {
       deleteModal.style.display = 'none';
       deleteSuccessModal.style.display = 'block';
       setTimeout(() => {
-        window.location.href = data.redirect;
+      window.location.href = data.redirect;
       }, 3000); // Redirect after 3 seconds
     } else {
       // Re-enable the button

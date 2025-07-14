@@ -13,4 +13,16 @@
 }
 .site-footer {
   border-top: 1px solid #dbdbdb;
+  width: 100%;
+  position: relative;
+  margin-top: auto;
+  background: #fff;
+}
+.sticky-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 10;
 } 

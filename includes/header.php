@@ -16,6 +16,7 @@ session_start();
   <title>StepIntoManila</title>
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/style.css">
   <link rel="stylesheet" href="<?php echo $basePath; ?>/css/header.css">
+  <link rel="stylesheet" href="../assets/css/footer.css">
   <link rel="icon" type="image/png" href="<?php echo $basePath; ?>/images/logo/blue-logo.png">
   <script>
     const BASE_URL = "<?php echo dirname($_SERVER['SCRIPT_NAME']); ?>";
@@ -28,11 +29,13 @@ session_start();
   <header class="site-header <?php echo $headerClass; ?>" id="main-header">
     <nav class="main-nav">
       <div class="logo">
-        <img
-          id="site-logo"
-          src="<?php echo $basePath; ?>/images/logo/<?php echo $isIndex ? 'white-logo.png' : 'blue-logo.png'; ?>"
-          alt="Logo"
-          style="height: 40px;">
+        <a href="/php-final-proj/index.php">
+          <img
+            id="site-logo"
+            src="<?php echo $basePath; ?>/images/logo/<?php echo $isIndex ? 'white-logo.png' : 'blue-logo.png'; ?>"
+            alt="Logo"
+            style="height: 40px;">
+        </a>
       </div>
       <ul class="nav-links">
         <li><a href="<?php echo $isIndex ? 'index.php' : '../index.php'; ?>"

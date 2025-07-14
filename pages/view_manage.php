@@ -53,63 +53,73 @@ include '../includes/header-index.php';
     <link rel="stylesheet" href="../assets/css/view_manage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .content {
+        flex: 1 0 auto;
+      }
+    </style>
 </head>
 <body>
-<section class="hero-image">
-    <img src="../assets/images/index/MANILA.jpg" alt="Manila Skyline">
-    <div class="overlay-text">Booking Details</div>
-</section>
-<section class="content">
+<section class="content" style="min-height: 60vh; padding-top: 32px; padding-bottom: 40px; width: 100%; max-width: 1200px; margin: 0 auto;">
+  <div class="center-group" style="display: flex; align-items: flex-start; justify-content: center; width: 100%;">
+    <a href="manage.php" class="back-btn" style="margin-right: 0; margin-top: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 22px; text-decoration: none; color: #397cff; font-weight: 600; background: none; border: none; cursor: pointer; align-self: flex-start;">
+      <i class="fas fa-arrow-left"></i>
+    </a>
     <!-- Unified Booking Card -->
-    <div class="unified-booking-card">
-        <div class="booking-card-header">
-            <div class="booking-card-title">
-                <span class="experience-title"><?= htmlspecialchars($booking['experience_title']) ?></span>
-            </div>
-            <div class="booking-code">
-                <?= htmlspecialchars($booking['booking_code']) ?>
-            </div>
+    <div class="unified-booking-card" style="padding: 48px 48px 48px 48px; max-width: 900px; margin: 0;">
+      <div class="booking-card-header">
+        <div class="booking-card-title">
+          <span class="experience-title"><?= htmlspecialchars($booking['experience_title']) ?></span>
         </div>
-        <div class="booking-card-body">
-            <div class="booking-card-left">
-                <div class="detail-row">
-                    <span class="detail-label">Date</span>
-                    <span class="detail-value"><b><?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?></b></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Duration</span>
-                    <span class="detail-value"><b><?= isset($booking['selected_time']) ? htmlspecialchars($booking['selected_time']) : (isset($booking['duration']) ? htmlspecialchars($booking['duration']) : 'N/A') ?></b></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Payment Method</span>
-                    <span class="detail-value"><b><?= $payment ? htmlspecialchars($payment['payment_method']) : 'N/A' ?></b></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Payment Date</span>
-                    <span class="detail-value"><b><?= $payment ? htmlspecialchars(date('M d, Y', strtotime($payment['payment_date']))) : 'N/A' ?></b></span>
-                </div>
-            </div>
-            <div class="booking-card-right">
-                <div class="detail-row">
-                    <span class="detail-label">Account Name</span>
-                    <span class="detail-value"><b><?= htmlspecialchars(strtoupper($booking['full_name'])) ?></b><br><span class="email-value"><?= htmlspecialchars($booking['email']) ?></span></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Total Number of Guests</span>
-                    <span class="detail-value"><b><?= htmlspecialchars($booking['number_of_guests']) ?></b></span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Guest Names</span>
-                    <span class="detail-value"><b><?= $guests ? htmlspecialchars(implode(', ', $guests)) : 'N/A' ?></b></span>
-                </div>
-            </div>
+        <div class="booking-code">
+          <?= htmlspecialchars($booking['booking_code']) ?>
         </div>
-        <div class="booking-card-footer">
-            <div class="total-label">Total</div>
-            <div class="total-value">₱<?= $payment ? htmlspecialchars(number_format($payment['amount'], 2)) : '0.00' ?></div>
+      </div>
+      <div class="booking-card-body">
+        <div class="booking-card-left">
+          <div class="detail-row">
+            <span class="detail-label">Date</span>
+            <span class="detail-value"><b><?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?></b></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Duration</span>
+            <span class="detail-value"><b><?= isset($booking['selected_time']) ? htmlspecialchars($booking['selected_time']) : (isset($booking['duration']) ? htmlspecialchars($booking['duration']) : 'N/A') ?></b></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Payment Method</span>
+            <span class="detail-value"><b><?= $payment ? htmlspecialchars(ucfirst($payment['payment_method'])) : 'N/A' ?></b></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Payment Date</span>
+            <span class="detail-value"><b><?= $payment ? htmlspecialchars(date('M d, Y', strtotime($payment['payment_date']))) : 'N/A' ?></b></span>
+          </div>
         </div>
+        <div class="booking-card-right">
+          <div class="detail-row">
+            <span class="detail-label">Account Name</span>
+            <span class="detail-value"><b><?= htmlspecialchars(strtoupper($booking['full_name'])) ?></b><br><span class="email-value"><?= htmlspecialchars($booking['email']) ?></span></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Total Number of Guests</span>
+            <span class="detail-value"><b><?= htmlspecialchars($booking['number_of_guests']) ?></b></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Guest Names</span>
+            <span class="detail-value"><b><?= $guests ? htmlspecialchars(implode(', ', $guests)) : 'N/A' ?></b></span>
+          </div>
+        </div>
+      </div>
+      <div class="booking-card-footer">
+        <div class="total-label">Total</div>
+        <div class="total-value">₱<?= $payment ? htmlspecialchars(number_format($payment['amount'], 2)) : '0.00' ?></div>
+      </div>
     </div>
-    
+  </div>
 </section>
 <?php include '../includes/footer.php'; ?>
 </body>

@@ -4,6 +4,16 @@
     <title>StepIntoManila</title>
     <link rel="stylesheet" href="../assets/css/about.css">
     <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .about-section {
+        flex: 1 0 auto;
+      }
+    </style>
 </head>
 
 <div class="about-image-container">
@@ -21,3 +31,4 @@
     convenience, and a sense of wonder.
   </p>
 </div>
+<?php include '../includes/footer.php'; ?>

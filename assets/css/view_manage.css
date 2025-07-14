@@ -57,18 +57,43 @@ body {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    padding: 25px 28px 28px 28px;
-    max-width: 700px;
-    margin: -70px auto 0 auto;
+    padding: 32px 48px 32px 48px;
+    max-width: 900px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 0px;
     font-size: 0.97em;
 }
+.booking-card-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+}
+.back-btn.inside-card {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 2;
+    margin: 0;
+    background: #067bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 .booking-card-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     border-bottom: 2px solid #ececec;
     padding-bottom: 10px;
     margin-bottom: 20px;
@@ -78,6 +103,8 @@ body {
     font-size: 26px;
     font-weight: 700;
     line-height: 1.1;
+    display: inline-block;
+    vertical-align: middle;
 }
 .booking-code {
     font-size: 1.2em;
@@ -86,11 +113,13 @@ body {
     letter-spacing: 1px;
     margin-left: 24px;
     white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
 }
 .booking-card-body {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 48px;
     justify-content: space-between;
 }
 .booking-card-left, .booking-card-right {
@@ -126,21 +155,25 @@ body {
 }
 .booking-card-footer {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     margin-top: 30px;
-    gap: 12px;
+    gap: 6px;
 }
 .total-label {
     font-size: 1em;
     color: #888;
     font-weight: 400;
-    margin-right: 10px;
+    margin-right: 6px;
+    display: inline-block;
+    vertical-align: middle;
 }
 .total-value {
     font-size: 1.7em;
     font-weight: 700;
     color: #333;
     letter-spacing: 1px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 /* Remove old card/section styles for this page */
@@ -158,6 +191,15 @@ body {
     .unified-booking-card {
         padding: 18px 8px 18px 8px;
         max-width: 98vw;
+    }
+    .booking-card-wrapper {
+        max-width: 98vw;
+    }
+    .back-btn.inside-card {
+        top: 8px;
+        left: 8px;
+        padding: 8px 12px;
+        font-size: 13px;
     }
     .booking-card-header {
         flex-direction: column;
@@ -221,7 +263,7 @@ body {
 }
 
 .back-btn {
-    background: #067bff;
+    background: #007bff;
     color: white;
     padding: 10px 20px;
     border: none;
