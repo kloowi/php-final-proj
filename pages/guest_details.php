@@ -236,6 +236,6 @@ if (!$experience_id || !$title || !$price) {
   window.addEventListener('DOMContentLoaded', matchGuestBoxHeight);
   window.addEventListener('resize', matchGuestBoxHeight);
 </script>
-
+<?php include '../includes/footer.php'; ?>
 </body>
 </html>
