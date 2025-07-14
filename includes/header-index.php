@@ -9,6 +9,8 @@ $isIndex = (basename($scriptPath) === 'index.php');
 $headerClass = $isIndex ? 'transparent' : 'white-bg';
 $basePath = $isIndex ? 'assets' : '../assets';
 $currentPage = basename($_SERVER['PHP_SELF']);
+$baseUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+$baseUrl .= preg_replace('#/pages$#', '', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'));
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +33,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <header class="site-header <?php echo $headerClass; ?>" id="main-header">
     <nav class="main-nav">
       <div class="logo">
-        <a href="index.php">
+        <a href="<?php echo $baseUrl; ?>/index.php">
           <img
             id="site-logo"
             src="<?php echo $basePath; ?>/images/logo/<?php echo $isIndex ? 'white-logo.png' : 'blue-logo.png'; ?>"
