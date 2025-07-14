@@ -74,6 +74,7 @@ body {
     flex-direction: column;
     gap: 0px;
     font-size: 0.97em;
+    position: relative;
 }
 .booking-card-wrapper {
     position: relative;
@@ -107,6 +108,7 @@ body {
     border-bottom: 2px solid #ececec;
     padding-bottom: 10px;
     margin-bottom: 20px;
+    margin-top: 0;
 }
 .experience-title {
     color: #397cff;
@@ -468,4 +470,34 @@ body {
     align-items: flex-start;
     justify-content: center;
     width: 100%;
+}
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.card-arrow-btn {
+  position: static;
+  top: auto;
+  right: auto;
+  margin: 0 0 0 12px;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+.card-arrow-btn:hover {
+  background: rgba(0,123,255,0.08);
+  border-radius: 50%;
+}
+
+.booking-details-label {
+  color: #888;
+  font-size: 1.05em;
+  font-weight: 400;
+  margin-bottom: 0;
+  margin-left: 2px;
+  display: block;
 }

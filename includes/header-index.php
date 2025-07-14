@@ -28,10 +28,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <?php endif; ?>
 </head>
 <body>
-  <header class="site-header <?php echo $headerClass; ?>" id="main-header">
+  <header class="site-header <?image.pngphp echo $headerClass; ?>" id="main-header">
     <nav class="main-nav">
       <div class="logo">
-        <a href="/php-final-proj/index.php">
+        <a href="index.php">
           <img
             id="site-logo"
             src="<?php echo $basePath; ?>/images/logo/<?php echo $isIndex ? 'white-logo.png' : 'blue-logo.png'; ?>"

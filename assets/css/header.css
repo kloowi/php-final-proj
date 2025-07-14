@@ -166,12 +166,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #2196f3;
-  color: #fff;
-  font-weight: normal;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  color: #2196f3;
+  font-weight: bold;
   font-size: 15px;
 } 
 

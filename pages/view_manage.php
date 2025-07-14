@@ -57,11 +57,13 @@ include '../includes/header-index.php';
 <body>
 <section class="content">
   <div class="center-group">
-    <a href="manage.php" class="back-btn">
-      <i class="fas fa-arrow-left"></i>
-    </a>
-    <!-- Unified Booking Card -->
     <div class="unified-booking-card">
+      <div class="card-header-row">
+        <div class="booking-details-label">Booking Details</div>
+        <a href="manage.php" class="back-btn card-arrow-btn">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+      </div>
       <div class="booking-card-header">
         <div class="booking-card-title">
           <span class="experience-title"><?= htmlspecialchars($booking['experience_title']) ?></span>
