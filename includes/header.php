@@ -1,5 +1,4 @@
 <?php
-session_start();
   // Simplified and more reliable path detection
   $scriptPath = $_SERVER['SCRIPT_NAME'];
   $isIndex = (basename($scriptPath) === 'index.php');
