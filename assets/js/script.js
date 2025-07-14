@@ -41,7 +41,7 @@ const whiteLogo = "/assets/images/logo/white-logo.png";
   });
 
   // Hover effect on entire header
-  header.addEventListener("mouseenter", () => {
+  header.addEventListener("mouseenter", () => { 
     if (!isScrolled) {
       header.classList.add("white-bg");
       header.classList.remove("transparent");

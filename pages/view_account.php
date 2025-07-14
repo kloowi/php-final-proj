@@ -31,7 +31,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>StepIntoManila</title>
-    <link rel="stylesheet" href="../assets/css/view.css">
+    <link rel="stylesheet" href="../assets/css/view_account.css">
     <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <div class="account-container">
