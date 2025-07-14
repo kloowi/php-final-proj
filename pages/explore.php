@@ -69,7 +69,7 @@ foreach ($experiences as $experience) {
                                     <div class="card-text-group">
                                         <div>
                                             <h3 class="card-title"><?php echo htmlspecialchars($experience['title']); ?></h3>
-                                            <p class="card-subtitle"><?php echo htmlspecialchars($experience['location']); ?> ★4.5</p>
+                                            <p class="card-subtitle"><?php echo htmlspecialchars($experience['location']); ?> ★<?php echo htmlspecialchars($experience['rating'] ?? '4.5'); ?></p>
                                         </div>
                                         <div class="card-price">₱<?php echo number_format($experience['price'], 2); ?></div>
                                     </div>
