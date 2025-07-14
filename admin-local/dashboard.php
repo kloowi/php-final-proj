@@ -193,7 +193,7 @@ $experiences = $stmt->fetchAll();
                     <div class="card-title">Total Experiences</div>
                     <div class="card-value">
                         <?php
-                        require_once '../includes/db_connect.php';
+                        require_once '../includes/db_config.php';
                         $count = $pdo->query('SELECT COUNT(*) FROM Experiences')->fetchColumn();
                         echo $count;
                         ?>
@@ -254,7 +254,7 @@ $experiences = $stmt->fetchAll();
                 <hr style="border: none; border-top: 2px solid #e5e7eb; width: 100%; margin: 28px 0 0 0;">
                 <?php
                 // Fetch reviews for display (frontend only, do not change backend logic)
-                require_once '../includes/db_connect.php';
+                require_once '../includes/db_config.php';
                 $reviews = $pdo->query('SELECT * FROM Reviews ORDER BY category ASC, rating DESC')->fetchAll(PDO::FETCH_ASSOC);
                 ?>
                 <div style="margin: 32px 0 0 0;">

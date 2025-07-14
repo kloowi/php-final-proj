@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/db_connect.php';
+require_once '../includes/db_config.php';
 
 // Check if database connection is available
 if (!$pdo) {
