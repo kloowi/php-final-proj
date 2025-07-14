@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Detect if current page is index.php (in root)
 $scriptPath = $_SERVER['SCRIPT_NAME'];
 $isIndex = (basename($scriptPath) === 'index.php');
