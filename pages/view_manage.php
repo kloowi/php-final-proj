@@ -53,25 +53,15 @@ include '../includes/header-index.php';
     <link rel="stylesheet" href="../assets/css/view_manage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-      .content {
-        flex: 1 0 auto;
-      }
-    </style>
 </head>
 <body>
-<section class="content" style="min-height: 60vh; padding-top: 32px; padding-bottom: 40px; width: 100%; max-width: 1200px; margin: 0 auto;">
-  <div class="center-group" style="display: flex; align-items: flex-start; justify-content: center; width: 100%;">
-    <a href="manage.php" class="back-btn" style="margin-right: 0; margin-top: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 22px; text-decoration: none; color: #397cff; font-weight: 600; background: none; border: none; cursor: pointer; align-self: flex-start;">
+<section class="content">
+  <div class="center-group">
+    <a href="manage.php" class="back-btn">
       <i class="fas fa-arrow-left"></i>
     </a>
     <!-- Unified Booking Card -->
-    <div class="unified-booking-card" style="padding: 48px 48px 48px 48px; max-width: 900px; margin: 0;">
+    <div class="unified-booking-card">
       <div class="booking-card-header">
         <div class="booking-card-title">
           <span class="experience-title"><?= htmlspecialchars($booking['experience_title']) ?></span>
