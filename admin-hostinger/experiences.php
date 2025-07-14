@@ -34,12 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $price = floatval($_POST['price'] ?? 0);
         $duration = trim($_POST['duration'] ?? '');
         $category = trim($_POST['category'] ?? '');
-        $available_slots = intval($_POST['available_slots'] ?? 0);
+        $rating = floatval($_POST['rating'] ?? 0);
         // Use uploaded image or fallback to text input if no file uploaded
         $image_url = $image_path ?: trim($_POST['image_url'] ?? '');
         if ($title && $description) {
-            $stmt = $pdo->prepare('INSERT INTO Experiences (title, description, location, price, duration, category, available_slots, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$title, $description, $location, $price, $duration, $category, $available_slots, $image_url]);
+            $stmt = $pdo->prepare('INSERT INTO Experiences (title, description, location, price, duration, category, rating, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$title, $description, $location, $price, $duration, $category, $rating, $image_url]);
             setFlashMessage('success', 'Experience added successfully.');
         } else {
             setFlashMessage('danger', 'Title and description are required.');
@@ -172,8 +172,8 @@ require_once 'edit_experience.php';
                             <input type="text" name="category" value="<?php echo htmlspecialchars($editing['category'] ?? ''); ?>">
                         </div>
                         <div class="form-group">
-                            <label>Available Slots</label>
-                            <input type="number" name="available_slots" value="<?php echo htmlspecialchars($editing['available_slots'] ?? ''); ?>">
+                            <label>Rating (1.0 - 5.0)</label>
+                            <input type="number" step="0.1" min="1.0" max="5.0" name="rating" value="<?php echo htmlspecialchars($editing['rating'] ?? ''); ?>">
                         </div>
                         <div class="form-group">
                             <label>Image File</label>
@@ -202,7 +202,7 @@ require_once 'edit_experience.php';
                             <th>Price</th>
                             <th>Duration</th>
                             <th>Category</th>
-                            <th>Slots</th>
+                            <th>Rating</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -218,7 +218,7 @@ require_once 'edit_experience.php';
                                 <td><?php echo htmlspecialchars($exp['price']); ?></td>
                                 <td><?php echo htmlspecialchars($exp['duration']); ?></td>
                                 <td><?php echo htmlspecialchars($exp['category']); ?></td>
-                                <td><?php echo htmlspecialchars($exp['available_slots']); ?></td>
+                                <td><?php echo htmlspecialchars($exp['rating']); ?></td>
                                 <td>
                                     <a href="?edit=<?php echo $exp['experience_id']; ?>" class="btn btn-sm btn-primary">Edit</a>
                                     <form method="POST" style="display:inline;" onsubmit="return confirm('Delete this experience?');">

@@ -10,12 +10,12 @@ if ($action === 'edit') {
     $price = floatval($_POST['price'] ?? 0);
     $duration = trim($_POST['duration'] ?? '');
     $category = trim($_POST['category'] ?? '');
-    $available_slots = intval($_POST['available_slots'] ?? 0);
+    $rating = floatval($_POST['rating'] ?? 0);
     // Use uploaded image or fallback to previous image if no new file uploaded
     $image_url = $image_path ?: trim($_POST['existing_image_url'] ?? '');
     if ($title && $description) {
-        $stmt = $pdo->prepare('UPDATE Experiences SET title=?, description=?, location=?, price=?, duration=?, category=?, available_slots=?, image_url=? WHERE experience_id=?');
-        $stmt->execute([$title, $description, $location, $price, $duration, $category, $available_slots, $image_url, $id]);
+        $stmt = $pdo->prepare('UPDATE Experiences SET title=?, description=?, location=?, price=?, duration=?, category=?, rating=?, image_url=? WHERE experience_id=?');
+        $stmt->execute([$title, $description, $location, $price, $duration, $category, $rating, $image_url, $id]);
         setFlashMessage('success', 'Experience updated successfully.');
     } else {
         setFlashMessage('danger', 'Title and description are required.');
