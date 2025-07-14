@@ -1,5 +1,7 @@
 <?php
-  session_start();
+  if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+  }
   // Simplified and more reliable path detection
   $scriptPath = $_SERVER['SCRIPT_NAME'];
   $isIndex = (basename($scriptPath) === 'index.php');
