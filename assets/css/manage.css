@@ -105,6 +105,11 @@ select::-ms-expand {
     padding: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
+    width: 900px;
+    min-width: 900px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .booking-card tbody tr:not(:last-child) {
