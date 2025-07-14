@@ -1,5 +1,7 @@
 /* Styles specific to index.php */
-
+body{
+    background-color: #fafafa;
+}
 .hero {
     position: relative;
     color: white;
