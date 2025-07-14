@@ -8,7 +8,7 @@ body{
     text-align: center;
     padding: 60px 20px 100px;
     overflow: hidden;
-    height: 350px;
+    height: 400px;
 }
 
 .slideshow-container {
@@ -18,6 +18,17 @@ body{
     width: 100%;
     height: 100%;
     z-index: 1;
+}
+
+.slideshow-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 2;
 }
 
 .slide {
@@ -39,7 +50,7 @@ body{
 
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -50,7 +61,7 @@ body{
 .hero-content h1 {
     margin-bottom: 40px;
     font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    text-shadow: 4px 4px 4px rgba(18, 18, 18, 0.5);
 }
 
 .slideshow-nav {
@@ -60,7 +71,7 @@ body{
     transform: translateX(-50%);
     display: flex;
     gap: 15px;
-    z-index: 3;
+    z-index: 4;
 }
 
 .nav-circle {
@@ -90,7 +101,7 @@ body{
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
-    z-index: 3;
+    z-index: 4;
 }
 
 .arrow-btn {
@@ -121,7 +132,7 @@ body{
 
 .search-box-wrapper {
   position: absolute;
-  top: 65%;
+  top: 72%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
