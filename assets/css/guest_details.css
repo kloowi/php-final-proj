@@ -2,11 +2,18 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: #fafafa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
 }
 
 .hero {
   position: relative !important;
-  height: 260px !important;
+  height: 160px !important;
   overflow: visible !important;
 }
 
@@ -195,29 +202,42 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.guest-controls button:hover,
+.guest-controls button:active {
+  background: #4da3ff;
+  color: #fff;
 }
 
+.pay-btn, .cancel-btn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 10px;
+  height: 48px;
+  line-height: 48px;
+  padding: 12px 24px;
+  text-align: center;
+  display: inline-block;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+}
 .pay-btn {
   background: #067bff;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: auto;
-  max-width: 320px;
-  margin: 0 auto;
-  transition: background-color 0.3s ease;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(6,123,255,0.08);
 }
 .pay-btn:hover {
   background: #0463d0;
+}
+.cancel-btn {
+  background: #eee;
+  color: #067bff;
+}
+.cancel-btn:hover {
+  background: #e0e0e0;
+  color: #0463d0;
 }
 
 .calendar-box h3:first-child {
@@ -295,7 +315,6 @@ body {
 .time-btn:hover:not(.active):not(:active) {
   background: #4da3ff;
   color: #fff;
-  border-color: #007bff;
 }
 
 .time-btn:active {
@@ -315,6 +334,84 @@ body {
 }
 .guest-header-row .guest-controls {
   margin-bottom: 0;
+}
+
+/* --- Unified Action Buttons --- */
+.btn-cancel, .btn-proceed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-width: 160px;
+  padding: 0 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(10,132,255,0.04);
+  outline: none;
+}
+.btn-cancel {
+  background: #e5e7eb;
+  color: #0a84ff;
+  font-weight: bold;
+  border: none;
+  text-decoration: none;
+  min-width: 100px;
+  padding: 0 18px;
+}
+.btn-cancel:hover, .btn-cancel:focus {
+  background: #d1d5db;
+  color: #006edc;
+}
+.btn-proceed {
+  background: #0a84ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  box-shadow: none;
+  text-decoration: none;
+  min-width: 160px;
+  padding: 0 36px;
+}
+.btn-proceed:hover, .btn-proceed:focus {
+  background: #006edc;
+  color: #fff;
+}
+
+.price-info-floating {
+  position: absolute;
+  top: 44px;
+  right: 26px;
+  text-align: right;
+  z-index: 2;
+  font-size: 0.95rem;
+  line-height: 0.4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  height: auto;
+  transform: translateY(-50%);
+}
+.price-info-floating #pricePerGuest {
+  color: #888;
+  font-size: 0.92em;
+  font-weight: 500;
+}
+.price-info-floating #totalPrice {
+  color: #007bff;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+/* Flatpickr selected date color */
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected:focus, .flatpickr-day.selected:hover {
+  background: #007bff !important;
+  border-color: #007bff !important;
+  color: #fff !important;
 }
 
 @media (max-width: 900px) {

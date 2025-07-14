@@ -5,6 +5,10 @@ session_start();
 $experience_id = isset($_GET['experience_id']) ? (int)$_GET['experience_id'] : 0;
 $title = isset($_GET['title']) ? $_GET['title'] : '';
 $price = isset($_GET['price']) ? (float)$_GET['price'] : 0;
+$selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : '';
+$selected_time = isset($_GET['selected_time']) ? $_GET['selected_time'] : '';
+$guest_count = isset($_GET['guest_count']) ? (int)$_GET['guest_count'] : 1;
+$guest_names = isset($_GET['guest_name']) ? (array)$_GET['guest_name'] : [];
 
 // Validate experience exists in database
 require_once '../includes/db_config.php';
@@ -23,6 +27,10 @@ if ($pdo && $experience_id > 0) {
         // Use database values for security
         $title = $experience['title'];
         $price = $experience['price'];
+        $image_path = $experience['image_url'];
+        if (!preg_match('/^https?:\/\//', $image_path)) {
+            $image_path = '../' . $image_path;
+        }
     } catch (PDOException $e) {
         error_log("Database error in guest_details.php: " . $e->getMessage());
     }
@@ -55,7 +63,7 @@ if (!$experience_id || !$title || !$price) {
 <?php include '../includes/header.php'; ?>
 
 <div class="hero">
-  <img src="../assets/images/booking/v157_303.png" alt="Banner Image">
+  <img src="<?= htmlspecialchars($image_path, ENT_QUOTES) ?>" alt="Experience Image">
   <div class="banner-title">Booking Details</div>
 </div>
 
@@ -80,27 +88,40 @@ if (!$experience_id || !$title || !$price) {
           <input type="hidden" name="selected_time" id="selectedTimeInput" required>
         </div>
       </div>
-      <div class="guest-box" id="guestBox" style="max-width: 370px; min-width: 320px; height: 100%; display: flex; flex-direction: column; justify-content: flex-start;">
+      <div class="guest-box" id="guestBox" style="max-width: 370px; min-width: 320px; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; position: relative;">
         <div class="guest-header-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 10px;">
           <h3 style="margin: 0;">Guests</h3>
           <div class="guest-controls">
             <button type="button" onclick="updateGuests(-1)">−</button>
-            <span id="guestCount">1</span>
+            <span id="guestCount"><?= htmlspecialchars($guest_count) ?></span>
             <button type="button" onclick="updateGuests(1)">+</button>
           </div>
         </div>
-        <input type="hidden" name="guest_count" id="guestCountInput" value="1">
+        <div class="price-info-floating">
+          <span id="pricePerGuest">₱<?php echo number_format($price, 2); ?></span><br>
+          <span id="totalPrice">₱<?php echo number_format($price, 2); ?></span>
+        </div>
+        <input type="hidden" name="guest_count" id="guestCountInput" value="<?= htmlspecialchars($guest_count) ?>">
         <div id="guest-names" style="flex: 1 1 auto; min-height: 0; max-height: 100%; overflow-y: auto; width: 100%;">
-          <input type="text" name="guest_name[]" placeholder="Guest 1 Name" required>
+          <?php if (!empty($guest_names)) {
+            foreach ($guest_names as $i => $gname) {
+              $num = $i + 1;
+              echo '<input type="text" name="guest_name[]" placeholder="Guest ' . $num . ' Name" value="' . htmlspecialchars($gname) . '" required class="guest-input">';
+            }
+          } else {
+            echo '<input type="text" name="guest_name[]" placeholder="Guest 1 Name" required class="guest-input">';
+          }
+          ?>
+        </div>
+        <div class="action-btn-row" style="display: flex; justify-content: flex-end; gap: 18px; margin-top: 18px; width: 100%;">
+          <a href="view_experience.php?id=<?php echo $experience_id; ?>" class="btn-cancel">Cancel</a>
+          <button type="submit" class="btn-proceed">Continue</button>
         </div>
       </div>
     </div>
     <input type="hidden" name="experience_id" value="<?php echo $experience_id; ?>">
     <input type="hidden" name="title" value="<?php echo htmlspecialchars($title); ?>">
     <input type="hidden" name="price" value="<?php echo $price; ?>">
-    <div class="pay-btn-row">
-      <button type="submit" class="pay-btn">Proceed to Payment</button>
-    </div>
   </div>
 </form>
 
@@ -120,10 +141,20 @@ if (!$experience_id || !$title || !$price) {
         document.getElementById("selected-date").value = dateStr;
       }
       instance._lastSelectedDateStr = dateStr;
-    }
+    },
+    <?php if ($selected_date): ?>
+    defaultDate: "<?= htmlspecialchars($selected_date) ?>",
+    <?php endif; ?>
   });
 
-  let guestCount = 1;
+  <?php if ($selected_date): ?>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("selected-date").value = "<?= htmlspecialchars($selected_date) ?>";
+  });
+  <?php endif; ?>
+
+  let guestCount = <?= (int)$guest_count ?>;
+  const pricePerGuest = <?php echo $price; ?>;
   function updateGuests(change) {
     const guestContainer = document.getElementById("guest-names");
     // Collect current values
@@ -133,6 +164,7 @@ if (!$experience_id || !$title || !$price) {
 
     document.getElementById("guestCount").textContent = guestCount;
     document.getElementById("guestCountInput").value = guestCount;
+    document.getElementById("totalPrice").textContent = '₱' + (guestCount * pricePerGuest).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
     guestContainer.innerHTML = "";
     for (let i = 0; i < guestCount; i++) {
@@ -177,6 +209,21 @@ if (!$experience_id || !$title || !$price) {
       }
     });
   });
+
+  // Set selected time if provided
+  <?php if ($selected_time): ?>
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      const timeBtns = document.querySelectorAll('.time-btn');
+      timeBtns.forEach(function(btn) {
+        if (btn.getAttribute('data-time') === "<?= htmlspecialchars($selected_time) ?>") {
+          btn.classList.add('active');
+          document.getElementById('selectedTimeInput').value = btn.getAttribute('data-time');
+        }
+      });
+    }, 100);
+  });
+  <?php endif; ?>
 
   // Match guest box height to calendar-time-card
   function matchGuestBoxHeight() {

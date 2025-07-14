@@ -42,7 +42,7 @@
         <h2>Join us for an adventure!</h2>
         <p>Explore Manila's hidden gems, guided by locals. From food crawls to heritage walks — your story starts here.</p>
         <h2>⠀</h2>
-        <div class="features-icons-row" style="display: flex; gap: 32px; justify-content: center; align-items: flex-end; margin: 18px 0;">
+        <div class="features-icons-row" style="display: flex; gap: 32px; justify-content: flex-start; align-items: flex-end; margin: 18px 0;">
           <div class="feature-icon-label" style="display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 2.1rem; color: #1a73e8;">
             <span class="material-icons" style="font-size: 2.1rem;">map</span>
             <span style="font-size: 0.95rem; color: #888; margin-top: 6px; font-weight: 500;">Smart Itinerary</span>

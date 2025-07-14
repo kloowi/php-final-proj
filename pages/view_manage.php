@@ -79,7 +79,7 @@ include '../includes/header-index.php';
             <span class="detail-value"><b><?= htmlspecialchars(date('M d, Y', strtotime($booking['booking_date']))) ?></b></span>
           </div>
           <div class="detail-row">
-            <span class="detail-label">Duration</span>
+            <span class="detail-label">Time</span>
             <span class="detail-value"><b><?= isset($booking['selected_time']) ? htmlspecialchars($booking['selected_time']) : (isset($booking['duration']) ? htmlspecialchars($booking['duration']) : 'N/A') ?></b></span>
           </div>
           <div class="detail-row">
@@ -102,7 +102,15 @@ include '../includes/header-index.php';
           </div>
           <div class="detail-row">
             <span class="detail-label">Guest Names</span>
-            <span class="detail-value"><b><?= $guests ? htmlspecialchars(implode(', ', $guests)) : 'N/A' ?></b></span>
+            <span class="detail-value"><b>
+              <?php if ($guests): ?>
+                <?php foreach ($guests as $g): ?>
+                  <?= htmlspecialchars($g) ?><br>
+                <?php endforeach; ?>
+              <?php else: ?>
+                N/A
+              <?php endif; ?>
+            </b></span>
           </div>
         </div>
       </div>
