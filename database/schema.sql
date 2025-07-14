@@ -22,7 +22,7 @@ CREATE TABLE Experiences (
     price DECIMAL(10, 2) NOT NULL,
     duration VARCHAR(100), -- e.g., '3 hours'
     category VARCHAR(100), -- e.g., 'history', 'food', 'arts'
-    available_slots INT DEFAULT 0,
+    rating DECIMAL(3,1) CHECK (rating >= 1.0 AND rating <= 5.0),
     image_url VARCHAR(500)
 );
 
