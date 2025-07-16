@@ -97,12 +97,8 @@ if (!$experience_id || !$title || !$price) {
             <button type="button" onclick="updateGuests(1)">+</button>
           </div>
         </div>
-        <div class="price-info-floating">
-          <span id="pricePerGuest">₱<?php echo number_format($price, 2); ?></span><br>
-          <span id="totalPrice">₱<?php echo number_format($price, 2); ?></span>
-        </div>
         <input type="hidden" name="guest_count" id="guestCountInput" value="<?= htmlspecialchars($guest_count) ?>">
-        <div id="guest-names" style="flex: 1 1 auto; min-height: 0; max-height: 100%; overflow-y: auto; width: 100%;">
+        <div id="guest-names" style="flex: 1 1 auto; min-height: 0; max-height: 200px; overflow-y: auto; width: 100%;">
           <?php if (!empty($guest_names)) {
             foreach ($guest_names as $i => $gname) {
               $num = $i + 1;
@@ -113,7 +109,10 @@ if (!$experience_id || !$title || !$price) {
           }
           ?>
         </div>
-        <div class="action-btn-row" style="display: flex; justify-content: flex-end; gap: 18px; margin-top: 18px; width: 100%;">
+        <div class="price-info-static" style="width: 100%; display: flex; justify-content: flex-end; margin-top: 72px; margin-bottom: 8px;">
+          <span id="totalPrice">₱<?php echo number_format($price, 2); ?></span>
+        </div>
+        <div class="action-btn-row" style="display: flex; justify-content: flex-end; gap: 18px; margin-top: 0; width: 100%;">
           <a href="view_experience.php?id=<?php echo $experience_id; ?>" class="btn-cancel">Cancel</a>
           <button type="submit" class="btn-proceed">Continue</button>
         </div>
