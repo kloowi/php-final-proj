@@ -130,7 +130,7 @@
 .user-greeting {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 20px;
   background-color: rgba(0, 128, 255, 0.1);
   transition: all 0.3s ease;
@@ -173,6 +173,7 @@
   color: #2196f3;
   font-weight: bold;
   font-size: 15px;
+  transition: color 0.7s ease;
 } 
 
 .user-greeting-text {
@@ -181,5 +182,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
+} 
+
+.site-header.transparent .user-greeting-initial {
+  color: #fff;
+}
+
+.site-header.white-bg .user-greeting-initial {
+  color: #0080ff;
 } 
 
