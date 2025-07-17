@@ -56,7 +56,7 @@ include '../includes/header-index.php';
 </head>
 <body>
 <section class="hero-image">
-    <img src="../assets/images/index/MANILA.jpg" alt="Manila Skyline">
+    <img src="../assets/images/manage/writing.jpg" alt="Manila Skyline">
     <div class="overlay-text">My Bookings</div>
 </section>
 
