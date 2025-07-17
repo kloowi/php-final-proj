@@ -72,6 +72,11 @@ if (!$experience_id || !$title || !$price) {
     <div class="booking-flex-row" style="display: flex; flex-direction: row; justify-content: center; align-items: flex-start; width: 100%; margin-bottom: 18px; gap: 32px;">
       <div class="calendar-time-card" style="background: #fff; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); padding: 32px 28px 32px 28px; display: flex; flex-direction: row; gap: 38px; align-items: flex-start;">
         <div class="calendar-box" style="box-shadow: none; padding: 0; margin: 0; background: transparent;">
+          <?php if (isset($_GET['error']) && $_GET['error']): ?>
+            <div style="color: #fff; background: #e74c3c; padding: 10px 18px; border-radius: 8px; margin-bottom: 16px; font-weight: bold; text-align: center;">
+              <?= htmlspecialchars($_GET['error']) ?>
+            </div>
+          <?php endif; ?>
           <h3>Choose a Date</h3>
           <div id="calendar"></div>
           <input type="hidden" id="selected-date" name="selected_date">
@@ -97,15 +102,16 @@ if (!$experience_id || !$title || !$price) {
             <button type="button" onclick="updateGuests(1)">+</button>
           </div>
         </div>
+        <div id="formError" style="color: #fff; background: #e74c3c; padding: 10px 18px; border-radius: 8px; margin-bottom: 16px; font-weight: bold; text-align: center; display: none;"></div>
         <input type="hidden" name="guest_count" id="guestCountInput" value="<?= htmlspecialchars($guest_count) ?>">
         <div id="guest-names" style="flex: 1 1 auto; min-height: 0; max-height: 200px; overflow-y: auto; width: 100%;">
           <?php if (!empty($guest_names)) {
             foreach ($guest_names as $i => $gname) {
               $num = $i + 1;
-              echo '<input type="text" name="guest_name[]" placeholder="Guest ' . $num . ' Name" value="' . htmlspecialchars($gname) . '" required class="guest-input">';
+              echo '<input type="text" name="guest_name[]" placeholder="Guest ' . $num . ' Name" value="' . htmlspecialchars($gname) . '" class="guest-input">';
             }
           } else {
-            echo '<input type="text" name="guest_name[]" placeholder="Guest 1 Name" required class="guest-input">';
+            echo '<input type="text" name="guest_name[]" placeholder="Guest 1 Name" class="guest-input">';
           }
           ?>
         </div>
@@ -171,7 +177,6 @@ if (!$experience_id || !$title || !$price) {
       input.type = "text";
       input.name = "guest_name[]";
       input.placeholder = `Guest ${i + 1} Name`;
-      input.required = true;
       input.classList.add("guest-input");
       if (currentValues[i]) input.value = currentValues[i];
       guestContainer.appendChild(input);
@@ -200,11 +205,39 @@ if (!$experience_id || !$title || !$price) {
         }
       });
     }
-    // Prevent form submit if no time selected
+    // Prevent form submit if no time or date selected
     document.getElementById('guestDetailsForm').addEventListener('submit', function(e) {
+      const errorDiv = document.getElementById('formError');
+      errorDiv.style.display = 'none';
+      errorDiv.textContent = '';
+
+      // Validate time
+      const timeInput = document.getElementById('selectedTimeInput');
       if (!timeInput.value) {
-        alert('Please select a time.');
+        errorDiv.textContent = 'Please select a time.';
+        errorDiv.style.display = 'block';
         e.preventDefault();
+        return;
+      }
+
+      // Validate date
+      const dateInput = document.getElementById('selected-date');
+      if (!dateInput.value) {
+        errorDiv.textContent = 'Please select a date.';
+        errorDiv.style.display = 'block';
+        e.preventDefault();
+        return;
+      }
+
+      // Validate guest names
+      const guestInputs = document.querySelectorAll('input[name="guest_name[]"]');
+      for (let i = 0; i < guestInputs.length; i++) {
+        if (!guestInputs[i].value.trim()) {
+          errorDiv.textContent = `Please fill out the name for Guest ${i + 1}.`;
+          errorDiv.style.display = 'block';
+          e.preventDefault();
+          return;
+        }
       }
     });
   });

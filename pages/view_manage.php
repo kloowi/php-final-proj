@@ -55,6 +55,11 @@ include '../includes/header-index.php';
     <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <body>
+<section class="hero-image">
+    <img src="../assets/images/index/MANILA.jpg" alt="Manila Skyline">
+    <div class="overlay-text">My Bookings</div>
+</section>
+
 <section class="content">
   <div class="center-group">
     <div class="unified-booking-card">

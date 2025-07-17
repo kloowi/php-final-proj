@@ -11,6 +11,29 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Accept POST from guest_details.php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['payment_step'])) {
+    // Validate date is not empty
+    if (empty($_POST['selected_date'])) {
+        // Build redirect URL with error and preserve form data
+        $params = [
+            'experience_id' => $_POST['experience_id'] ?? '',
+            'title' => $_POST['title'] ?? '',
+            'price' => $_POST['price'] ?? '',
+            'selected_time' => $_POST['selected_time'] ?? '',
+            'guest_count' => $_POST['guest_count'] ?? '',
+            'error' => 'Please choose a date before continuing.'
+        ];
+        if (!empty($_POST['guest_name']) && is_array($_POST['guest_name'])) {
+            foreach ($_POST['guest_name'] as $gname) {
+                $params['guest_name[]'][] = $gname;
+            }
+        }
+        $query = http_build_query($params);
+        header('Location: guest_details.php?' . $query);
+        exit;
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_step'])) {
     // This is the payment form submission: process booking, payment, and redirect to confirmation
     $experience_id   = isset($_POST['experience_id'])   ? (int)   $_POST['experience_id']   : 0;
