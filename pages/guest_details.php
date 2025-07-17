@@ -72,16 +72,13 @@ if (!$experience_id || !$title || !$price) {
     <div class="booking-flex-row" style="display: flex; flex-direction: row; justify-content: center; align-items: flex-start; width: 100%; margin-bottom: 18px; gap: 32px;">
       <div class="calendar-time-card" style="background: #fff; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); padding: 32px 28px 32px 28px; display: flex; flex-direction: row; gap: 38px; align-items: flex-start;">
         <div class="calendar-box" style="box-shadow: none; padding: 0; margin: 0; background: transparent;">
-          <?php if (isset($_GET['error']) && $_GET['error']): ?>
-            <div style="color: #fff; background: #e74c3c; padding: 10px 18px; border-radius: 8px; margin-bottom: 16px; font-weight: bold; text-align: center;">
-              <?= htmlspecialchars($_GET['error']) ?>
-            </div>
-          <?php endif; ?>
+          <div id="dateError" style="color: #e74c3c; font-weight: normal; font-size: 15px; margin-bottom: 6px; display: none;"></div>
           <h3>Choose a Date</h3>
           <div id="calendar"></div>
           <input type="hidden" id="selected-date" name="selected_date">
         </div>
         <div class="time-box" style="box-shadow: none; padding: 0; margin: 0; background: transparent;">
+          <div id="timeError" style="color: #e74c3c; font-weight: normal; font-size: 15px; margin-bottom: 6px; display: none;"></div>
           <h3>Choose a Time</h3>
           <div class="time-options" id="timeOptions" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 8px; margin-bottom: 8px;">
             <?php for ($hour = 8; $hour <= 19; $hour++): ?>
@@ -102,7 +99,7 @@ if (!$experience_id || !$title || !$price) {
             <button type="button" onclick="updateGuests(1)">+</button>
           </div>
         </div>
-        <div id="formError" style="color: #fff; background: #e74c3c; padding: 10px 18px; border-radius: 8px; margin-bottom: 16px; font-weight: bold; text-align: center; display: none;"></div>
+        <div id="guestError" style="color: #e74c3c; font-weight: normal; font-size: 15px; margin-bottom: 6px; display: none;"></div>
         <input type="hidden" name="guest_count" id="guestCountInput" value="<?= htmlspecialchars($guest_count) ?>">
         <div id="guest-names" style="flex: 1 1 auto; min-height: 0; max-height: 200px; overflow-y: auto; width: 100%;">
           <?php if (!empty($guest_names)) {
@@ -187,6 +184,9 @@ if (!$experience_id || !$title || !$price) {
   document.addEventListener('DOMContentLoaded', function() {
     const timeOptions = document.getElementById('timeOptions');
     const timeInput = document.getElementById('selectedTimeInput');
+    // Remove old error div
+    const formError = document.getElementById('formError');
+    if (formError) formError.remove();
     if (timeOptions && timeInput) {
       timeOptions.addEventListener('click', function(e) {
         if (e.target.classList.contains('time-btn')) {
@@ -207,37 +207,44 @@ if (!$experience_id || !$title || !$price) {
     }
     // Prevent form submit if no time or date selected
     document.getElementById('guestDetailsForm').addEventListener('submit', function(e) {
-      const errorDiv = document.getElementById('formError');
-      errorDiv.style.display = 'none';
-      errorDiv.textContent = '';
+      // Clear all error messages
+      document.getElementById('dateError').style.display = 'none';
+      document.getElementById('dateError').textContent = '';
+      document.getElementById('timeError').style.display = 'none';
+      document.getElementById('timeError').textContent = '';
+      document.getElementById('guestError').style.display = 'none';
+      document.getElementById('guestError').textContent = '';
+
+      let hasError = false;
 
       // Validate time
-      const timeInput = document.getElementById('selectedTimeInput');
       if (!timeInput.value) {
-        errorDiv.textContent = 'Please select a time.';
-        errorDiv.style.display = 'block';
-        e.preventDefault();
-        return;
+        document.getElementById('timeError').textContent = 'Please select a time.';
+        document.getElementById('timeError').style.display = 'block';
+        hasError = true;
       }
 
       // Validate date
       const dateInput = document.getElementById('selected-date');
       if (!dateInput.value) {
-        errorDiv.textContent = 'Please select a date.';
-        errorDiv.style.display = 'block';
-        e.preventDefault();
-        return;
+        document.getElementById('dateError').textContent = 'Please select a date.';
+        document.getElementById('dateError').style.display = 'block';
+        hasError = true;
       }
 
       // Validate guest names
       const guestInputs = document.querySelectorAll('input[name="guest_name[]"]');
       for (let i = 0; i < guestInputs.length; i++) {
         if (!guestInputs[i].value.trim()) {
-          errorDiv.textContent = `Please fill out the name for Guest ${i + 1}.`;
-          errorDiv.style.display = 'block';
-          e.preventDefault();
-          return;
+          document.getElementById('guestError').textContent = `Please fill out the name for Guest ${i + 1}.`;
+          document.getElementById('guestError').style.display = 'block';
+          hasError = true;
+          break; // Only show the first missing guest name error
         }
+      }
+
+      if (hasError) {
+        e.preventDefault();
       }
     });
   });
