@@ -45,20 +45,18 @@ body {
 .success-icon {
   width: 60px;
   height: 60px;
-  background: #5bd257;
+  background: transparent;
   border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 10px auto;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .checkmark-icon {
 
-  width: 190px;
-  height: 110px;
-  filter: brightness(0) invert(1);
+  width: 230px;
+  height: 130px;
 }
 
 /* Main Title */
@@ -69,6 +67,7 @@ body {
   font-size: 26px;
   margin: 0 0 8px 0;
   text-align: center;
+  padding-top: 15px;
 }
 
 /* Order Number */
@@ -143,7 +142,7 @@ body {
   display: flex;
   gap: 15px;
   justify-content: center;
-  margin: 16px 0;
+  margin: 8px 0;
   flex-wrap: wrap;
 }
 
