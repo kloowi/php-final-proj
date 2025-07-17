@@ -2,23 +2,31 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   background-color: #fafafa;
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  flex: 1 0 auto;
 }
 
 .confirmation-container {
   width: 100%;
-  /* min-height: 100vh; */
-  background: rgba(255,255,255,1);
+  background: #fafafa;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  margin-top: 80px;
+  padding: 20px 0 0 0;
+  flex: 1 0 auto;
+  margin-top: 60px;
 }
 
 .confirmation-card {
@@ -37,8 +45,8 @@ body {
 .success-icon {
   width: 60px;
   height: 60px;
-  background: #4CAF50;
-  border-radius: 50%;
+  background: #5bd257;
+  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,8 +55,9 @@ body {
 }
 
 .checkmark-icon {
-  width: 30px;
-  height: 30px;
+
+  width: 190px;
+  height: 110px;
   filter: brightness(0) invert(1);
 }
 
@@ -116,14 +125,14 @@ body {
 }
 
 .detail-label {
-  color: rgba(78,78,78,1);
+  color: #7b7b7b;
   font-weight: 500;
   font-size: 14px;
   text-align: left;
 }
 
 .detail-value {
-  color: rgba(78,78,78,1);
+  color: rgb(50, 50, 50);
   font-weight: 500;
   font-size: 14px;
   text-align: right;
@@ -242,4 +251,8 @@ body {
     width: 40px;
     height: 40px;
   }
+} 
+
+.site-footer {
+  margin-top: auto;
 } 

@@ -79,3 +79,5 @@ if ($pdo && $booking_code && $booking_id) {
         </div>
     </div>
 </div>
+
+<?php include '../includes/footer.php'; ?>
