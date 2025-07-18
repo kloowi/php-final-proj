@@ -91,4 +91,22 @@ document.addEventListener("DOMContentLoaded", () => {
       hero.addEventListener('mouseleave', startSlideshow);
     }
   }
+
+  // Search box functionality
+  const searchBox = document.querySelector('.search-box input[type="text"]');
+  const searchBtn = document.querySelector('.search-box button');
+  if (searchBox && searchBtn) {
+    searchBtn.addEventListener('click', () => {
+      const query = searchBox.value.trim();
+      if (query.length > 0) {
+        window.location.href = `pages/explore.php?search=${encodeURIComponent(query)}`;
+      }
+    });
+    // Optional: allow pressing Enter to search
+    searchBox.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        searchBtn.click();
+      }
+    });
+  }
 }); 

@@ -41,10 +41,16 @@ foreach ($experiences as $experience) {
     <meta charset="UTF-8">
     <title>StepIntoManila</title>
     <link rel="stylesheet" href="../assets/css/cards.css">
+    <link rel="stylesheet" href="../assets/css/explore.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="icon" type="image/png" href="../assets/images/logo/blue-logo.png">
 </head>
 <body>
     <div class="container">
+        <form class="explore-search-bar" method="get" action="">
+            <input type="text" name="search" placeholder="Search experiences..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+            <button type="submit" aria-label="Search"><span class="material-icons">search</span></button>
+        </form>
         <?php foreach ($categorized_experiences as $category_title => $category_experiences): ?>
             <?php if (!empty($category_experiences)): ?>
                 <h2 class="section-title" style="margin-top: 40px; margin-bottom: 20px;"><?php echo htmlspecialchars($category_title); ?></h2>
