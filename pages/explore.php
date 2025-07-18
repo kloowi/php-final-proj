@@ -4,9 +4,17 @@
 require_once '../includes/db_config.php';
 
 $experiences = [];
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
 if ($pdo) {
     try {
-        $stmt = $pdo->query('SELECT * FROM Experiences ORDER BY experience_id DESC');
+        if ($search !== '') {
+            $stmt = $pdo->prepare('SELECT * FROM Experiences WHERE title LIKE :search OR location LIKE :search OR description LIKE :search ORDER BY experience_id DESC');
+            $like = "%" . $search . "%";
+            $stmt->bindParam(':search', $like, PDO::PARAM_STR);
+            $stmt->execute();
+        } else {
+            $stmt = $pdo->query('SELECT * FROM Experiences ORDER BY experience_id DESC');
+        }
         $experiences = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         // Handle error silently or log it
@@ -48,9 +56,12 @@ foreach ($experiences as $experience) {
 <body>
     <div class="container">
         <form class="explore-search-bar" method="get" action="">
-            <input type="text" name="search" placeholder="Search experiences..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+            <input type="text" name="search" placeholder="Search experiences..." value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit" aria-label="Search"><span class="material-icons">search</span></button>
         </form>
+        <?php if ($search !== '' && empty($experiences)): ?>
+            <p style="margin: 40px 0; text-align: center; color: #888; font-size: 1.2em;">No experiences found for '<?php echo htmlspecialchars($search); ?>'.</p>
+        <?php endif; ?>
         <?php foreach ($categorized_experiences as $category_title => $category_experiences): ?>
             <?php if (!empty($category_experiences)): ?>
                 <h2 class="section-title" style="margin-top: 40px; margin-bottom: 20px;"><?php echo htmlspecialchars($category_title); ?></h2>

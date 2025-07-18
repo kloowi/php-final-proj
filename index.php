@@ -23,10 +23,10 @@
     <div class="hero-content">
         <h1>Your gateway to discovering Manila like a local.</h1>
         <div class="search-box-wrapper">
-          <div class="search-box">
-            <input type="text" placeholder="Search...">
-            <button>Search Experience</button>
-          </div>
+          <form class="search-box" method="get" action="pages/explore.php">
+            <input type="text" name="search" placeholder="Search experiences..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+            <button type="submit">Search Experience</button>
+          </form>
         </div>
     </div>
     
