@@ -56,7 +56,14 @@ foreach ($experiences as $experience) {
 <body>
     <div class="container">
         <form class="explore-search-bar" method="get" action="">
-            <input type="text" name="search" placeholder="Search experiences..." value="<?php echo htmlspecialchars($search); ?>">
+            <div class="search-input-container">
+                <input type="text" name="search" id="searchInput" placeholder="Search experiences..." value="<?php echo htmlspecialchars($search); ?>">
+                <?php if ($search !== ''): ?>
+                    <button type="button" class="clear-search-btn" onclick="clearSearch()" aria-label="Clear search">
+                        <span class="material-icons">close</span>
+                    </button>
+                <?php endif; ?>
+            </div>
             <button type="submit" aria-label="Search"><span class="material-icons">search</span></button>
         </form>
         <?php if ($search !== '' && empty($experiences)): ?>
@@ -100,6 +107,12 @@ foreach ($experiences as $experience) {
     </div>
 
 <?php include '../includes/footer.php'; ?>
+
+<script>
+function clearSearch() {
+    window.location.href = 'explore.php';
+}
+</script>
 </body>
 </html>
 

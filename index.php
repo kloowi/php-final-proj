@@ -24,8 +24,13 @@
         <h1>Your gateway to discovering Manila like a local.</h1>
         <div class="search-box-wrapper">
           <form class="search-box" method="get" action="pages/explore.php">
-            <input type="text" name="search" placeholder="Search experiences..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-            <button type="submit">Search Experience</button>
+            <div class="search-input-container">
+              <input type="text" name="search" placeholder="What do you want to do today?" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+              <button type="button" class="clear-search" id="clearSearch" style="display: none;">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <button type="submit">Search</button>
           </form>
         </div>
     </div>
