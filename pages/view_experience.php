@@ -268,9 +268,7 @@ if (!empty($experience['category']) && $pdo) {
                         }
                         
                         if ($is_fallback): ?>
-                            <p class="no-reviews" style="color: #666; font-style: italic; margin-bottom: 15px;">
-                                Showing general reviews while we gather more feedback for this experience.
-                            </p>
+                        
                         <?php endif; ?>
                         
                         <?php 
