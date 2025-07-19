@@ -206,7 +206,7 @@ body{
 .search-box button:hover {
     background-color: #0463d0;
     box-shadow: 0 6px 16px rgba(6, 123, 255, 0.4);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .intro-section {
