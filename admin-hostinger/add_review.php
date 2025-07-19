@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message = 'Failed to add review.';
             }
         } catch (PDOException $e) {
-            $message = 'Database error occurred. Please try again.';
+            $message = 'Database error occurred. Please try again. ' . $e->getMessage(); // DEBUG: show actual error
             error_log("Review insert error: " . $e->getMessage());
         }
     } else {
@@ -41,7 +41,7 @@ if ($selected_category) {
         $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Review fetch error: " . $e->getMessage());
-        $message = 'Error loading reviews. Please try again.';
+        $message = 'Error loading reviews. Please try again. ' . $e->getMessage(); // DEBUG: show actual error
     }
 }
 ?>
