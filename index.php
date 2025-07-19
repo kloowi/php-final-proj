@@ -113,14 +113,40 @@
     include_once 'includes/db_connect.php';
     
     if ($pdo) {
-        $stmt = $pdo->query("SHOW TABLES");
-        $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        echo "<pre>Tables: " . print_r($tables, true) . "</pre>";
-        $stmt2 = $pdo->query("SELECT * FROM Reviews");
-        $reviews = $stmt2->fetchAll();
-        echo "<pre>Reviews: " . print_r($reviews, true) . "</pre>";
+        try {
+            // Fetch reviews from database
+            $stmt = $pdo->query("SELECT username, rating, description, category FROM Reviews ORDER BY RAND() LIMIT 3");
+            $reviews = $stmt->fetchAll();
+            
+            if ($reviews) {
+                foreach ($reviews as $review) {
+                    echo '<div class="review">';
+                    echo '<div class="review-header">';
+                    echo '<div class="reviewer-info">';
+                    echo '<h4>' . htmlspecialchars($review['username']) . '</h4>';
+                    echo '<span class="category">' . htmlspecialchars($review['category']) . '</span>';
+                    echo '</div>';
+                    echo '<div class="rating">';
+                    for ($i = 1; $i <= 5; $i++) {
+                        if ($i <= $review['rating']) {
+                            echo '<span class="star filled">★</span>';
+                        } else {
+                            echo '<span class="star">☆</span>';
+                        }
+                    }
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<p>' . htmlspecialchars($review['description']) . '</p>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p style="text-align: center; color: #666; font-style: italic;">No reviews available yet. Be the first to share your experience!</p>';
+            }
+        } catch (PDOException $e) {
+            echo '<p style="text-align: center; color: #666; font-style: italic;">Reviews will be available soon.</p>';
+        }
     } else {
-        echo "No DB connection!";
+        echo '<p style="text-align: center; color: #666; font-style: italic;">Reviews will be available soon.</p>';
     }
     ?>
 </div>
