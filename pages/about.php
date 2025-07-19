@@ -17,7 +17,7 @@
 </head>
 
 <div class="about-image-container">
-  <img src="../assets/images/index/MANILA.jpg" alt="Manila Skyline">
+  <img src="../assets/images/about/about.jpg" alt="Manila Skyline">
   <div class="overlay-text">MANILA</div>
 </div>
 
@@ -31,4 +31,19 @@
     convenience, and a sense of wonder.
   </p>
 </div>
+
+<hr style="margin: 20px auto; width: 80%; border: none; border-top: 1px solid #e0e0e0;">
+<div class="about-content-row">
+  <div class="about-image-section">
+    <img src="../assets/images/about/groupic.jpg" alt="Manila Skyline">
+  </div>
+  <div class="about-text-section">
+    <h2>Our Group</h2>
+    <p>
+    We're a passionate group of students and explorers on a mission to showcase the heart and soul of Manila. What started as a simple idea turned into a full-fledged experience — built with the goal of connecting locals and travelers through unforgettable adventures.
+    </p>
+  </div>
+</div>
+
+
 <?php include '../includes/footer.php'; ?>
