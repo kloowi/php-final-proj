@@ -47,7 +47,7 @@
         <h2>Join us for an adventure!</h2>
         <p>Explore Manila's hidden gems, guided by locals. From food crawls to heritage walks — your story starts here.</p>
         <h2>⠀</h2>
-        <div class="features-icons-row" style="display: flex; gap: 32px; justify-content: flex-start; align-items: flex-end; margin: 18px 0;">
+        <div class="features-icons-row" style="display: flex; gap: 32px; justify-content: flex-start; align-items: flex-end; margin: 5px 0;">
           <div class="feature-icon-label" style="display: flex; flex-direction: column; align-items: center; text-align: center; font-size: 2.1rem; color: #1a73e8;">
             <span class="material-icons" style="font-size: 2.1rem;">map</span>
             <span style="font-size: 0.95rem; color: #888; margin-top: 6px; font-weight: 500;">Smart Itinerary</span>
@@ -75,6 +75,7 @@
         <img src="assets/images/index/main-index.png" alt="Adventure">
     </div>
 </div>
+<hr style="margin: 20px auto; width: 80%; border: none; border-top: 1px solid #e0e0e0;">
 <div class="popular-section">
     <h3>Most Popular Experiences</h3>
 
@@ -101,6 +102,54 @@
             <p>Join a guided food crawl through Binondo's historical alleys and temples. Taste authentic dumplings, lumpia, siopao, and fusion dishes.</p>
         </div>
     </div>
+</div>
+
+<hr style="margin: 20px auto; width: 80%; border: none; border-top: 1px solid #e0e0e0;">
+
+<div class="reviews-section">
+    <h3>What Our Travelers Are Saying</h3>
+    
+    <?php
+    // Include database connection
+    include_once 'includes/db_connect.php';
+    
+    if ($pdo) {
+        try {
+            // Fetch reviews from database
+            $stmt = $pdo->query("SELECT username, rating, description, category FROM Reviews ORDER BY RAND() LIMIT 3");
+            $reviews = $stmt->fetchAll();
+            
+            if ($reviews) {
+                foreach ($reviews as $review) {
+                    echo '<div class="review">';
+                    echo '<div class="review-header">';
+                    echo '<div class="reviewer-info">';
+                    echo '<h4>' . htmlspecialchars($review['username']) . '</h4>';
+                    echo '<span class="category">' . htmlspecialchars($review['category']) . '</span>';
+                    echo '</div>';
+                    echo '<div class="rating">';
+                    for ($i = 1; $i <= 5; $i++) {
+                        if ($i <= $review['rating']) {
+                            echo '<span class="star filled">★</span>';
+                        } else {
+                            echo '<span class="star">☆</span>';
+                        }
+                    }
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<p>' . htmlspecialchars($review['description']) . '</p>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p style="text-align: center; color: #666; font-style: italic;">No reviews available yet. Be the first to share your experience!</p>';
+            }
+        } catch (PDOException $e) {
+            echo '<p style="text-align: center; color: #666; font-style: italic;">Reviews will be available soon.</p>';
+        }
+    } else {
+        echo '<p style="text-align: center; color: #666; font-style: italic;">Reviews will be available soon.</p>';
+    }
+    ?>
 </div>
 
 <?php include 'includes/footer-index.php'; ?>
