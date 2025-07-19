@@ -63,9 +63,77 @@ if (!$experience) {
 $reviews = [];
 if (!empty($experience['category']) && $pdo) {
     try {
-        $stmt = $pdo->prepare('SELECT * FROM Reviews WHERE category = ? ORDER BY rating DESC LIMIT 10');
-        $stmt->execute([$experience['category']]);
+        // Debug: Log the experience category
+        error_log("Experience category: " . $experience['category']);
+        
+        // Create a mapping of experience categories to review categories
+        $category_mapping = [
+            // Historical categories
+            'history' => ['history', 'historical', 'historical & cultural sites', 'cultural', 'heritage'],
+            'historical' => ['history', 'historical', 'historical & cultural sites', 'cultural', 'heritage'],
+            'heritage' => ['history', 'historical', 'historical & cultural sites', 'cultural', 'heritage'],
+            'cultural' => ['history', 'historical', 'historical & cultural sites', 'cultural', 'heritage'],
+            
+            // Food categories
+            'food' => ['food', 'food & market experiences', 'cuisine', 'dining', 'market'],
+            'cuisine' => ['food', 'food & market experiences', 'cuisine', 'dining', 'market'],
+            'dining' => ['food', 'food & market experiences', 'cuisine', 'dining', 'market'],
+            'market' => ['food', 'food & market experiences', 'cuisine', 'dining', 'market'],
+            
+            // Nature categories
+            'nature' => ['nature', 'nature & scenic spots', 'scenic', 'park', 'outdoor'],
+            'scenic' => ['nature', 'nature & scenic spots', 'scenic', 'park', 'outdoor'],
+            'park' => ['nature', 'nature & scenic spots', 'scenic', 'park', 'outdoor'],
+            'outdoor' => ['nature', 'nature & scenic spots', 'scenic', 'park', 'outdoor']
+        ];
+        
+        $exp_category = strtolower(trim($experience['category']));
+        $matching_categories = [];
+        
+        // Find matching categories
+        foreach ($category_mapping as $key => $values) {
+            if (stripos($exp_category, $key) !== false) {
+                $matching_categories = array_merge($matching_categories, $values);
+            }
+        }
+        
+        // If no specific mapping found, try the original category and common variations
+        if (empty($matching_categories)) {
+            $matching_categories = [$exp_category, $experience['category']];
+            
+            // Add common variations
+            if (stripos($exp_category, 'history') !== false) {
+                $matching_categories = array_merge($matching_categories, ['history', 'historical', 'historical & cultural sites']);
+            }
+            if (stripos($exp_category, 'food') !== false) {
+                $matching_categories = array_merge($matching_categories, ['food', 'food & market experiences']);
+            }
+            if (stripos($exp_category, 'nature') !== false) {
+                $matching_categories = array_merge($matching_categories, ['nature', 'nature & scenic spots']);
+            }
+        }
+        
+        // Remove duplicates and create placeholders for SQL
+        $matching_categories = array_unique($matching_categories);
+        $placeholders = str_repeat('?,', count($matching_categories) - 1) . '?';
+        
+        // Query with multiple category matches
+        $stmt = $pdo->prepare("SELECT * FROM Reviews WHERE LOWER(category) IN ($placeholders) ORDER BY rating DESC LIMIT 10");
+        $stmt->execute($matching_categories);
         $reviews = $stmt->fetchAll();
+        
+        // If still no reviews found, show some general reviews as fallback
+        if (empty($reviews)) {
+            $stmt = $pdo->prepare("SELECT * FROM Reviews ORDER BY rating DESC LIMIT 5");
+            $stmt->execute();
+            $reviews = $stmt->fetchAll();
+        }
+        
+        // Debug: Log the matching process
+        error_log("Experience category: " . $experience['category']);
+        error_log("Matching categories: " . implode(', ', $matching_categories));
+        error_log("Found " . count($reviews) . " reviews");
+        
     } catch (PDOException $e) {
         error_log("Error fetching reviews: " . $e->getMessage());
         // Continue without reviews rather than failing completely
@@ -159,8 +227,52 @@ if (!empty($experience['category']) && $pdo) {
             <div class="col-30">
                 <div class="reviews modern-reviews">
                     <h3 class="reviews-title">Guest Reviews</h3>
+                    <?php if (isset($_GET['debug']) && $_GET['debug'] === '1'): ?>
+                        <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px;">
+                            <strong>Debug Info:</strong><br>
+                            Experience Category: <?php echo htmlspecialchars($experience['category'] ?? 'NULL'); ?><br>
+                            Experience ID: <?php echo $experience_id; ?><br>
+                            Reviews Found: <?php echo count($reviews); ?><br>
+                            <?php if (!empty($reviews)): ?>
+                                Review Categories: <?php echo implode(', ', array_unique(array_column($reviews, 'category'))); ?><br>
+                                Total Reviews in DB: <?php 
+                                    $stmt = $pdo->query('SELECT COUNT(*) FROM Reviews');
+                                    echo $stmt->fetchColumn();
+                                ?>
+                            <?php else: ?>
+                                <br>All Review Categories in DB: <?php 
+                                    $stmt = $pdo->query('SELECT DISTINCT category FROM Reviews');
+                                    $all_categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                                    echo implode(', ', $all_categories);
+                                ?>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="reviews-list">
                     <?php if (!empty($reviews)): ?>
+                        <?php 
+                        // Check if these are fallback reviews (not matching the experience category)
+                        $is_fallback = false;
+                        if (!empty($experience['category'])) {
+                            $exp_category_lower = strtolower($experience['category']);
+                            $review_categories = array_unique(array_column($reviews, 'category'));
+                            $has_matching_category = false;
+                            foreach ($review_categories as $rev_cat) {
+                                if (stripos($exp_category_lower, strtolower($rev_cat)) !== false || 
+                                    stripos(strtolower($rev_cat), $exp_category_lower) !== false) {
+                                    $has_matching_category = true;
+                                    break;
+                                }
+                            }
+                            $is_fallback = !$has_matching_category;
+                        }
+                        
+                        if ($is_fallback): ?>
+                            <p class="no-reviews" style="color: #666; font-style: italic; margin-bottom: 15px;">
+                                Showing general reviews while we gather more feedback for this experience.
+                            </p>
+                        <?php endif; ?>
+                        
                         <?php 
                         // Group reviews into pairs for 2-column layout
                         $review_pairs = array_chunk($reviews, 2);
