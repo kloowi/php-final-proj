@@ -216,6 +216,25 @@ body{
     transform: translateY(-px);
 }
 
+.explore-btn {
+    margin-top: 30px;
+    background-color: #067bff;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.explore-btn:hover {
+    background-color: #0463d0;
+}
+
 .intro-section {
     display: flex;
     align-items: center;
@@ -224,6 +243,19 @@ body{
     padding: 40px 20px 40px;
     max-width: 1000px;
     margin: 0 auto;
+}
+
+
+.intro-section p {
+    color: #646464;
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+
+.intro-section h2 {
+    color: #252525;
+    margin-bottom: 10px;
+    font-size: 32px;
 }
 
 .intro-text {
@@ -251,24 +283,6 @@ body{
     text-align: center;
 }
 
-.explore-btn {
-    margin-top: 20px;
-    background-color: #067bff;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 15px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-}
-
-.explore-btn:hover {
-    background-color: #0463d0;
-}
 
 .intro-text .explore-btn {
     display: block;
@@ -334,6 +348,38 @@ body{
     font-size: 25px;
     text-align: left;
     width: 100%;
+}
+
+/* Feature Icons Section Styles */
+.features-icons-row {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0;
+    flex-wrap: nowrap;
+}
+
+.feature-icon-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.feature-icon-label .material-icons {
+    font-size: 2.1rem;
+    color: #1a73e8;
+    margin-bottom: 8px;
+}
+
+.feature-icon-label span:not(.material-icons) {
+    font-size: 0.95rem;
+    color: #888;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
 .review {

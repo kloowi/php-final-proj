@@ -75,7 +75,7 @@ if ($pdo && $booking_code && $booking_id) {
         </div>
         <!-- Done Button -->
         <div class="action-buttons">
-            <a href="../index.php" class="btn btn-primary">Done</a>
+            <a href="../pages/manage.php" class="btn btn-primary">Manage</a>
         </div>
     </div>
 </div>
