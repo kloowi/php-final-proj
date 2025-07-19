@@ -6,17 +6,6 @@ if (!$pdo) {
     die("Database connection failed. Please try again later.");
 }
 
-// Debug: Check if Reviews table exists
-try {
-    $stmt = $pdo->query("SHOW TABLES LIKE 'Reviews'");
-    $tableExists = $stmt->rowCount() > 0;
-    if (!$tableExists) {
-        error_log("Reviews table does not exist on hosting database");
-    }
-} catch (PDOException $e) {
-    error_log("Error checking Reviews table: " . $e->getMessage());
-}
-
 // Handle form submission
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -52,7 +41,7 @@ if ($selected_category) {
         $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Review fetch error: " . $e->getMessage());
-        $message = 'Error loading reviews: ' . $e->getMessage();
+        $message = 'Error loading reviews. Please try again.';
     }
 }
 ?>
