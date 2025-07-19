@@ -110,7 +110,7 @@
     
     <?php
     // Include database connection
-    include_once 'includes/db_connect.php';
+    include_once 'includes/db_config.php';
     
     if ($pdo) {
         try {
